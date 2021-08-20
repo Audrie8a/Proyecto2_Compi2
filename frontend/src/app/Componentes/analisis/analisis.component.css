@@ -1,0 +1,19 @@
+#Panel-Analisis{
+    margin: 50px;
+}
+.shadow-textarea textarea.form-control::placeholder {
+    font-weight: 300;
+}
+.shadow-textarea textarea.form-control {
+    padding-left: 0.8rem;
+    width: 500px;
+    height: 400px;
+    margin: 100px;
+    margin-top: 10px;
+}
+
+#lblEntrada{
+    margin-left: 60px;
+    margin-top: 40px;
+    font-size: 30px;
+}
