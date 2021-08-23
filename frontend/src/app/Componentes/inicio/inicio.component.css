@@ -11402,3 +11402,12 @@ html {
   background: rgb(2,0,36);
   background: linear-gradient(153deg, rgba(2,0,36,1) 0%, rgba(135,47,93,0.9979342078628326) 35%, rgba(47,59,135,0.9979342078628326) 89%);
 }
+
+.mat-tab-label{
+  color:white;
+  min-width: 25px !important;
+  padding: 5px;
+     background-color:transparent;
+      color:white;
+      font-weight: 700;
+}

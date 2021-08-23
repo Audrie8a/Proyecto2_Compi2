@@ -6,26 +6,25 @@
 # -----------------------------------------------------------------------------
 
 tokens  = (
-    'REVALUAR',
+    'IPRINT',
+    'IPRINTLN',
     'PARIZQ',
     'PARDER',
-    'CORIZQ',
-    'CORDER',
     'MAS',
     'MENOS',
     'POR',
     'DIVIDIDO',
     'DECIMAL',
     'ENTERO',
+    'STRING',
     'PTCOMA'
 )
 
 # Tokens
-t_REVALUAR  = r'Evaluar'
+t_IPRINT     = r'print'
+t_IPRINTLN   = r'println' 
 t_PARIZQ    = r'\('
 t_PARDER    = r'\)'
-t_CORIZQ    = r'\['
-t_CORDER    = r'\]'
 t_MAS       = r'\+'
 t_MENOS     = r'-'
 t_POR       = r'\*'
@@ -50,6 +49,11 @@ def t_ENTERO(t):
         t.value = 0
     return t
 
+def t_STRING(t):
+    r'\".*?\"'
+    t.value=t.value[1:-1]
+    return t
+
 # Caracteres ignorados
 t_ignore = " \t"
 
@@ -63,6 +67,14 @@ def t_error(t):
     t.lexer.skip(1)
     
 # Construyendo el analizador léxico
+from Environment.Environment import Environment
+from Instruction.IPrint import IPrint
+from Instruction.IPrintln import IPrintln
+from Expression.Primitive import Primitive
+from Expression.Arithmetic import Arithmetic
+from Enum.arithmeticOperation import arithmeticOperation
+from Enum.typeExpression import typeExpression
+
 import ply.lex as lex
 lexer = lex.lex()
 
@@ -75,15 +87,40 @@ precedence = (
     )
 
 # Definición de la gramática
+def p_initial(t):
+    '''initial  :   instrucciones'''
+    glovalEnv= Environment (None)
+    for ins in t[1]:
+        ins.execute(glovalEnv)
+
+#-----------------------------------------------------------------
 def p_instrucciones_lista(t):
-    '''instrucciones    : instruccion instrucciones
-                        | instruccion '''
+    '''instrucciones    :   instrucciones instruccion
+                            | instruccion
+     '''
 
-def p_instrucciones_evaluar(t):
-    'instruccion : REVALUAR CORIZQ expresion CORDER PTCOMA'
-    print('El valor de la expresión es: ' + str(t[3]))
+    if(len(t)==3):
+        t[1].append(t[2])
+        t[0]=t[1]
+    elif (len(t)==2):
+        t[0]=[t[1]]
 
-def p_expresion_binaria(t):
+#-----------------------------------------------------------------
+def p_instruccion(t):
+    ''' instruccion     :   impresion
+    '''
+    t[0] = t[1]
+
+#-----------------------------------------------------------------
+def p_impresion(t):
+    ''' impresion   :   IPRINT PARIZQ expresion PARDER PTCOMA
+                        | IPRINTLN PARIZQ expresion PARDER PTCOMA
+    '''
+    if t[1] =='print'       : t[0]=IPrint(t[3])
+    elif t[1]=='println'    : t[0]=IPrintln(t[3])
+
+#-----------------------------------------------------------------
+def p_expresion_aritmetica(t):
     '''expresion : expresion MAS expresion
                   | expresion MENOS expresion
                   | expresion POR expresion
@@ -101,19 +138,23 @@ def p_expresion_agrupacion(t):
     'expresion : PARIZQ expresion PARDER'
     t[0] = t[2]
 
-def p_expresion_number(t):
+def p_expresion_entero(t):
     '''expresion    : ENTERO
-                    | DECIMAL'''
-    t[0] = t[1]
+    '''
+    t[0] = Primitive(t[1], typeExpression.INTEGER)
+
+def p_expresion_decimal(t):
+    '''expresion    : DECIMAL
+    '''
+    t[0] = Primitive(t[1], typeExpression.FLOAT)
+
+def p_expresion_string(t):
+    '''expresion    : STRING
+    '''
+    t[0] = Primitive(t[1], typeExpression.STRING)
 
 def p_error(t):
     print("Error sintáctico en '%s'" % t.value)
 
 import ply.yacc as yacc
 parser = yacc.yacc()
-
-
-f = open("./entrada.txt", "r")
-input = f.read()
-print(input)
-parser.parse(input)

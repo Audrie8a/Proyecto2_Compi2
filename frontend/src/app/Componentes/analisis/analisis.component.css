@@ -1,5 +1,6 @@
 #Panel-Analisis{
     margin: 50px;
+    margin-bottom: 5px;
 }
 .shadow-textarea textarea.form-control::placeholder {
     font-weight: 300;
@@ -16,4 +17,14 @@
     margin-left: 60px;
     margin-top: 40px;
     font-size: 30px;
+}
+
+#Boton button{
+    margin:25px;
+    height: 60px;
+    width: 200px;
+    background: rgba(0,0,0,0.6);
+    background: radial-gradient(circle, rgba(152, 58, 99, 0.486) 0%, rgba(29, 57, 91, 0.315) 100%);
+    
+    color:white
 }

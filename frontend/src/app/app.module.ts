@@ -9,6 +9,7 @@ import { ReportesComponent } from './Componentes/reportes/reportes.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DatosComponent } from './Componentes/datos/datos.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { DatosComponent } from './Componentes/datos/datos.component';
 
     MatTabsModule,
 
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
