@@ -1,5 +1,4 @@
-print("Hola");
-print("Audrie");
-println("Jala bien");
-print("hola");
-print("Amigos");
+
+println("hola"*"hola2");
+println("jaja"*5);
+println(5/10);

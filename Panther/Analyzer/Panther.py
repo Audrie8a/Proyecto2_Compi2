@@ -17,7 +17,10 @@ tokens  = (
     'DECIMAL',
     'ENTERO',
     'STRING',
-    'PTCOMA'
+    'PTCOMA',
+    'COMA',
+    'IPARSE',
+    'ISTRING'
 )
 
 # Tokens
@@ -30,6 +33,9 @@ t_MENOS     = r'-'
 t_POR       = r'\*'
 t_DIVIDIDO  = r'/'
 t_PTCOMA    = r';'
+t_COMA      = r','
+t_IPARSE    = r'parse'
+t_ISTRING   = r'string'
 
 def t_DECIMAL(t):
     r'\d+\.\d+'
@@ -74,6 +80,8 @@ from Expression.Primitive import Primitive
 from Expression.Arithmetic import Arithmetic
 from Enum.arithmeticOperation import arithmeticOperation
 from Enum.typeExpression import typeExpression
+from Expression.Concat import Concat
+from Enum.concatOperation import concatOperation
 
 import ply.lex as lex
 lexer = lex.lex()
@@ -113,22 +121,30 @@ def p_instruccion(t):
 
 #-----------------------------------------------------------------
 def p_impresion(t):
-    ''' impresion   :   IPRINT PARIZQ expresion PARDER PTCOMA
-                        | IPRINTLN PARIZQ expresion PARDER PTCOMA
+    ''' impresion   :   IPRINT PARIZQ val PARDER PTCOMA
+                        | IPRINTLN PARIZQ val PARDER PTCOMA
     '''
     if t[1] =='print'       : t[0]=IPrint(t[3])
     elif t[1]=='println'    : t[0]=IPrintln(t[3])
 
+#-----------------------------------------------------------------
+def p_val(t):
+    ''' val     :   val COMA val
+                    | casteo POR casteo
+                    | expresion                   
+    '''
+    if len(t)==4 and t[2]==',': t[0]= Concat(t[1],t[3],concatOperation.COMA)
+    elif len(t)==2: t[0]=t[1]
 #-----------------------------------------------------------------
 def p_expresion_aritmetica(t):
     '''expresion : expresion MAS expresion
                   | expresion MENOS expresion
                   | expresion POR expresion
                   | expresion DIVIDIDO expresion'''
-    if t[2] == '+'  : t[0] = t[1] + t[3]
-    elif t[2] == '-': t[0] = t[1] - t[3]
-    elif t[2] == '*': t[0] = t[1] * t[3]
-    elif t[2] == '/': t[0] = t[1] / t[3]
+    if t[2] == '+'  : t[0] = Arithmetic( t[1], t[3], arithmeticOperation.PLUS)
+    elif t[2] == '-': t[0] = Arithmetic(t[1], t[3], arithmeticOperation.MINUS)
+    elif t[2] == '*': t[0] = Arithmetic(t[1], t[3], arithmeticOperation.MULTIPLY)
+    elif t[2] == '/': t[0] = Arithmetic(t[1], t[3], arithmeticOperation.DIV)
 
 def p_expresion_unaria(t):
     'expresion : MENOS expresion %prec UMENOS'
@@ -152,6 +168,12 @@ def p_expresion_string(t):
     '''expresion    : STRING
     '''
     t[0] = Primitive(t[1], typeExpression.STRING)
+
+def p_expresion_string_casteo(t):
+    '''casteo   :   IPARSE PARIZQ ISTRING COMA ENTERO PARDER
+                    | IPARSE PARIZQ ISTRING COMA DECIMAL PARDER
+    '''
+    t[0]= Primitive( t[5], typeExpression.STRING)
 
 def p_error(t):
     print("Error sintáctico en '%s'" % t.value)

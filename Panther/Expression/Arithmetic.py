@@ -72,6 +72,20 @@ class Arithmetic(Expression):
                     float(leftValue.getValue()) * float(rightValue.getValue()),
                     typeExpression.FLOAT
                     )
+            elif(dominant==typeExpression.STRING):
+                 if leftValue.getType().value==0 and rightValue.getType().value==0:
+                    return Symbol(
+                        "",
+                        str(leftValue.getValue())+str(rightValue.getValue()),
+                        typeExpression.STRING
+                    )
+                 else:                    
+                     print("\nNo es posible imprimir " + str(leftValue.getValue()) + " y " + str(rightValue.getValue())+". Se necesita Castear")
+                     return Symbol(
+                        "",
+                        None,
+                        typeExpression.STRING
+                    )
             else:
                 print("No es posible multiplicar " + leftValue.getValue() + " y " + rightValue.getValue())
 
