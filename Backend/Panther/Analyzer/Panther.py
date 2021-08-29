@@ -17,10 +17,14 @@ tokens  = (
     'DECIMAL',
     'ENTERO',
     'STRING',
+    'POW',
+    'MOD',
     'PTCOMA',
     'COMA',
     'IPARSE',
-    'ISTRING'
+    'ISTRING',
+    'IUPPERCASE',
+    'ILOWERCASE'
 )
 
 # Tokens
@@ -30,12 +34,16 @@ t_PARIZQ    = r'\('
 t_PARDER    = r'\)'
 t_MAS       = r'\+'
 t_MENOS     = r'-'
+t_POW       = r'^'
+t_MOD       = r'%'
 t_POR       = r'\*'
 t_DIVIDIDO  = r'/'
 t_PTCOMA    = r';'
 t_COMA      = r','
 t_IPARSE    = r'parse'
 t_ISTRING   = r'string'
+t_IUPPERCASE    = r'uppercase'
+t_LOWERCASE     = r'lowercase'
 
 def t_DECIMAL(t):
     r'\d+\.\d+'
@@ -90,7 +98,7 @@ lexer = lex.lex()
 # Asociación de operadores y precedencia
 precedence = (
     ('left','MAS','MENOS'),
-    ('left','POR','DIVIDIDO'),
+    ('left','POR','DIVIDIDO','MOD','POW'),
     ('right','UMENOS'),
     )
 
@@ -129,12 +137,26 @@ def p_impresion(t):
 
 #-----------------------------------------------------------------
 def p_val(t):
-    ''' val     :   val COMA val
-                    | casteo POR casteo
-                    | expresion                   
+    ''' val     :   concat
+                    |expresion                  
     '''
     if len(t)==4 and t[2]==',': t[0]= Concat(t[1],t[3],concatOperation.COMA)
     elif len(t)==2: t[0]=t[1]
+
+#-----------------------------------------------------------------
+def p_concat(t):
+    ''' concat  :   concat POW concat
+                    | concat POR concat
+                    | concat COMA concat
+                    | IUPPERCASE PARIZQ concat PARDER
+                    | ILOWERCASE PARIZQ concat PARDER
+                    | STRING
+    '''
+    if len(t)==4 and t[2]=='^': t[0]=Concat(t[1],t[3],concatOperation.ELEV)
+    elif len(t)==4 and t[2]=='*': t[0]=Concat(t[1],t[3],concatOperation.MULTIPLY)
+    elif len(t)==4 and t[2]==',': t[0]=Concat(t[1],t[3],concatOperation.COMMA)
+    elif len(t)==5 and t[2]=='uppercase': t[0]=Concat(t[3],t[3],concatOperation.UPPERCASE)
+    elif len(t)==5 and t[2]=='lowercase': t[0]=Concat(t[3],t[3],concatOperation.LOWERCASE)
 #-----------------------------------------------------------------
 def p_expresion_aritmetica(t):
     '''expresion : expresion MAS expresion
@@ -180,3 +202,4 @@ def p_error(t):
 
 import ply.yacc as yacc
 parser = yacc.yacc()
+

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AnalisisService } from 'src/app/Servicios/analisis.service';
 
 @Component({
   selector: 'app-analisis',
@@ -8,13 +9,21 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class AnalisisComponent implements OnInit {
 
-  constructor() { }
+  constructor( public analisisService: AnalisisService,
+    public _activatedRoute: ActivatedRoute,
+    public _router: Router) { }
 
   txtEntrada:string ="";
   ngOnInit(): void {
   }
 
   async Analizar(){
-    alert(this.txtEntrada);
+    let respuesta = await this.analisisService.sendEntrada(this.txtEntrada);
+    if(respuesta!= null){
+      alert("Analizando");
+    }else{
+      alert("Error: No se logró comunicación")
+    }
+    
   }
 }
