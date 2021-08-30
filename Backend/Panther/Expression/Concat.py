@@ -20,26 +20,42 @@ class Concat(Expression):
         rightValue = self.rightExp.execute(environment)
         
         
-        if(self.operation == concatOperation.COMA):           
+        if(self.operation == concatOperation.COMMA):           
                 return Symbol(
                     "",
                     str(leftValue.getValue())+str(rightValue.getValue()),
                     typeExpression.STRING
-                )
-        elif(self.operation == concatOperation.MULTIPLY):
-            if leftValue.getType().value==0 and rightValue.getType().value==0:
+        )
+        
+        elif(self.operation == concatOperation.UPPERCASE):
+            if leftValue.getType().value==0:
                 return Symbol(
                         "",
-                        str(leftValue.getValue())+str(rightValue.getValue()),
+                        str(leftValue.getValue()).upper(),
                         typeExpression.STRING
                     )
             else:                    
-                print("\nNo es posible imprimir " + str(leftValue.getValue()) + " y " + str(rightValue.getValue())+". Se necesita Castear")
+                print("\nNo es posible imprimir " + str(leftValue.getValue()))
                 return Symbol(
                         "",
                         None,
                         typeExpression.STRING
+        )
+
+        elif(self.operation == concatOperation.LOWERCASE):
+            if leftValue.getType().value==0 :
+                return Symbol(
+                        "",
+                        str(leftValue.getValue()).lower(),
+                        typeExpression.STRING
                     )
+            else:                    
+                print("\nNo es posible imprimir " + str(leftValue.getValue()))
+                return Symbol(
+                        "",
+                        None,
+                        typeExpression.STRING
+        )
         else:
             print("No es posible imprimir " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
-        return Symbol('',0,typeExpression.INTEGER)
+            return Symbol('',None,typeExpression.STRING)

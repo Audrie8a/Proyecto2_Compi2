@@ -1,4 +1,8 @@
 
-println("hola"*"hola2");
-println("jaja"*5);
-println(5/10);
+println("Nativas-------------------");
+println(sin(45)*12+10*(-9+5));
+println(cos(45));
+println(tan(45));
+println(sqrt(45));
+println(log10(45));
+println(log(45,2));

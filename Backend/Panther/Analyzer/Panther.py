@@ -24,7 +24,13 @@ tokens  = (
     'IPARSE',
     'ISTRING',
     'IUPPERCASE',
-    'ILOWERCASE'
+    'ILOWERCASE',
+    'ILOGD',
+    'ILOG',
+    'ISIN',
+    'ICOS',
+    'ITAN',
+    'ISQRT'
 )
 
 # Tokens
@@ -34,7 +40,7 @@ t_PARIZQ    = r'\('
 t_PARDER    = r'\)'
 t_MAS       = r'\+'
 t_MENOS     = r'-'
-t_POW       = r'^'
+t_POW       = r'\^'
 t_MOD       = r'%'
 t_POR       = r'\*'
 t_DIVIDIDO  = r'/'
@@ -43,7 +49,13 @@ t_COMA      = r','
 t_IPARSE    = r'parse'
 t_ISTRING   = r'string'
 t_IUPPERCASE    = r'uppercase'
-t_LOWERCASE     = r'lowercase'
+t_ILOWERCASE     = r'lowercase'
+t_ILOGD     = r'log10'
+t_ILOG     = r'log'
+t_ISIN      = r'sin'
+t_ICOS      = r'cos'
+t_ITAN      = r'tan'
+t_ISQRT     = r'sqrt'
 
 def t_DECIMAL(t):
     r'\d+\.\d+'
@@ -90,6 +102,8 @@ from Enum.arithmeticOperation import arithmeticOperation
 from Enum.typeExpression import typeExpression
 from Expression.Concat import Concat
 from Enum.concatOperation import concatOperation
+from Enum.nativeOperation import nativeOperation
+from Expression.Native import Native
 
 import ply.lex as lex
 lexer = lex.lex()
@@ -98,7 +112,8 @@ lexer = lex.lex()
 # Asociación de operadores y precedencia
 precedence = (
     ('left','MAS','MENOS'),
-    ('left','POR','DIVIDIDO','MOD','POW'),
+    ('left','POR','DIVIDIDO'),
+    ('left','POW','MOD'),
     ('right','UMENOS'),
     )
 
@@ -124,6 +139,7 @@ def p_instrucciones_lista(t):
 #-----------------------------------------------------------------
 def p_instruccion(t):
     ''' instruccion     :   impresion
+                            | expresion
     '''
     t[0] = t[1]
 
@@ -137,65 +153,91 @@ def p_impresion(t):
 
 #-----------------------------------------------------------------
 def p_val(t):
-    ''' val     :   concat
-                    |expresion                  
+    ''' val     :   val COMA val   
+                    | expresion   
+                       
     '''
-    if len(t)==4 and t[2]==',': t[0]= Concat(t[1],t[3],concatOperation.COMA)
-    elif len(t)==2: t[0]=t[1]
-
-#-----------------------------------------------------------------
-def p_concat(t):
-    ''' concat  :   concat POW concat
-                    | concat POR concat
-                    | concat COMA concat
-                    | IUPPERCASE PARIZQ concat PARDER
-                    | ILOWERCASE PARIZQ concat PARDER
-                    | STRING
-    '''
-    if len(t)==4 and t[2]=='^': t[0]=Concat(t[1],t[3],concatOperation.ELEV)
-    elif len(t)==4 and t[2]=='*': t[0]=Concat(t[1],t[3],concatOperation.MULTIPLY)
-    elif len(t)==4 and t[2]==',': t[0]=Concat(t[1],t[3],concatOperation.COMMA)
-    elif len(t)==5 and t[2]=='uppercase': t[0]=Concat(t[3],t[3],concatOperation.UPPERCASE)
-    elif len(t)==5 and t[2]=='lowercase': t[0]=Concat(t[3],t[3],concatOperation.LOWERCASE)
+    if len(t)==2: t[0]=t[1]
+    elif len(t)==4 and t[2]==',': t[0]=Concat(t[1],t[3], concatOperation.COMMA)
 #-----------------------------------------------------------------
 def p_expresion_aritmetica(t):
     '''expresion : expresion MAS expresion
                   | expresion MENOS expresion
+                  | expresion DIVIDIDO expresion
                   | expresion POR expresion
-                  | expresion DIVIDIDO expresion'''
-    if t[2] == '+'  : t[0] = Arithmetic( t[1], t[3], arithmeticOperation.PLUS)
-    elif t[2] == '-': t[0] = Arithmetic(t[1], t[3], arithmeticOperation.MINUS)
-    elif t[2] == '*': t[0] = Arithmetic(t[1], t[3], arithmeticOperation.MULTIPLY)
-    elif t[2] == '/': t[0] = Arithmetic(t[1], t[3], arithmeticOperation.DIV)
+                  | expresion POW expresion
+                  | expresion MOD expresion                  
+                  | MENOS expresion %prec UMENOS
+                  | PARIZQ expresion PARDER
+                  | valor
+    '''
+    if len(t)==4:
+        if t[2] == '+'  : t[0] = Arithmetic( t[1], t[3], arithmeticOperation.PLUS)
+        elif t[2] == '-': t[0] = Arithmetic(t[1], t[3], arithmeticOperation.MINUS)
+        elif t[2] == '/': t[0] = Arithmetic(t[1], t[3], arithmeticOperation.DIV)
+        elif t[2] == '*': t[0] = Arithmetic(t[1], t[3], arithmeticOperation.MULTIPLY)
+        elif t[2] == '^': t[0] = Arithmetic(t[1], t[3], arithmeticOperation.POW)
+        elif t[2] == '%': t[0] = Arithmetic(t[1], t[3], arithmeticOperation.MOD)  
+        elif t[1] == '(': t[0]=t[2]
+    elif t[1]=='-':
+        t[0]=Arithmetic(t[2],t[2],arithmeticOperation.UMENOS)      
+    elif len(t)==2:
+        t[0]=t[1]
+    
+#------------------------------------------------------------------
 
-def p_expresion_unaria(t):
-    'expresion : MENOS expresion %prec UMENOS'
-    t[0] = -t[2]
-
-def p_expresion_agrupacion(t):
-    'expresion : PARIZQ expresion PARDER'
-    t[0] = t[2]
-
-def p_expresion_entero(t):
-    '''expresion    : ENTERO
+def p_valor_entero(t):
+    '''valor    : ENTERO
     '''
     t[0] = Primitive(t[1], typeExpression.INTEGER)
 
-def p_expresion_decimal(t):
-    '''expresion    : DECIMAL
+def p_valor_decimal(t):
+    '''valor    : DECIMAL
     '''
     t[0] = Primitive(t[1], typeExpression.FLOAT)
 
-def p_expresion_string(t):
-    '''expresion    : STRING
+def p_valor_string(t):
+    '''valor   :    cadena                   
     '''
-    t[0] = Primitive(t[1], typeExpression.STRING)
+    t[0]= t[1]
 
-def p_expresion_string_casteo(t):
-    '''casteo   :   IPARSE PARIZQ ISTRING COMA ENTERO PARDER
-                    | IPARSE PARIZQ ISTRING COMA DECIMAL PARDER
+def p_valor_nativas(t):
+    '''valor    :   nativas
     '''
-    t[0]= Primitive( t[5], typeExpression.STRING)
+    t[0]=t[1]
+#-------------------------------------------------------------------
+def p_nativas(t):
+    '''nativas  :   ILOGD PARIZQ expresion PARDER
+                    | ILOG PARIZQ expresion COMA expresion PARDER
+                    | ISIN PARIZQ expresion PARDER
+                    | ICOS PARIZQ expresion PARDER
+                    | ITAN PARIZQ expresion PARDER
+                    | ISQRT PARIZQ expresion PARDER
+    '''
+    if len(t)==5:
+        if t[1]=='log10': t[0]=Native(t[3],t[3],nativeOperation.LOGD)
+        elif t[1]=='sin': t[0]=Native(t[3],t[3],nativeOperation.SIN)
+        elif t[1]=='cos': t[0]=Native(t[3],t[3],nativeOperation.COS)
+        elif t[1]=='tan': t[0]=Native(t[3],t[3],nativeOperation.TAN)
+        elif t[1]=='sqrt': t[0]=Native(t[3],t[3],nativeOperation.SQRT)
+    elif len(t)==7:
+        t[0]=Native(t[3],t[5],nativeOperation.LOG)
+
+#--------------------------------------------------------------------
+def p_cadena(t):
+    '''cadena   :   IUPPERCASE PARIZQ expresion PARDER
+                    | ILOWERCASE PARIZQ expresion PARDER
+                    | IPARSE PARIZQ ISTRING COMA ENTERO PARDER
+                    | IPARSE PARIZQ ISTRING COMA DECIMAL PARDER
+                    | STRING
+    '''
+    if len(t)==5:
+        if t[1]=='uppercase': t[0]=Concat(t[3],t[3],concatOperation.UPPERCASE)
+        elif t[1]=='lowercase': t[0]=Concat(t[3],t[3],concatOperation.LOWERCASE)
+    elif len(t)==7:
+        t[0]=Primitive(t[5],typeExpression.STRING)
+    elif len(t)==2: 
+        t[0]=Primitive(t[1],typeExpression.STRING)
 
 def p_error(t):
     print("Error sintáctico en '%s'" % t.value)

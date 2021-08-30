@@ -5,3 +5,6 @@ class arithmeticOperation(enum.Enum):
     MINUS = 1
     MULTIPLY = 2
     DIV = 3
+    POW =4
+    MOD =5
+    UMENOS=6
