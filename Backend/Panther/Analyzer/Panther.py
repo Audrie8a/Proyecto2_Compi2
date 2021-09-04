@@ -194,7 +194,7 @@ def p_impresion(t):
 #-----------------------------------------------------------------
 def p_val(t):
     ''' val     :   val COMA val   
-                    | expresionL   
+                    | expresion   
                     
                        
     '''
@@ -203,68 +203,52 @@ def p_val(t):
 
 #-----------------------------------------------------------------
 def p_expresion_logica(t):
-    '''expresionL : expresionL AND expresionL
-                  | expresionL OR expresionL
-                  | NOT expresionL
-                  | PARIZQ expresionL PARDER
-                  | expresionR
+    '''expresion : NOT expresion 
+                  | MENOS expresion %prec UMENOS
+
+                  | expresion MAS expresion
+                  | expresion MENOS expresion
+                  | expresion DIVIDIDO expresion
+                  | expresion POR expresion
+                  | expresion POW expresion
+                  | expresion MOD expresion
+                  | expresion MAYOR expresion
+                  | expresion MENOR expresion
+                  | expresion MAYORIGUAL expresion
+                  | expresion MENORIGUAL expresion
+                  | expresion IGUALIGUAL expresion
+                  | expresion NOIGUAL expresion
+
+                  | expresion AND expresion
+                  | expresion OR expresion
+
+                  | PARIZQ expresion PARDER
+                  | valor
     '''
     if len(t)==4:
         if t[2] == '&&'  : t[0] = Logic( t[1], t[3], logicOperation.AND)
-        elif t[2] == '||': t[0] = Logic(t[1], t[3], logicOperation.OR)
-        elif t[1] ==  '!': t[0] = Logic(t[2], t[2], logicOperation.NOT)
-        elif t[1] == '(': t[0]=t[2]
-    elif len(t)==2:
-        t[0]=t[1]
-    
-#-----------------------------------------------------------------
-def p_expresion_relacional(t):
-    '''expresionR : expresionR MAYOR expresionR
-                  | expresionR MENOR expresionR
-                  | expresionR MAYORIGUAL expresionR
-                  | expresionR MENORIGUAL expresionR
-                  | expresionR IGUALIGUAL expresionR
-                  | expresionR NOIGUAL expresionR
-                  | PARIZQ expresionR PARDER
-                  | booleano
-                  | expresion
-    '''
-    if len(t)==4:
-        if t[2] == '>'  : t[0] = Relational( t[1], t[3], relationalOperation.MAYORQ)
+        elif t[2] == '||': t[0] = Logic(t[1], t[3], logicOperation.OR)        
+        elif t[2] == '>'  : t[0] = Relational( t[1], t[3], relationalOperation.MAYORQ)
         elif t[2] == '<': t[0] = Relational(t[1], t[3], relationalOperation.MENORQ)
         elif t[2] == '>=': t[0] = Relational(t[1], t[3], relationalOperation.MAYORIGUAL)
         elif t[2] == '<=': t[0] = Relational(t[1], t[3], relationalOperation.MENORIGUAL)      
         elif t[2] == '==': t[0] = Relational(t[1], t[3], relationalOperation.IGUALIGUAL)      
         elif t[2] == '!=': t[0] = Relational(t[1], t[3], relationalOperation.DIFERENTE)
-        elif t[1] == '(': t[0]=t[2]
-    elif len(t)==2:
-        t[0]=t[1]
-    
-#------------------------------------------------------------------
-def p_expresion_aritmetica(t):
-    '''expresion : expresion MAS expresion
-                  | expresion MENOS expresion
-                  | expresion DIVIDIDO expresion
-                  | expresion POR expresion
-                  | expresion POW expresion
-                  | expresion MOD expresion                  
-                  | MENOS expresion %prec UMENOS
-                  | PARIZQ expresion PARDER
-                  | valor
-    '''
-    if len(t)==4:
-        if t[2] == '+'  : t[0] = Arithmetic( t[1], t[3], arithmeticOperation.PLUS)
+        elif t[2] == '+'  : t[0] = Arithmetic( t[1], t[3], arithmeticOperation.PLUS)
         elif t[2] == '-': t[0] = Arithmetic(t[1], t[3], arithmeticOperation.MINUS)
         elif t[2] == '/': t[0] = Arithmetic(t[1], t[3], arithmeticOperation.DIV)
         elif t[2] == '*': t[0] = Arithmetic(t[1], t[3], arithmeticOperation.MULTIPLY)
         elif t[2] == '^': t[0] = Arithmetic(t[1], t[3], arithmeticOperation.POW)
         elif t[2] == '%': t[0] = Arithmetic(t[1], t[3], arithmeticOperation.MOD)  
         elif t[1] == '(': t[0]=t[2]
-    elif t[1]=='-':
-        t[0]=Arithmetic(t[2],t[2],arithmeticOperation.UMENOS)      
+    elif t[1]=='-':    t[0]=Arithmetic(t[2],t[2],arithmeticOperation.UMENOS)  
+    elif t[1] ==  '!': t[0] = Logic(t[2], t[2], logicOperation.NOT)    
+    
     elif len(t)==2:
         t[0]=t[1]
     
+
+
 #------------------------------------------------------------------
 
 def p_booleano(t):
@@ -290,6 +274,11 @@ def p_valor_string(t):
 
 def p_valor_nativas(t):
     '''valor    :   nativas
+    '''
+    t[0]=t[1]
+
+def p_valor_booleanas(t):
+    '''valor    :   booleano
     '''
     t[0]=t[1]
 #-------------------------------------------------------------------
