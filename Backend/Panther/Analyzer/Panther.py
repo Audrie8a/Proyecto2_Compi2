@@ -30,7 +30,18 @@ tokens  = (
     'ISIN',
     'ICOS',
     'ITAN',
-    'ISQRT'
+    'ISQRT',
+    'MAYOR',
+    'MENOR',
+    'MAYORIGUAL',
+    'MENORIGUAL',
+    'IGUALIGUAL',
+    'NOIGUAL',
+    'VERDADERO',
+    'FALSO',
+    'NOT',
+    'AND',
+    'OR'
 )
 
 # Tokens
@@ -56,6 +67,17 @@ t_ISIN      = r'sin'
 t_ICOS      = r'cos'
 t_ITAN      = r'tan'
 t_ISQRT     = r'sqrt'
+t_MAYOR     = r'>'
+t_MENOR     = r'<'
+t_MAYORIGUAL     = r'>='
+t_MENORIGUAL     = r'<='
+t_VERDADERO      = r'true'
+t_FALSO     = r'false'
+t_IGUALIGUAL     = r'=='
+t_NOIGUAL        = r'!='
+t_NOT            = r'!'
+t_AND            = r'&&'
+t_OR             = r'\|\|'
 
 def t_DECIMAL(t):
     r'\d+\.\d+'
@@ -80,8 +102,17 @@ def t_STRING(t):
     t.value=t.value[1:-1]
     return t
 
+def t_MLCOMMENT(t):
+    r'\#=(.|\n)*?=\#'
+    
+
+def t_OLCOMMENT(t):
+    r'\#.*\n'
+   
+
 # Caracteres ignorados
 t_ignore = " \t"
+
 
 
 def t_newline(t):
@@ -98,23 +129,32 @@ from Instruction.IPrint import IPrint
 from Instruction.IPrintln import IPrintln
 from Expression.Primitive import Primitive
 from Expression.Arithmetic import Arithmetic
-from Enum.arithmeticOperation import arithmeticOperation
-from Enum.typeExpression import typeExpression
+from Expression.Logic import Logic
 from Expression.Concat import Concat
+from Expression.Native import Native
+from Expression.Relational import Relational
+from Enum.arithmeticOperation import arithmeticOperation
+from Enum.relationalOperation import relationalOperation
 from Enum.concatOperation import concatOperation
 from Enum.nativeOperation import nativeOperation
-from Expression.Native import Native
+from Enum.logicOperation import logicOperation
+from Enum.typeExpression import typeExpression
 
 import ply.lex as lex
 lexer = lex.lex()
 
 
 # Asociación de operadores y precedencia
-precedence = (
+precedence = (  
+    ('left','OR'),  
+    ('left','AND'),
+    ('left', 'MENOR','MENORIGUAL','MAYOR','MAYORIGUAL'),
+    ('left','IGUALIGUAL','NOIGUAL'),
     ('left','MAS','MENOS'),
     ('left','POR','DIVIDIDO'),
     ('left','POW','MOD'),
     ('right','UMENOS'),
+    ('right','NOT'),
     )
 
 # Definición de la gramática
@@ -154,12 +194,53 @@ def p_impresion(t):
 #-----------------------------------------------------------------
 def p_val(t):
     ''' val     :   val COMA val   
-                    | expresion   
+                    | expresionL   
+                    
                        
     '''
     if len(t)==2: t[0]=t[1]
     elif len(t)==4 and t[2]==',': t[0]=Concat(t[1],t[3], concatOperation.COMMA)
+
 #-----------------------------------------------------------------
+def p_expresion_logica(t):
+    '''expresionL : expresionL AND expresionL
+                  | expresionL OR expresionL
+                  | NOT expresionL
+                  | PARIZQ expresionL PARDER
+                  | expresionR
+    '''
+    if len(t)==4:
+        if t[2] == '&&'  : t[0] = Logic( t[1], t[3], logicOperation.AND)
+        elif t[2] == '||': t[0] = Logic(t[1], t[3], logicOperation.OR)
+        elif t[1] ==  '!': t[0] = Logic(t[2], t[2], logicOperation.NOT)
+        elif t[1] == '(': t[0]=t[2]
+    elif len(t)==2:
+        t[0]=t[1]
+    
+#-----------------------------------------------------------------
+def p_expresion_relacional(t):
+    '''expresionR : expresionR MAYOR expresionR
+                  | expresionR MENOR expresionR
+                  | expresionR MAYORIGUAL expresionR
+                  | expresionR MENORIGUAL expresionR
+                  | expresionR IGUALIGUAL expresionR
+                  | expresionR NOIGUAL expresionR
+                  | PARIZQ expresionR PARDER
+                  | booleano
+                  | expresion
+    '''
+    if len(t)==4:
+        if t[2] == '>'  : t[0] = Relational( t[1], t[3], relationalOperation.MAYORQ)
+        elif t[2] == '<': t[0] = Relational(t[1], t[3], relationalOperation.MENORQ)
+        elif t[2] == '>=': t[0] = Relational(t[1], t[3], relationalOperation.MAYORIGUAL)
+        elif t[2] == '<=': t[0] = Relational(t[1], t[3], relationalOperation.MENORIGUAL)      
+        elif t[2] == '==': t[0] = Relational(t[1], t[3], relationalOperation.IGUALIGUAL)      
+        elif t[2] == '!=': t[0] = Relational(t[1], t[3], relationalOperation.DIFERENTE)
+        elif t[1] == '(': t[0]=t[2]
+    elif len(t)==2:
+        t[0]=t[1]
+    
+#------------------------------------------------------------------
 def p_expresion_aritmetica(t):
     '''expresion : expresion MAS expresion
                   | expresion MENOS expresion
@@ -185,6 +266,12 @@ def p_expresion_aritmetica(t):
         t[0]=t[1]
     
 #------------------------------------------------------------------
+
+def p_booleano(t):
+    ''' booleano    :   VERDADERO
+                        | FALSO
+    '''
+    t[0]= Primitive(t[1],typeExpression.BOOL)
 
 def p_valor_entero(t):
     '''valor    : ENTERO
