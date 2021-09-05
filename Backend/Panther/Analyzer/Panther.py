@@ -4,12 +4,38 @@
 #
 # Ejemplo mi primer proyecto con Python utilizando ply en Ubuntu
 # -----------------------------------------------------------------------------
+reservadas={
+    'while'     :   'RWHILE',
+    'end'       :   'REND',
 
-tokens  = (
-    'IPRINT',
-    'IPRINTLN',
+    'print'     :   'IPRINT',
+    'println'   :   'IPRINTLN',
+    'Int64'     :   'RINT',
+    'Float64'   :   'RFLOAT',
+    'Bool'      :   'RBOOL',
+    'Char'      :   'RCHAR',
+    'String'    :   'RSTRING',
+    'parse'     :   'IPARSE',
+    'uppercase' :   'IUPPERCASE',
+    'lowercase' :   'ILOWERCASE',
+    'log10'     :   'ILOGD',
+    'log'       :   'ILOG',
+    'sin'       :   'ISIN',
+    'cos'       :   'ICOS',
+    'tan'       :   'ITAN',
+    'sqrt'      :   'ISQRT',
+
+
+    'true'      :   'VERDADERO',
+    'false'     :   'FALSO',
+}
+
+tokens  = [
+    
+
     'PARIZQ',
     'PARDER',
+
     'MAS',
     'MENOS',
     'POR',
@@ -19,34 +45,28 @@ tokens  = (
     'STRING',
     'POW',
     'MOD',
+
+
     'PTCOMA',
-    'COMA',
-    'IPARSE',
-    'ISTRING',
-    'IUPPERCASE',
-    'ILOWERCASE',
-    'ILOGD',
-    'ILOG',
-    'ISIN',
-    'ICOS',
-    'ITAN',
-    'ISQRT',
+    'COMA',  
+    'FPTS',
+    'IGUAL',
+    'ID',
+
     'MAYOR',
     'MENOR',
     'MAYORIGUAL',
     'MENORIGUAL',
     'IGUALIGUAL',
     'NOIGUAL',
-    'VERDADERO',
-    'FALSO',
+
+
     'NOT',
     'AND',
     'OR'
-)
+] + list(reservadas.values())
 
 # Tokens
-t_IPRINT     = r'print'
-t_IPRINTLN   = r'println' 
 t_PARIZQ    = r'\('
 t_PARDER    = r'\)'
 t_MAS       = r'\+'
@@ -55,29 +75,28 @@ t_POW       = r'\^'
 t_MOD       = r'%'
 t_POR       = r'\*'
 t_DIVIDIDO  = r'/'
+
+
 t_PTCOMA    = r';'
 t_COMA      = r','
-t_IPARSE    = r'parse'
-t_ISTRING   = r'string'
-t_IUPPERCASE    = r'uppercase'
-t_ILOWERCASE     = r'lowercase'
-t_ILOGD     = r'log10'
-t_ILOG     = r'log'
-t_ISIN      = r'sin'
-t_ICOS      = r'cos'
-t_ITAN      = r'tan'
-t_ISQRT     = r'sqrt'
+t_FPTS           = r'::'
+t_IGUAL          = r'='
+
 t_MAYOR     = r'>'
 t_MENOR     = r'<'
 t_MAYORIGUAL     = r'>='
 t_MENORIGUAL     = r'<='
-t_VERDADERO      = r'true'
-t_FALSO     = r'false'
 t_IGUALIGUAL     = r'=='
 t_NOIGUAL        = r'!='
 t_NOT            = r'!'
 t_AND            = r'&&'
 t_OR             = r'\|\|'
+
+
+def t_ID(t):
+    r'[a-zA-Z_][a-zA-Z_0-9]*'
+    t.type = reservadas.get(t.value, 'ID')
+    return t
 
 def t_DECIMAL(t):
     r'\d+\.\d+'
@@ -127,6 +146,9 @@ def t_error(t):
 from Environment.Environment import Environment
 from Instruction.IPrint import IPrint
 from Instruction.IPrintln import IPrintln
+from Instruction.Declaration import Declaration
+from Instruction.VariableCall import VariableCall
+from Instruction.While import While
 from Expression.Primitive import Primitive
 from Expression.Arithmetic import Arithmetic
 from Expression.Logic import Logic
@@ -178,11 +200,76 @@ def p_instrucciones_lista(t):
 
 #-----------------------------------------------------------------
 def p_instruccion(t):
-    ''' instruccion     :   impresion
-                            | expresion
+    ''' instruccion     :   block
     '''
     t[0] = t[1]
 
+#-----------------------------------------------------------------
+def p_block(t):
+    ''' block   :   impresion
+                    | expresionL
+                    | ciclo
+                    | asignacion PTCOMA
+    '''
+    t[0] = t[1]
+
+#-----------------------------------------------------------------
+def p_ciclo(t):
+    ''' ciclo     :   whileSt
+    '''
+    t[0] = t[1]
+
+#-----------------------------------------------------------------
+def p_whileSt(t):
+    ''' whileSt     :   RWHILE expresionL block REND PTCOMA
+    '''
+    t[0]=While(t[2],t[3])
+
+
+#------------------------------------------------------------------
+
+def p_asignacion(t):
+    '''asignacion   :   ID asingArray IGUAL expresionL Final
+    '''
+    
+    if t[2]==False:
+        if t[5]==True:  t[0]=[]
+        else: t[0]=Declaration(t[1],t[5],t[4],False)
+    else: pass
+
+#------------------------------------------------------------------
+def p_asingArray(t):
+    '''asingArray   :   asingArray PARIZQ ENTERO PARDER
+                    |   empty   
+    '''
+    if len(t)==5: 
+        t[0]=True
+    elif len(t)==2: 
+        t[0]=False#t[1]
+#------------------------------------------------------------------
+def p_Final(t):
+    '''Final    :   FPTS Tipo
+                    | empty
+    '''
+    if len(t)==3:
+        t[0]=t[2]
+    else:
+        t[0]=True
+#------------------------------------------------------------------
+def p_Tipo(t):
+    '''Tipo :   RINT
+                | RFLOAT
+                | RBOOL
+                | RCHAR
+                | RSTRING   
+    '''
+    
+    if t[1]=='Int64'        : t[0]=typeExpression.INTEGER
+    elif t[1]=='Float64'    : t[0]=typeExpression.FLOAT
+    elif t[1]=='Bool'       : t[0]=typeExpression.BOOL
+    elif t[1]=='Char'       : t[0]=typeExpression.CHAR
+    elif t[1]=='String'     : t[0]=typeExpression.STRING 
+    
 #-----------------------------------------------------------------
 def p_impresion(t):
     ''' impresion   :   IPRINT PARIZQ val PARDER PTCOMA
@@ -262,7 +349,7 @@ def p_expresion_aritmetica(t):
         elif t[1] == '(': t[0]=t[2]
     elif t[1]=='-':
         t[0]=Arithmetic(t[2],t[2],arithmeticOperation.UMENOS)      
-    elif len(t)==2:
+    elif len(t)==2:        
         t[0]=t[1]
     
 #------------------------------------------------------------------
@@ -292,6 +379,16 @@ def p_valor_nativas(t):
     '''valor    :   nativas
     '''
     t[0]=t[1]
+
+def p_valor_Id (t):
+    '''valor    : ID
+    '''
+    t[0]=VariableCall(t[1])
+
+def p_empty(t):
+     'empty :'
+     pass
+    
 #-------------------------------------------------------------------
 def p_nativas(t):
     '''nativas  :   ILOGD PARIZQ expresion PARDER
@@ -314,8 +411,8 @@ def p_nativas(t):
 def p_cadena(t):
     '''cadena   :   IUPPERCASE PARIZQ expresion PARDER
                     | ILOWERCASE PARIZQ expresion PARDER
-                    | IPARSE PARIZQ ISTRING COMA ENTERO PARDER
-                    | IPARSE PARIZQ ISTRING COMA DECIMAL PARDER
+                    | IPARSE PARIZQ RSTRING COMA ENTERO PARDER
+                    | IPARSE PARIZQ RSTRING COMA DECIMAL PARDER
                     | STRING
     '''
     if len(t)==5:

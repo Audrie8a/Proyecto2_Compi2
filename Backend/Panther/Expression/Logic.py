@@ -25,9 +25,9 @@ class Logic(Expression):
         global der
         izq=True  
         der=True
-        if(leftValue.getValue()=='false' or leftValue.getValue()=='False' or leftValue.getValue()==False and leftValue.getType()==3):
+        if(leftValue.getValue()=='false' or leftValue.getValue()=='False' or leftValue.getValue()==False and leftValue.getType().value==3):
             izq=False
-        if(rightValue.getValue()=='false' or rightValue.getValue()=='False' or rightValue.getValue()==False and rightValue.getType()==3):
+        if(rightValue.getValue()=='false' or rightValue.getValue()=='False' or rightValue.getValue()==False and rightValue.getType().value==3):
             der=False
 
         if(self.operation == logicOperation.AND):

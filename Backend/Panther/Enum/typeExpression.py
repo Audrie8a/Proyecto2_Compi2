@@ -6,4 +6,6 @@ class typeExpression(enum.Enum):
     FLOAT = 2
     BOOL = 3
     ERROR = 4
+    OBJETO = 5
+    CHAR = 6
     
