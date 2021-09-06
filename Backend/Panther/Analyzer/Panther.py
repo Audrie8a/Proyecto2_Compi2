@@ -10,21 +10,31 @@ reservadas={
 
     'print'     :   'IPRINT',
     'println'   :   'IPRINTLN',
+
+
     'Int64'     :   'RINT',
     'Float64'   :   'RFLOAT',
     'Bool'      :   'RBOOL',
     'Char'      :   'RCHAR',
     'String'    :   'RSTRING',
+
+
     'parse'     :   'IPARSE',
+    'typeof'    :   'RTYPEOF',
+    'trunc'     :   'RTRUNC',
+    'float'     :   'RFLOATC',
+
     'uppercase' :   'IUPPERCASE',
     'lowercase' :   'ILOWERCASE',
+
+
     'log10'     :   'ILOGD',
     'log'       :   'ILOG',
     'sin'       :   'ISIN',
     'cos'       :   'ICOS',
     'tan'       :   'ITAN',
     'sqrt'      :   'ISQRT',
-
+    'string'    :   'ISTRING',
 
     'true'      :   'VERDADERO',
     'false'     :   'FALSO',
@@ -40,11 +50,13 @@ tokens  = [
     'MENOS',
     'POR',
     'DIVIDIDO',
+
     'DECIMAL',
     'ENTERO',
     'STRING',
     'POW',
     'MOD',
+    'CHAR',
 
 
     'PTCOMA',
@@ -121,6 +133,11 @@ def t_STRING(t):
     t.value=t.value[1:-1]
     return t
 
+def t_CHAR(t):
+    r'\'.?\''
+    t.value = t.value[1:-1]
+    return t
+
 def t_MLCOMMENT(t):
     r'\#=(.|\n)*?=\#'
     
@@ -143,10 +160,12 @@ def t_error(t):
     t.lexer.skip(1)
     
 # Construyendo el analizador léxico
+from types import DynamicClassAttribute
 from Environment.Environment import Environment
 from Instruction.IPrint import IPrint
 from Instruction.IPrintln import IPrintln
-from Instruction.Declaration import Declaration
+from Instruction.Declaration import Declaration 
+from Instruction.DeclaracionSinTipo import DeclaracionSinTipo
 from Instruction.VariableCall import VariableCall
 from Instruction.While import While
 from Expression.Primitive import Primitive
@@ -154,12 +173,14 @@ from Expression.Arithmetic import Arithmetic
 from Expression.Logic import Logic
 from Expression.Concat import Concat
 from Expression.Native import Native
+from Expression.Cast import Cast
 from Expression.Relational import Relational
 from Enum.arithmeticOperation import arithmeticOperation
 from Enum.relationalOperation import relationalOperation
 from Enum.concatOperation import concatOperation
 from Enum.nativeOperation import nativeOperation
 from Enum.logicOperation import logicOperation
+from Enum.castOperation import castOperation
 from Enum.typeExpression import typeExpression
 
 import ply.lex as lex
@@ -200,18 +221,14 @@ def p_instrucciones_lista(t):
 
 #-----------------------------------------------------------------
 def p_instruccion(t):
-    ''' instruccion     :   block
+    ''' instruccion     :   impresion PTCOMA
+                            | expresionL
+                            | ciclo PTCOMA
+                            | asignacion PTCOMA
     '''
     t[0] = t[1]
 
-#-----------------------------------------------------------------
-def p_block(t):
-    ''' block   :   impresion
-                    | expresionL
-                    | ciclo
-                    | asignacion PTCOMA
-    '''
-    t[0] = t[1]
+
 
 #-----------------------------------------------------------------
 def p_ciclo(t):
@@ -221,10 +238,15 @@ def p_ciclo(t):
 
 #-----------------------------------------------------------------
 def p_whileSt(t):
-    ''' whileSt     :   RWHILE expresionL block REND PTCOMA
+    ''' whileSt     :   RWHILE expresionL block REND 
     '''
     t[0]=While(t[2],t[3])
 
+#------------------------------------------------------------------
+def p_block(t):
+    '''block    : instrucciones
+    '''
+    t[0]=t[1]
 
 #------------------------------------------------------------------
 
@@ -232,10 +254,12 @@ def p_asignacion(t):
     '''asignacion   :   ID asingArray IGUAL expresionL Final
     '''
     
-    if t[2]==False:
-        if t[5]==True:  t[0]=[]
-        else: t[0]=Declaration(t[1],t[5],t[4],False)
-    else: pass
+    if t[2]==False:     # Si no es un arreglo
+        if t[5]==False:  # Si no define tipo variable
+            t[0]=DeclaracionSinTipo(t[1],t[4],False)
+        else:           # Si define tipo variable
+            t[0]=Declaration(t[1],t[5],t[4],False)            
+    else: pass          # Si es un arreglo
 
 #------------------------------------------------------------------
 def p_asingArray(t):
@@ -254,7 +278,7 @@ def p_Final(t):
     if len(t)==3:
         t[0]=t[2]
     else:
-        t[0]=True
+        t[0]=False
 #------------------------------------------------------------------
 def p_Tipo(t):
     '''Tipo :   RINT
@@ -272,8 +296,8 @@ def p_Tipo(t):
     
 #-----------------------------------------------------------------
 def p_impresion(t):
-    ''' impresion   :   IPRINT PARIZQ val PARDER PTCOMA
-                        | IPRINTLN PARIZQ val PARDER PTCOMA
+    ''' impresion   :   IPRINT PARIZQ val PARDER 
+                        | IPRINTLN PARIZQ val PARDER 
     '''
     if t[1] =='print'       : t[0]=IPrint(t[3])
     elif t[1]=='println'    : t[0]=IPrintln(t[3])
@@ -315,6 +339,7 @@ def p_expresion_relacional(t):
                   | PARIZQ expresionR PARDER
                   | booleano
                   | expresion
+                  
     '''
     if len(t)==4:
         if t[2] == '>'  : t[0] = Relational( t[1], t[3], relationalOperation.MAYORQ)
@@ -370,6 +395,11 @@ def p_valor_decimal(t):
     '''
     t[0] = Primitive(t[1], typeExpression.FLOAT)
 
+def p_valor_char(t):
+    '''valor    : CHAR
+    '''
+    t[0] = Primitive(t[1], typeExpression.CHAR)
+
 def p_valor_string(t):
     '''valor   :    cadena                   
     '''
@@ -397,6 +427,7 @@ def p_nativas(t):
                     | ICOS PARIZQ expresion PARDER
                     | ITAN PARIZQ expresion PARDER
                     | ISQRT PARIZQ expresion PARDER
+                    | casteo
     '''
     if len(t)==5:
         if t[1]=='log10': t[0]=Native(t[3],t[3],nativeOperation.LOGD)
@@ -406,20 +437,37 @@ def p_nativas(t):
         elif t[1]=='sqrt': t[0]=Native(t[3],t[3],nativeOperation.SQRT)
     elif len(t)==7:
         t[0]=Native(t[3],t[5],nativeOperation.LOG)
+    elif len(t)==2:
+        t[0]=t[1]
+        
+#--------------------------------------------------------------------
+def p_casteo(t):
+    '''casteo   :   IPARSE PARIZQ Tipo COMA expresionL PARDER
+                    | RTRUNC PARIZQ RINT COMA expresionL PARDER
+                    | RTYPEOF PARIZQ expresionL PARDER                    
+                    | ISTRING PARIZQ expresionL PARDER
+                    | RFLOATC PARIZQ expresionL PARDER
+    '''
+    if len(t)==7:
+        if t[1]=='parse': t[0]=Cast(t[5],t[3],castOperation.PARSE)
+        elif t[1]=='trunc': t[0]=Cast(t[5],typeExpression.FLOAT,castOperation.TRUNC)
+    elif len(t)==5:
+        if t[1]=='typeof': t[0]=Cast(t[3],typeExpression.OBJETO,castOperation.TYPEOF)
+        elif t[1]=='string': t[0]=Cast(t[3], typeExpression.OBJETO,castOperation.STRING)
+        elif t[1]=='float': t[0]=Cast(t[3],typeExpression.OBJETO,castOperation.FLOAT)
 
 #--------------------------------------------------------------------
 def p_cadena(t):
     '''cadena   :   IUPPERCASE PARIZQ expresion PARDER
                     | ILOWERCASE PARIZQ expresion PARDER
-                    | IPARSE PARIZQ RSTRING COMA ENTERO PARDER
-                    | IPARSE PARIZQ RSTRING COMA DECIMAL PARDER
+                    | IPARSE PARIZQ ISTRING COMA expresionL PARDER
                     | STRING
     '''
     if len(t)==5:
         if t[1]=='uppercase': t[0]=Concat(t[3],t[3],concatOperation.UPPERCASE)
         elif t[1]=='lowercase': t[0]=Concat(t[3],t[3],concatOperation.LOWERCASE)
     elif len(t)==7:
-        t[0]=Primitive(t[5],typeExpression.STRING)
+        t[0]= Concat(t[5],t[5],concatOperation.PARSE)#Primitive(t[5],typeExpression.STRING)
     elif len(t)==2: 
         t[0]=Primitive(t[1],typeExpression.STRING)
 

@@ -22,3 +22,5 @@ class Declaration(Instruction):
             return
 
         environment.saveVariable(self.id,tempValue,self.type,self.isArray)
+    
+

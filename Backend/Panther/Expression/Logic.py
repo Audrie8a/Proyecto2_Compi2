@@ -29,48 +29,51 @@ class Logic(Expression):
             izq=False
         if(rightValue.getValue()=='false' or rightValue.getValue()=='False' or rightValue.getValue()==False and rightValue.getType().value==3):
             der=False
-
-        if(self.operation == logicOperation.AND):
-            if(dominant == typeExpression.ERROR):
-                print("No es posible operar tipos de datos diferentes a Bool" + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
-                return Symbol(
-                    "",
-                    None,
-                    typeExpression.STRING
-                    )
-            elif(dominant == typeExpression.BOOL):
-                return Symbol(
-                    "",
-                    izq and der,
-                    typeExpression.BOOL
-                    )            
-        
-        elif(self.operation == logicOperation.OR):
-            if(dominant == typeExpression.ERROR):
-                print("No es posible operar tipos de datos diferentes a Bool" + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
-                return Symbol(
-                    "",
-                    None,
-                    typeExpression.STRING
-                    )
-            elif(dominant == typeExpression.BOOL):
-                return Symbol(
-                    "",
-                    izq or der,
-                    typeExpression.BOOL
-                    )  
-        
-        elif(self.operation == logicOperation.NOT):
-            if(dominant == typeExpression.ERROR):
-                print("No es posible operar tipos de datos diferentes a Bool" + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
-                return Symbol(
-                    "",
-                    None,
-                    typeExpression.STRING
-                    )
-            elif(dominant == typeExpression.BOOL):
-                return Symbol(
-                    "",
-                    not izq,
-                    typeExpression.BOOL
-                    )    
+        try:
+            if(self.operation == logicOperation.AND):
+                if(dominant == typeExpression.ERROR):
+                    print("No es posible operar tipos de datos diferentes a Bool" + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    return Symbol(
+                        "",
+                        None,
+                        typeExpression.STRING
+                        )
+                elif(dominant == typeExpression.BOOL):
+                    return Symbol(
+                        "",
+                        izq and der,
+                        typeExpression.BOOL
+                        )            
+            
+            elif(self.operation == logicOperation.OR):
+                if(dominant == typeExpression.ERROR):
+                    print("No es posible operar tipos de datos diferentes a Bool" + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    return Symbol(
+                        "",
+                        None,
+                        typeExpression.STRING
+                        )
+                elif(dominant == typeExpression.BOOL):
+                    return Symbol(
+                        "",
+                        izq or der,
+                        typeExpression.BOOL
+                        )  
+            
+            elif(self.operation == logicOperation.NOT):
+                if(dominant == typeExpression.ERROR):
+                    print("No es posible operar tipos de datos diferentes a Bool" + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    return Symbol(
+                        "",
+                        None,
+                        typeExpression.STRING
+                        )
+                elif(dominant == typeExpression.BOOL):
+                    return Symbol(
+                        "",
+                        not izq,
+                        typeExpression.BOOL
+                        )    
+        except:
+            print("\n Error al obtener resultado expresion Lógica")
+        return Symbol("",False,typeExpression.BOOL ) 

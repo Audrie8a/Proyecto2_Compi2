@@ -18,44 +18,56 @@ class Concat(Expression):
         leftValue = self.leftExp.execute(environment)
         # Resolvemos la expresion que viene de lado derecho
         rightValue = self.rightExp.execute(environment)
+        dominant = Dominant[leftValue.getType().value][rightValue.getType().value]
         
-        
-        if(self.operation == concatOperation.COMMA):           
-                return Symbol(
-                    "",
-                    str(leftValue.getValue())+str(rightValue.getValue()),
-                    typeExpression.STRING
-        )
-        
-        elif(self.operation == concatOperation.UPPERCASE):
-            if leftValue.getType().value==0:
-                return Symbol(
+        try:
+            if(self.operation == concatOperation.COMMA):           
+                    return Symbol(
                         "",
-                        str(leftValue.getValue()).upper(),
+                        str(leftValue.getValue())+str(rightValue.getValue()),
                         typeExpression.STRING
-                    )
-            else:                    
-                print("\nNo es posible imprimir " + str(leftValue.getValue()))
-                return Symbol(
-                        "",
-                        None,
-                        typeExpression.STRING
-        )
+            )
+            
+            elif(self.operation == concatOperation.UPPERCASE):
+                if leftValue.getType().value==0:
+                    return Symbol(
+                            "",
+                            str(leftValue.getValue()).upper(),
+                            typeExpression.STRING
+                        )
+                else:                    
+                    print("\nNo es posible imprimir " + str(leftValue.getValue()))
+                    return Symbol(
+                            "",
+                            None,
+                            typeExpression.STRING
+            )
 
-        elif(self.operation == concatOperation.LOWERCASE):
-            if leftValue.getType().value==0 :
+            elif(self.operation == concatOperation.LOWERCASE):
+                if leftValue.getType().value==0 :
+                    return Symbol(
+                            "",
+                            str(leftValue.getValue()).lower(),
+                            typeExpression.STRING
+                        )
+                else:                    
+                    print("\nNo es posible imprimir " + str(leftValue.getValue()))
+                    return Symbol(
+                            "",
+                            None,
+                            typeExpression.STRING
+            )
+            
+            elif(self.operation == concatOperation.PARSE):
                 return Symbol(
-                        "",
-                        str(leftValue.getValue()).lower(),
-                        typeExpression.STRING
-                    )
-            else:                    
-                print("\nNo es posible imprimir " + str(leftValue.getValue()))
-                return Symbol(
-                        "",
-                        None,
-                        typeExpression.STRING
-        )
-        else:
-            print("No es posible imprimir " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
-            return Symbol('',None,typeExpression.STRING)
+                            "",
+                            str(leftValue.getValue()),
+                            typeExpression.STRING
+                        )
+
+            else:
+                print("No es posible imprimir " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                return Symbol('',None,typeExpression.STRING)
+        except:
+            print("\n Error al obtener Cadena")
+        return Symbol('',None,typeExpression.STRING)

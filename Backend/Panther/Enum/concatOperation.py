@@ -6,3 +6,4 @@ class concatOperation(enum.Enum):
     UPPERCASE=2
     LOWERCASE=3
     ELEV=4
+    PARSE = 5
