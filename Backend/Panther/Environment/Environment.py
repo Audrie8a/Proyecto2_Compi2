@@ -6,6 +6,7 @@ class Environment:
     def __init__(self, father):
         #Usamos un diccionario para nuestra tabla de simbolos, guardara el id como clave y como cuerpo un simbolo
         self.variable = {}
+        self.function={}
         #Father es el entorno exterior al cual podemos acceder
         self.father = father
 

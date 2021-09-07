@@ -6,6 +6,7 @@
 # -----------------------------------------------------------------------------
 reservadas={
     'while'     :   'RWHILE',
+    'function'  :   'RFUNCTION',
     'end'       :   'REND',
 
     'print'     :   'IPRINT',
@@ -167,6 +168,9 @@ from Instruction.IPrintln import IPrintln
 from Instruction.Declaration import Declaration 
 from Instruction.DeclaracionSinTipo import DeclaracionSinTipo
 from Instruction.VariableCall import VariableCall
+from Instruction.Function import Function
+from Instruction.Parameter import Parameter
+from Instruction.CallFuncSt import CallFuncSt
 from Instruction.While import While
 from Expression.Primitive import Primitive
 from Expression.Arithmetic import Arithmetic
@@ -225,10 +229,67 @@ def p_instruccion(t):
                             | expresionL
                             | ciclo PTCOMA
                             | asignacion PTCOMA
+                            | DecFunc PTCOMA
+                            | callFunc PTCOMA
+                            | empty
     '''
     t[0] = t[1]
 
+#------------------------------------------------------------------
+def p_DecFunc(t):
+    '''DecFunc    : RFUNCTION ID PARIZQ Parametros PARDER block REND
+                    | RFUNCTION ID PARIZQ PARDER block REND
+    '''
+    if len(t)==8:
+        t[0]=Function(t[2],t[4],t[6])
+    elif len(t)==7:
+        t[0]=Function(t[2],None,t[5])
+#------------------------------------------------------------------
+def p_Parametros(t):
+    '''Parametros   :   Parametros COMA Parametro
+                        | Parametro
+    '''
+    if(len(t) == 4):
+        t[1].append(t[3])
+        t[0] = t[1]
+    elif(len(t) == 2):
+        t[0] = [t[1]]
 
+
+#------------------------------------------------------------------
+def p_Parametro(t):
+    '''Parametro    :   ID FPTS Tipo
+                        | ID
+    '''
+    if len(t)==4:
+        t[0]=Parameter(t[1],t[3])
+    elif len(t)==2:
+        t[0]=Parameter(t[1],typeExpression.OBJETO)
+
+#-----------------------------------------------------------------
+def p_callFunc(t):
+    ''' callFunc    :   ID  ParametrosFunc 
+    '''
+    t[0] = CallFuncSt(t[1],t[2])
+
+#-----------------------------------------------------------------
+def p_ParametrosFunc(t):
+    ''' ParametrosFunc  : PARIZQ lstVal PARDER
+                        | PARIZQ PARDER
+    '''
+    if len(t)==4: t[0]=t[2]
+    elif len(t)==3: t[0]=[] # -> AQUÍ ESTÁ EL ERROR
+
+#-----------------------------------------------------------------
+def p_lstVal(t):
+    ''' lstVal  :   lstVal COMA expresionL
+                    | expresionL
+    '''
+    if(len(t) == 4):
+        t[1].append(t[3])
+        t[0] = t[1]
+    elif(len(t) == 2):
+        t[0] = [t[1]]
 
 #-----------------------------------------------------------------
 def p_ciclo(t):

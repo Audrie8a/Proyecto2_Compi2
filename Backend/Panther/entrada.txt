@@ -1,7 +1,4 @@
+function Hola()
+    print("Audrie");
+end;
 
-x=12;
-println(float(5+6+x));
-println(trunc(Int64,5+6.5+x));
-println(string(5+6+x)^3);
-println(typeof(5+5.6+x));
-println( parse(Int64,"Hola"),"Hola","   ", 20>5+30);
