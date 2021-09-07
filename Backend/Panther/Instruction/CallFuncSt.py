@@ -16,9 +16,14 @@ class CallFuncSt(Instruction):
         
         tempFunc: Function = environment.getFunction(self.id)
         newEnvironment = Environment(environment.getGlobal())
+        try:
+            if tempFunc.parameters!=None:            
+                for x in range(0,len(tempFunc.parameters)):
+                    tempPar: Parameter = tempFunc.parameters[x]
+                    tempPar.setValue(self.parameters[x])
 
-        for x in range(0,len(tempFunc.parameters)):
-            tempPar: Parameter = tempFunc.parameters[x]
-            tempPar.setValue(self.parameters[x])
-
-        tempFunc.executeFunction(newEnvironment)
+                tempFunc.executeFunction(newEnvironment)
+            else:
+                tempFunc.executeFunctionNone(newEnvironment)
+        except:
+            print("\n Error al procesar función, verifique parámetros!")

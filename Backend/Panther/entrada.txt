@@ -1,4 +1,9 @@
+variable =12;
+
 function Hola()
-    print("Audrie");
+    println(variable);
+
+    
 end;
 
+Hola();

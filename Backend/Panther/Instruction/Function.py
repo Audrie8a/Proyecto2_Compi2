@@ -22,3 +22,10 @@ class Function(Instruction):
         
         for ins in self.block:
             ins.execute(newEnv)
+
+    def executeFunctionNone(self, environment: Environment):
+
+        newEnv = Environment(environment)
+        
+        for ins in self.block:
+            ins.execute(newEnv)
