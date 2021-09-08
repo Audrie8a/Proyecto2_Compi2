@@ -4,6 +4,8 @@
 #
 # Ejemplo mi primer proyecto con Python utilizando ply en Ubuntu
 # -----------------------------------------------------------------------------
+linea =0
+columna =0
 reservadas={
     'while'     :   'RWHILE',
     'function'  :   'RFUNCTION',
@@ -39,6 +41,9 @@ reservadas={
 
     'true'      :   'VERDADERO',
     'false'     :   'FALSO',
+
+    'global'    :   'RGLOBAL',
+    'local'     :   'RLOCAL',
 }
 
 tokens  = [
@@ -233,7 +238,10 @@ def p_instruccion(t):
                             | callFunc PTCOMA
                             | empty
     '''
-    t[0] = t[1]
+    if t[1]==False:
+        t[0]=IPrintln(Primitive(" ", typeExpression.STRING))
+    else:
+        t[0] = t[1]
 
 #------------------------------------------------------------------
 def p_DecFunc(t):
@@ -301,7 +309,7 @@ def p_ciclo(t):
 def p_whileSt(t):
     ''' whileSt     :   RWHILE expresionL block REND 
     '''
-    t[0]=While(t[2],t[3])
+    t[0]= While(t[2],t[3])
 
 #------------------------------------------------------------------
 def p_block(t):
@@ -312,15 +320,31 @@ def p_block(t):
 #------------------------------------------------------------------
 
 def p_asignacion(t):
-    '''asignacion   :   ID asingArray IGUAL expresionL Final
+    '''asignacion   :   TipoVarible ID asingArray IGUAL expresionL Final
+                        | ID asingArray IGUAL expresionL Final
+    '''
+    if len(t)==7:
+        if t[3]==False:     # Si no es un arreglo
+            if t[6]==False:  # Si no define tipo variable
+                t[0]=DeclaracionSinTipo(t[1],t[2],t[5],False,linea, columna)
+            else:           # Si define tipo variable
+                t[0]=Declaration(t[1],t[2],t[6],t[5],False,linea, columna)            
+        else: pass          # Si es un arreglo
+    else:
+        if t[2]==False:     # Si no es un arreglo
+            if t[5]==False:  # Si no define tipo variable
+                t[0]=DeclaracionSinTipo("Vacio",t[1],t[4],False,linea, columna)
+            else:           # Si define tipo variable
+                t[0]=Declaration("Vacio",t[1],t[5],t[4],False,linea, columna)            
+        else: pass          # Si es un arreglo
+
+
+def p_TipoVarible(t):
+    '''TipoVarible   :  RGLOBAL
+                        | RLOCAL
     '''
     
-    if t[2]==False:     # Si no es un arreglo
-        if t[5]==False:  # Si no define tipo variable
-            t[0]=DeclaracionSinTipo(t[1],t[4],False)
-        else:           # Si define tipo variable
-            t[0]=Declaration(t[1],t[5],t[4],False)            
-    else: pass          # Si es un arreglo
+    t[0]= t[1]
 
 #------------------------------------------------------------------
 def p_asingArray(t):
@@ -330,7 +354,7 @@ def p_asingArray(t):
     if len(t)==5: 
         t[0]=True
     elif len(t)==2: 
-        t[0]=False#t[1]
+        t[0]=t[1]
 #------------------------------------------------------------------
 def p_Final(t):
     '''Final    :   FPTS Tipo
@@ -339,7 +363,7 @@ def p_Final(t):
     if len(t)==3:
         t[0]=t[2]
     else:
-        t[0]=False
+        t[0]=t[1]
 #------------------------------------------------------------------
 def p_Tipo(t):
     '''Tipo :   RINT
@@ -382,9 +406,9 @@ def p_expresion_logica(t):
                   | expresionR
     '''
     if len(t)==4:
-        if t[2] == '&&'  : t[0] = Logic( t[1], t[3], logicOperation.AND)
-        elif t[2] == '||': t[0] = Logic(t[1], t[3], logicOperation.OR)
-        elif t[1] ==  '!': t[0] = Logic(t[2], t[2], logicOperation.NOT)
+        if t[2] == '&&'  : t[0] = Logic( t[1], t[3], logicOperation.AND,linea,columna)
+        elif t[2] == '||': t[0] = Logic(t[1], t[3], logicOperation.OR,linea,columna)
+        elif t[1] ==  '!': t[0] = Logic(t[2], t[2], logicOperation.NOT,linea,columna)
         elif t[1] == '(': t[0]=t[2]
     elif len(t)==2:
         t[0]=t[1]
@@ -403,12 +427,12 @@ def p_expresion_relacional(t):
                   
     '''
     if len(t)==4:
-        if t[2] == '>'  : t[0] = Relational( t[1], t[3], relationalOperation.MAYORQ)
-        elif t[2] == '<': t[0] = Relational(t[1], t[3], relationalOperation.MENORQ)
-        elif t[2] == '>=': t[0] = Relational(t[1], t[3], relationalOperation.MAYORIGUAL)
-        elif t[2] == '<=': t[0] = Relational(t[1], t[3], relationalOperation.MENORIGUAL)      
-        elif t[2] == '==': t[0] = Relational(t[1], t[3], relationalOperation.IGUALIGUAL)      
-        elif t[2] == '!=': t[0] = Relational(t[1], t[3], relationalOperation.DIFERENTE)
+        if t[2] == '>'  : t[0] = Relational( t[1], t[3], relationalOperation.MAYORQ,linea,columna)
+        elif t[2] == '<': t[0] = Relational(t[1], t[3], relationalOperation.MENORQ,linea,columna)
+        elif t[2] == '>=': t[0] = Relational(t[1], t[3], relationalOperation.MAYORIGUAL,linea,columna)
+        elif t[2] == '<=': t[0] = Relational(t[1], t[3], relationalOperation.MENORIGUAL,linea,columna)      
+        elif t[2] == '==': t[0] = Relational(t[1], t[3], relationalOperation.IGUALIGUAL,linea,columna)      
+        elif t[2] == '!=': t[0] = Relational(t[1], t[3], relationalOperation.DIFERENTE,linea,columna)
         elif t[1] == '(': t[0]=t[2]
     elif len(t)==2:
         t[0]=t[1]
@@ -478,7 +502,7 @@ def p_valor_Id (t):
 
 def p_empty(t):
      'empty :'
-     pass
+     t[0]=False
     
 #-------------------------------------------------------------------
 def p_nativas(t):
@@ -491,13 +515,13 @@ def p_nativas(t):
                     | casteo
     '''
     if len(t)==5:
-        if t[1]=='log10': t[0]=Native(t[3],t[3],nativeOperation.LOGD)
-        elif t[1]=='sin': t[0]=Native(t[3],t[3],nativeOperation.SIN)
-        elif t[1]=='cos': t[0]=Native(t[3],t[3],nativeOperation.COS)
-        elif t[1]=='tan': t[0]=Native(t[3],t[3],nativeOperation.TAN)
-        elif t[1]=='sqrt': t[0]=Native(t[3],t[3],nativeOperation.SQRT)
+        if t[1]=='log10': t[0]=Native(t[3],t[3],nativeOperation.LOGD, linea,columna)
+        elif t[1]=='sin': t[0]=Native(t[3],t[3],nativeOperation.SIN, linea,columna)
+        elif t[1]=='cos': t[0]=Native(t[3],t[3],nativeOperation.COS, linea,columna)
+        elif t[1]=='tan': t[0]=Native(t[3],t[3],nativeOperation.TAN, linea,columna)
+        elif t[1]=='sqrt': t[0]=Native(t[3],t[3],nativeOperation.SQRT, linea,columna)
     elif len(t)==7:
-        t[0]=Native(t[3],t[5],nativeOperation.LOG)
+        t[0]=Native(t[3],t[5],nativeOperation.LOG, linea,columna)
     elif len(t)==2:
         t[0]=t[1]
         

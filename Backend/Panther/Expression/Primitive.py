@@ -11,4 +11,4 @@ class Primitive(Expression):
         self.type = type
     
     def execute(self, environment: Environment) -> Symbol:
-        return Symbol("",self.value,self.type)
+        return Symbol("",self.value,self.type,"",0,0)

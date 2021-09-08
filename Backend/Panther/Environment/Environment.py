@@ -7,6 +7,7 @@ class Environment:
         #Usamos un diccionario para nuestra tabla de simbolos, guardara el id como clave y como cuerpo un simbolo
         self.variable = {}
         self.function={}
+        self.Global={}
         #Father es el entorno exterior al cual podemos acceder
         self.father = father
 
@@ -16,20 +17,33 @@ class Environment:
             tempEnv = tempEnv.father
         return tempEnv
 
-    def saveVariable(self, id: str, value, type: typeExpression, isArray: bool):
+    def saveVariable(self, id: str, value, type: typeExpression, isArray: bool, linea, columna):
         if (self.variable.get(id) != None):
             print("La variable " + id + " ya existe")
             return
-        tempVar = Symbol(id,value,type)
+        tempVar = Symbol(id,value,type,"none",linea,columna)
         tempVar.array = isArray
         self.variable[id] = tempVar
     
+    def saveVariableGlobal(self, id: str, value, type: typeExpression, isArray: bool, linea, columna):
+        if (self.Global.get(id) != None):
+            print("La variable " + id + " ya existe")
+            return
+        tempVar = Symbol(id,value,type,"global",linea, columna)
+        tempVar.array = isArray
+        self.Global[id] = tempVar
+    
     def getVariable(self, id: str) -> Symbol:
         tempEnv = self
+        tempEnvGlobal = self
         while(tempEnv != None):
             if(tempEnv.variable.get(id) != None):
                 return tempEnv.variable.get(id).getValue()
             tempEnv = tempEnv.father
+        while(tempEnvGlobal != None):
+            if(tempEnvGlobal.Global.get(id) != None):
+                return tempEnvGlobal.Global.get(id).getValue()
+            tempEnvGlobal = tempEnvGlobal.father
         print("Error: la variable " + id + " no existe")
         return None
 

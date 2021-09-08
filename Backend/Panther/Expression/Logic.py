@@ -7,10 +7,12 @@ from Abstract.Expression import Expression
 
 class Logic(Expression):
 
-    def __init__(self, leftExp: Expression, rightExp: Expression, operation: logicOperation):
+    def __init__(self, leftExp: Expression, rightExp: Expression, operation: logicOperation,linea,columna):
         self.leftExp = leftExp
         self.rightExp = rightExp
         self.operation = operation
+        self.linea=linea
+        self.columna=columna
 
     
     def execute(self, environment: Environment) -> Symbol:
@@ -18,6 +20,9 @@ class Logic(Expression):
         leftValue = self.leftExp.execute(environment)
         # Resolvemos la expresion que viene de lado derecho
         rightValue = self.rightExp.execute(environment)
+        #linea y columna
+        line=self.linea
+        column=self.columna
         #Obtenemos nuestro dominante
         dominant = Dominant[leftValue.getType().value][rightValue.getType().value]
         
@@ -36,13 +41,13 @@ class Logic(Expression):
                     return Symbol(
                         "",
                         None,
-                        typeExpression.STRING
+                        typeExpression.STRING, "",line,column
                         )
                 elif(dominant == typeExpression.BOOL):
                     return Symbol(
                         "",
                         izq and der,
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )            
             
             elif(self.operation == logicOperation.OR):
@@ -51,13 +56,13 @@ class Logic(Expression):
                     return Symbol(
                         "",
                         None,
-                        typeExpression.STRING
+                        typeExpression.STRING, "",line,column
                         )
                 elif(dominant == typeExpression.BOOL):
                     return Symbol(
                         "",
                         izq or der,
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )  
             
             elif(self.operation == logicOperation.NOT):
@@ -66,14 +71,14 @@ class Logic(Expression):
                     return Symbol(
                         "",
                         None,
-                        typeExpression.STRING
+                        typeExpression.STRING, "",line,column
                         )
                 elif(dominant == typeExpression.BOOL):
                     return Symbol(
                         "",
                         not izq,
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )    
         except:
             print("\n Error al obtener resultado expresion Lógica")
-        return Symbol("",False,typeExpression.BOOL ) 
+        return Symbol("",False,typeExpression.BOOL, "",line,column ) 

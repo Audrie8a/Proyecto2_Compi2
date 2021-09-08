@@ -8,7 +8,7 @@ from Enum.DominantRelatonal import DominantRelational
 
 class DeclaracionSinTipo(Instruction):
      listOperations=['MAYORQ','MENORQ','MAYORIGUAL','MENORIGUAL','IGUALIGUAL','DIFERENTE']
-     def __init__(self,tipoVariable, id: str,value: Expression, isArray: bool) -> None:
+     def __init__(self,tipoVariable, id: str,value: Expression, isArray: bool, linea, columna) -> None:
         self.tipoVariable=tipoVariable
         self.id = id
         try:
@@ -17,18 +17,25 @@ class DeclaracionSinTipo(Instruction):
            self.type=typeExpression.OBJETO
         self.value = value
         self.isArray = isArray
+        self.linea=linea
+        self.columna = columna
     
      def execute(self, environment: Environment):
-        
+       
         tempValue = self.value.execute(environment)
-
         if(self.type.value != tempValue.getType().value):
            if self.type.value!=5:
               print("Los tipos no coinciden")
-              environment.saveVariable('None',Primitive(0,typeExpression.INTEGER).execute(environment),typeExpression.INTEGER,False)
+              environment.saveVariable('None',Primitive(0,typeExpression.INTEGER).execute(environment),typeExpression.INTEGER,False,self.linea, self.columna)
               return
            else:
               self.type=tempValue.getType()
 
-        environment.saveVariable(self.id,tempValue,self.type,self.isArray)
+        if self.tipoVariable=='global':
+            environment.getGlobal().saveVariableGlobal(self.id,tempValue,self.type,self.isArray,self.linea, self.columna)
+        elif self.tipoVariable=='local':
+            environment.saveVariable(self.id,tempValue,self.type,self.isArray,self.linea, self.columna)
+        else:
+            environment.saveVariable(self.id,tempValue,self.type,self.isArray,self.linea, self.columna)
+        
     

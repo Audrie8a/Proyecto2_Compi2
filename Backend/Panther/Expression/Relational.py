@@ -7,10 +7,12 @@ from Abstract.Expression import Expression
 
 class Relational(Expression):
 
-    def __init__(self, leftExp: Expression, rightExp: Expression, operation: relationalOperation):
+    def __init__(self, leftExp: Expression, rightExp: Expression, operation: relationalOperation,linea, columna):
         self.leftExp = leftExp
         self.rightExp = rightExp
         self.operation = operation
+        self.linea=linea
+        self.columna=columna
 
     
     def execute(self, environment: Environment) -> Symbol:
@@ -18,6 +20,9 @@ class Relational(Expression):
         leftValue = self.leftExp.execute(environment)
         # Resolvemos la expresion que viene de lado derecho
         rightValue = self.rightExp.execute(environment)
+        #linea y columna
+        line=self.linea
+        column= self.columna
         #Obtenemos nuestro dominante
         dominant = DominantRelational[leftValue.getType().value][rightValue.getType().value]
         
@@ -39,14 +44,14 @@ class Relational(Expression):
                         "",
                         
                         izq > der,
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )            
                 elif(dominant == typeExpression.INTEGER):
                     if (leftValue.getType().value==1 or leftValue.getType().value==2) and(rightValue.getType().value==3) :
                         return Symbol(
                             "",
                             float(leftValue.getValue()) > der,
-                            typeExpression.BOOL
+                            typeExpression.BOOL, "",line,column
                             )
                     elif (rightValue.getType().value==1 or rightValue.getType().value==2) and(leftValue.getType().value==3) :
                         return Symbol(
@@ -58,26 +63,26 @@ class Relational(Expression):
                     return Symbol(
                         "",
                         False,
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )
                 elif(dominant == typeExpression.FLOAT):
                     return Symbol(
                         "",
                         float(leftValue.getValue()) > float(rightValue.getValue()),
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )
                 elif(dominant == typeExpression.CHAR):
                     return Symbol(
                         "",
                         str(leftValue.getValue())[0] > str(rightValue.getValue())[0],
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )   
                 elif(dominant == typeExpression.ERROR):
                     print("No es posible una expresión relacional de cadenas con otros tipos de datos:  " + str(leftValue.getValue())) + " y " + str(rightValue.getValue())
                     return Symbol(
                                 "",
                                 0,
-                                typeExpression.INTEGER
+                                typeExpression.INTEGER, "",line,column
                         )
             
             elif(self.operation == relationalOperation.MENORQ):
@@ -85,45 +90,45 @@ class Relational(Expression):
                     return Symbol(
                         "",
                         izq< der,
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )            
                 elif(dominant == typeExpression.INTEGER):
                     if (leftValue.getType().value==1 or leftValue.getType().value==2) and(rightValue.getType().value==3) :
                         return Symbol(
                             "",
                             float(leftValue.getValue()) < der,
-                            typeExpression.BOOL
+                            typeExpression.BOOL, "",line,column
                             )
                     elif (rightValue.getType().value==1 or rightValue.getType().value==2) and(leftValue.getType().value==3) :
                         return Symbol(
                             "",
                             izq < float(rightValue.getValue()),
-                            typeExpression.BOOL
+                            typeExpression.BOOL, "",line,column
                             )
                 elif(dominant == typeExpression.STRING):
                     return Symbol(
                         "",
                         False,
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )
                 elif(dominant == typeExpression.FLOAT):
                     return Symbol(
                         "",
                         float(leftValue.getValue()) < float(rightValue.getValue()),
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )
                 elif(dominant == typeExpression.CHAR):
                     return Symbol(
                         "",
                         str(leftValue.getValue())[0] < str(rightValue.getValue())[0],
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )
                 elif(dominant == typeExpression.ERROR):
                     print("No es posible una expresión relacional de cadenas con otros tipos de datos:  " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
                     return Symbol(
                                 "",
                                 0,
-                                typeExpression.INTEGER
+                                typeExpression.INTEGER, "",line,column
                         )
             
             elif(self.operation == relationalOperation.MAYORIGUAL):
@@ -131,46 +136,46 @@ class Relational(Expression):
                     return Symbol(
                         "",
                         izq >= der,
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )            
                 elif(dominant == typeExpression.INTEGER):
                     if (leftValue.getType().value==1 or leftValue.getType().value==2) and(rightValue.getType().value==3) :
                         return Symbol(
                             "",
                             float(leftValue.getValue()) >= der,
-                            typeExpression.BOOL
+                            typeExpression.BOOL, "",line,column
                             )
                     elif (rightValue.getType().value==1 or rightValue.getType().value==2) and(leftValue.getType().value==3) :
                         return Symbol(
                             "",
                             izq >= float(rightValue.getValue()),
-                            typeExpression.BOOL
+                            typeExpression.BOOL, "",line,column
                             )
                 elif(dominant == typeExpression.STRING):
                     return Symbol(
                         "",
                     False,
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )
                 elif(dominant == typeExpression.FLOAT):
                     
                     return Symbol(
                         "",
                         float(leftValue.getValue()) >= float(rightValue.getValue()),
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )
                 elif(dominant == typeExpression.CHAR):
                     return Symbol(
                         "",
                         str(leftValue.getValue())[0] >= str(rightValue.getValue())[0],
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )
                 elif(dominant == typeExpression.ERROR):
                     print("No es posible una expresión relacional de cadenas con otros tipos de datos:  " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
                     return Symbol(
                                 "",
                                 0,
-                                typeExpression.INTEGER
+                                typeExpression.INTEGER, "",line,column
                         )
             
             elif(self.operation == relationalOperation.MENORIGUAL):
@@ -178,45 +183,45 @@ class Relational(Expression):
                     return Symbol(
                         "",
                         izq <= der,
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )            
                 elif(dominant == typeExpression.INTEGER):
                     if (leftValue.getType().value==1 or leftValue.getType().value==2) and(rightValue.getType().value==3) :
                         return Symbol(
                             "",
                             float(leftValue.getValue()) <= der,
-                            typeExpression.BOOL
+                            typeExpression.BOOL, "",line,column
                             )
                     elif (rightValue.getType().value==1 or rightValue.getType().value==2) and(leftValue.getType().value==3) :
                         return Symbol(
                             "",
                             izq <= float(rightValue.getValue()),
-                            typeExpression.BOOL
+                            typeExpression.BOOL, "",line,column
                             )
                 elif(dominant == typeExpression.STRING):
                     return Symbol(
                         "",
                         False,
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )
                 elif(dominant == typeExpression.FLOAT):
                     return Symbol(
                         "",
                         float(leftValue.getValue()) <= float(rightValue.getValue()),
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )
                 elif(dominant == typeExpression.CHAR):
                     return Symbol(
                         "",
                         str(leftValue.getValue())[0] <= str(rightValue.getValue())[0],
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )
                 elif(dominant == typeExpression.ERROR):
                     print("No es posible una expresión relacional de cadenas con otros tipos de datos:  " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
                     return Symbol(
                                 "",
                                 0,
-                                typeExpression.INTEGER
+                                typeExpression.INTEGER, "",line,column
                         )
             
             elif(self.operation == relationalOperation.IGUALIGUAL):
@@ -224,14 +229,14 @@ class Relational(Expression):
                     return Symbol(
                         "",
                         izq == der,
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )            
                 elif(dominant == typeExpression.INTEGER):
                     if (leftValue.getType().value==1 or leftValue.getType().value==2) and(rightValue.getType().value==3) :
                         return Symbol(
                             "",
                             float(leftValue.getValue()) == der,
-                            typeExpression.BOOL
+                            typeExpression.BOOL, "",line,column
                             )
                     elif (rightValue.getType().value==1 or rightValue.getType().value==2) and(leftValue.getType().value==3) :
                         return Symbol(
@@ -243,19 +248,19 @@ class Relational(Expression):
                     return Symbol(
                         "",
                         str(leftValue.getValue()) == str(rightValue.getValue()),
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )
                 elif(dominant == typeExpression.CHAR):
                     return Symbol(
                         "",
                         str(leftValue.getValue())[0] == str(rightValue.getValue())[0],
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )
                 elif(dominant == typeExpression.FLOAT):
                     return Symbol(
                         "",
                         float(leftValue.getValue()) == float(rightValue.getValue()),
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )
                 elif(dominant == typeExpression.ERROR):
                     # En caso que venga STRING con cualquier otro tipo
@@ -265,13 +270,13 @@ class Relational(Expression):
                         return Symbol(
                         "",
                         float(leftValue.getValue()) == str(rightValue.getValue()),
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )
                     elif leftValue.getType().value==3 and rightValue.getType().value==0: #Booleano
                         return Symbol(
                         "",
                         izq == str(rightValue.getValue()),
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )
 
                         #DER
@@ -280,13 +285,13 @@ class Relational(Expression):
                         return Symbol(
                         "",
                         str(leftValue.getValue()) == float(rightValue.getValue()),
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )
                     elif rightValue.getType().value==3 and leftValue.getType().value==0:
                         return Symbol(
                         "",
                         str(leftValue.getValue()) == der,
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )
                     
                     # En caso que venga CHAR con cualquier otro tipo
@@ -297,13 +302,13 @@ class Relational(Expression):
                         return Symbol(
                         "",
                         float(leftValue.getValue()) == str(rightValue.getValue())[0],
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )
                     elif leftValue.getType().value==3 and rightValue.getType().value==6: #Booleano
                         return Symbol(
                         "",
                         izq == str(rightValue.getValue())[0],
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )
 
                         #DER
@@ -312,13 +317,13 @@ class Relational(Expression):
                         return Symbol(
                         "",
                         str(leftValue.getValue())[0] == float(rightValue.getValue()),
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )
                     elif rightValue.getType().value==3 and leftValue.getType().value==6:
                         return Symbol(
                         "",
                         str(leftValue.getValue())[0] == der,
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )
 
                     #En caso venga string y char o viceversa
@@ -326,13 +331,13 @@ class Relational(Expression):
                         return Symbol(
                         "",
                         str(leftValue.getValue()) == str(rightValue.getValue())[0],
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )
                     elif leftValue.getType().value==6 and rightValue.getType().value==0:
                         return Symbol(
                         "",
                         str(leftValue.getValue())[0] == str(rightValue.getValue()),
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )
         
             elif(self.operation == relationalOperation.DIFERENTE):
@@ -340,38 +345,38 @@ class Relational(Expression):
                     return Symbol(
                         "",
                         izq != der,
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )            
                 elif(dominant == typeExpression.INTEGER):
                     if (leftValue.getType().value==1 or leftValue.getType().value==2) and(rightValue.getType().value==3) :
                         return Symbol(
                             "",
                             float(leftValue.getValue()) != der,
-                            typeExpression.BOOL
+                            typeExpression.BOOL, "",line,column
                             )
                     elif (rightValue.getType().value==1 or rightValue.getType().value==2) and(leftValue.getType().value==3) :
                         return Symbol(
                             "",
                             izq != float(rightValue.getValue()),
-                            typeExpression.BOOL
+                            typeExpression.BOOL, "",line,column
                             )
                 elif(dominant == typeExpression.STRING):
                     return Symbol(
                         "",
                         str(leftValue.getValue()) != str(rightValue.getValue()),
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )
                 elif(dominant == typeExpression.CHAR):
                     return Symbol(
                         "",
                         str(leftValue.getValue())[0] != str(rightValue.getValue())[0],
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )
                 elif(dominant == typeExpression.FLOAT):
                     return Symbol(
                         "",
                         float(leftValue.getValue()) != float(rightValue.getValue()),
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )
                 elif(dominant == typeExpression.ERROR):
                     # En caso que venga STRING con cualquier otro tipo
@@ -381,13 +386,13 @@ class Relational(Expression):
                         return Symbol(
                         "",
                         float(leftValue.getValue()) != str(rightValue.getValue()),
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )
                     elif leftValue.getType().value==3 and rightValue.getType().value==0: #Booleano
                         return Symbol(
                         "",
                         izq != str(rightValue.getValue()),
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )
 
                         #DER
@@ -396,13 +401,13 @@ class Relational(Expression):
                         return Symbol(
                         "",
                         str(leftValue.getValue()) != float(rightValue.getValue()),
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )
                     elif rightValue.getType().value==3 and leftValue.getType().value==0:
                         return Symbol(
                         "",
                         str(leftValue.getValue()) != der,
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )
                     
                     # En caso que venga CHAR con cualquier otro tipo
@@ -413,13 +418,13 @@ class Relational(Expression):
                         return Symbol(
                         "",
                         float(leftValue.getValue()) != str(rightValue.getValue())[0],
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )
                     elif leftValue.getType().value==3 and rightValue.getType().value==6: #Booleano
                         return Symbol(
                         "",
                         izq != str(rightValue.getValue())[0],
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )
 
                         #DER
@@ -428,13 +433,13 @@ class Relational(Expression):
                         return Symbol(
                         "",
                         str(leftValue.getValue())[0] != float(rightValue.getValue()),
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )
                     elif rightValue.getType().value==3 and leftValue.getType().value==6:
                         return Symbol(
                         "",
                         str(leftValue.getValue())[0] != der,
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )
                     
                     #En caso venga string con char o viceversa
@@ -442,15 +447,15 @@ class Relational(Expression):
                         return Symbol(
                         "",
                         str(leftValue.getValue()) != str(rightValue.getValue())[0],
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )
                     elif leftValue.getType().value==6 and rightValue.getType().value==0:
                         return Symbol(
                         "",
                         str(leftValue.getValue())[0] != str(rightValue.getValue()),
-                        typeExpression.BOOL
+                        typeExpression.BOOL, "",line,column
                         )
         except:
             print("No se pudo realizar esta expresion Relacional")
-        return Symbol("",False,typeExpression.BOOL)
+        return Symbol("",False,typeExpression.BOOL, "",line,column)
                     

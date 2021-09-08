@@ -1,12 +1,17 @@
-println ("Variables");
-variable = 12;
+variable =12;
 
 function Hola()
-    variable2 = "hola";
+    global variable2 = 25;
     println(variable2);
-
+    
     
 end;
 
 Hola();
-println(variable);
+println(variable2);
+
+println("Funciones nativas aritmeticas");
+# log(base, numero)
+println(log(2, 4));     # 2.0
+println(4>3);
+println(true && false);
