@@ -6,7 +6,7 @@ from Enum.typeExpression import typeExpression
 
 class Declaration(Instruction):
 
-    def __init__(self, id: str, type: typeExpression, value: Expression, isArray: bool) -> None:
+    def __init__(self,tipoVariable, id: str, type: typeExpression, value: Expression, isArray: bool) -> None:
         self.id = id
         self.type = type
         self.value = value

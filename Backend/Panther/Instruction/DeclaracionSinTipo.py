@@ -8,7 +8,8 @@ from Enum.DominantRelatonal import DominantRelational
 
 class DeclaracionSinTipo(Instruction):
      listOperations=['MAYORQ','MENORQ','MAYORIGUAL','MENORIGUAL','IGUALIGUAL','DIFERENTE']
-     def __init__(self, id: str,value: Expression, isArray: bool) -> None:
+     def __init__(self,tipoVariable, id: str,value: Expression, isArray: bool) -> None:
+        self.tipoVariable=tipoVariable
         self.id = id
         try:
            self.type =value.type

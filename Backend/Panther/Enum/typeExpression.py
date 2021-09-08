@@ -8,4 +8,4 @@ class typeExpression(enum.Enum):
     ERROR = 4
     OBJETO = 5
     CHAR = 6
-    
+    VACIO = 7

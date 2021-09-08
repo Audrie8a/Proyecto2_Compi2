@@ -1,9 +1,12 @@
-variable =12;
+println ("Variables");
+variable = 12;
 
 function Hola()
-    println(variable);
+    variable2 = "hola";
+    println(variable2);
 
     
 end;
 
 Hola();
+println(variable);
