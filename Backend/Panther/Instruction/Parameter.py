@@ -7,10 +7,12 @@ from Abstract.Instruction import Instruction
 
 class Parameter(Instruction):
 
-    def __init__(self, id: str, type: typeExpression) -> None:
+    def __init__(self, id: str, type: typeExpression,linea, columna) -> None:
         self.id = id
         self. type = type
         self.value = None
+        self.linea=linea
+        self.columna=columna
 
     def setValue(self, value: Expression):
         self.value = value
@@ -22,9 +24,9 @@ class Parameter(Instruction):
         if(self.type.value != tempValue.getType().value):
             if self.type.value!=5:
                 print("Los tipos no coinciden")
-                environment.saveVariable('None',Primitive(0,typeExpression.INTEGER).execute(environment),typeExpression.INTEGER,False)
+                environment.saveVariable('None',Primitive(0,typeExpression.INTEGER,self.linea,self.columna).execute(environment),typeExpression.INTEGER,False,self.linea,self.columna)
                 return
             else:
               self.type=tempValue.getType()
 
-        environment.saveVariable(self.id,tempValue,self.type, False)
+        environment.saveVariable(self.id,tempValue,self.type, False,self.linea, self.columna)

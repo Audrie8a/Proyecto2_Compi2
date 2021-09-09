@@ -6,9 +6,11 @@ from Abstract.Expression import Expression
 
 class Primitive(Expression):
 
-    def __init__(self, value, type: typeExpression):
+    def __init__(self, value, type: typeExpression,linea,columna):
         self.value = value
         self.type = type
+        self.linea=linea
+        self.columna=columna
     
     def execute(self, environment: Environment) -> Symbol:
-        return Symbol("",self.value,self.type,"",0,0)
+        return Symbol("",self.value,self.type,"",self.linea,self.columna)

@@ -5,18 +5,23 @@ from Abstract.Expression import Expression
 
 class While(Instruction):
 
-    def __init__(self, condition: Expression, block) -> None:
+    def __init__(self, condition: Expression, block,linea,columna) -> None:
         self.condition = condition
         self.block = block
+        self.linea=linea
+        self.columna=columna
 
     def execute(self, environment: Environment):
-        
-        tempCondition: Symbol = self.condition.execute(environment)
+        try:
 
-        while(tempCondition.getValue() == True):
-            newEnv = Environment(environment)
+            tempCondition: Symbol = self.condition.execute(environment)
 
-            for ins in self.block:
-                ins.execute(newEnv)
+            while(tempCondition.getValue() == True):
+                newEnv = Environment(environment)
 
-            tempCondition = self.condition.execute(environment)
+                for ins in self.block:
+                    ins.execute(newEnv)
+
+                tempCondition = self.condition.execute(environment)
+        except:
+            print("Error al ejecutar el while ",self.linea,self.columna)

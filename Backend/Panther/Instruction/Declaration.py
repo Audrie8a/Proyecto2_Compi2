@@ -17,20 +17,19 @@ class Declaration(Instruction):
 
     def execute(self, environment: Environment):
         
-        if self.tipoVariable=='global':
-            print("Global");
-        elif self.tipoVariable=='local':
-            print("Local")
-        else:
-            print("Normal")
-            
+        
         tempValue = self.value.execute(environment)
 
         if(self.type.value != tempValue.getType().value):
             print("Los tipos no coinciden")
-            environment.saveVariable('None',Primitive(0,typeExpression.INTEGER).execute(environment),typeExpression.INTEGER, self.linea, self.columna)
+            environment.saveVariable('None',Primitive(0,typeExpression.INTEGER,self.linea,self.columna).execute(environment),typeExpression.INTEGER, self.linea, self.columna)
             return
 
-        environment.saveVariable(self.id,tempValue,self.type,self.isArray, self.linea, self.columna)
+        if self.tipoVariable=='global':
+            environment.getGlobal().saveVariableGlobal(self.id,tempValue,self.type,self.isArray,self.linea, self.columna)
+        elif self.tipoVariable=='local':
+            environment.saveVariableLocal(self.id,tempValue,self.type,self.isArray,self.linea, self.columna)
+        else:
+            environment.saveVariable(self.id,tempValue,self.type,self.isArray,self.linea, self.columna)
     
 

@@ -6,13 +6,15 @@ from Enum.typeExpression import typeExpression
 
 class Function(Instruction):
     
-    def __init__(self, id: str, parameters,block) -> None:
+    def __init__(self, id: str, parameters,block,linea,columna) -> None:
         self.id = id
         self.parameters = parameters
         self.block = block
+        self.linea=linea
+        self.columna=columna
 
     def execute(self, environment: Environment):
-        environment.saveFunction(self.id,self)
+        environment.saveFunction(self.id,self,self.linea,self.columna)
 
     def executeFunction(self, environment: Environment):
 

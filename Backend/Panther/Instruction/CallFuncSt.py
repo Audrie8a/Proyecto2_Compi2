@@ -8,13 +8,15 @@ from Enum.typeExpression import typeExpression
 
 class CallFuncSt(Instruction):
 
-    def __init__(self,id,parameters) -> None:
+    def __init__(self,id,parameters,linea,columna) -> None:
         self.id = id
         self.parameters = parameters
+        self.linea=linea
+        self.columna=columna
 
     def execute(self, environment: Environment):
         
-        tempFunc: Function = environment.getFunction(self.id)
+        tempFunc: Function = environment.getFunction(self.id,self.linea,self.columna)
         newEnvironment = Environment(environment.getGlobal())
         try:
             if tempFunc.parameters!=None:            

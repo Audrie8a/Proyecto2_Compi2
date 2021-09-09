@@ -20,3 +20,9 @@ class Symbol:
 
     def getExtens(self):
         return self.extens
+
+    def getLine(self):
+        return self.fila
+    
+    def getColumn(self):
+        return self.columna

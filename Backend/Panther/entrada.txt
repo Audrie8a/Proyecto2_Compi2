@@ -1,17 +1,11 @@
-variable =12;
+local variable2 = "Hola";
+function Hola()  
+    global variable2 =15;
+    println(variable2+20);
+    println("Dentro de la funcion: ", variable2,"\n");
 
-function Hola()
-    global variable2 = 25;
-    println(variable2);
-    
-    
 end;
 
-Hola();
-println(variable2);
 
-println("Funciones nativas aritmeticas");
-# log(base, numero)
-println(log(2, 4));     # 2.0
-println(4>3);
-println(true && false);
+Hola();
+println("Fuera de la funcion: ",variable2,"\n");

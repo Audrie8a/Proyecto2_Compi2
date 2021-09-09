@@ -239,7 +239,7 @@ def p_instruccion(t):
                             | empty
     '''
     if t[1]==False:
-        t[0]=IPrintln(Primitive(" ", typeExpression.STRING))
+        t[0]=IPrintln(Primitive(" ", typeExpression.STRING,linea,columna),linea,columna)
     else:
         t[0] = t[1]
 
@@ -249,9 +249,9 @@ def p_DecFunc(t):
                     | RFUNCTION ID PARIZQ PARDER block REND
     '''
     if len(t)==8:
-        t[0]=Function(t[2],t[4],t[6])
+        t[0]=Function(t[2],t[4],t[6],linea,columna)
     elif len(t)==7:
-        t[0]=Function(t[2],None,t[5])
+        t[0]=Function(t[2],None,t[5],linea,columna)
 #------------------------------------------------------------------
 def p_Parametros(t):
     '''Parametros   :   Parametros COMA Parametro
@@ -270,15 +270,15 @@ def p_Parametro(t):
                         | ID
     '''
     if len(t)==4:
-        t[0]=Parameter(t[1],t[3])
+        t[0]=Parameter(t[1],t[3],linea,columna)
     elif len(t)==2:
-        t[0]=Parameter(t[1],typeExpression.OBJETO)
+        t[0]=Parameter(t[1],typeExpression.OBJETO,linea,columna)
 
 #-----------------------------------------------------------------
 def p_callFunc(t):
     ''' callFunc    :   ID  ParametrosFunc 
     '''
-    t[0] = CallFuncSt(t[1],t[2])
+    t[0] = CallFuncSt(t[1],t[2],linea,columna)
 
 #-----------------------------------------------------------------
 def p_ParametrosFunc(t):
@@ -309,7 +309,7 @@ def p_ciclo(t):
 def p_whileSt(t):
     ''' whileSt     :   RWHILE expresionL block REND 
     '''
-    t[0]= While(t[2],t[3])
+    t[0]= While(t[2],t[3],linea,columna)
 
 #------------------------------------------------------------------
 def p_block(t):
@@ -384,8 +384,8 @@ def p_impresion(t):
     ''' impresion   :   IPRINT PARIZQ val PARDER 
                         | IPRINTLN PARIZQ val PARDER 
     '''
-    if t[1] =='print'       : t[0]=IPrint(t[3])
-    elif t[1]=='println'    : t[0]=IPrintln(t[3])
+    if t[1] =='print'       : t[0]=IPrint(t[3],linea,columna)
+    elif t[1]=='println'    : t[0]=IPrintln(t[3],linea,columna)
 
 #-----------------------------------------------------------------
 def p_val(t):
@@ -395,7 +395,7 @@ def p_val(t):
                        
     '''
     if len(t)==2: t[0]=t[1]
-    elif len(t)==4 and t[2]==',': t[0]=Concat(t[1],t[3], concatOperation.COMMA)
+    elif len(t)==4 and t[2]==',': t[0]=Concat(t[1],t[3], concatOperation.COMMA,linea,columna)
 
 #-----------------------------------------------------------------
 def p_expresion_logica(t):
@@ -450,15 +450,15 @@ def p_expresion_aritmetica(t):
                   | valor
     '''
     if len(t)==4:
-        if t[2] == '+'  : t[0] = Arithmetic( t[1], t[3], arithmeticOperation.PLUS)
-        elif t[2] == '-': t[0] = Arithmetic(t[1], t[3], arithmeticOperation.MINUS)
-        elif t[2] == '/': t[0] = Arithmetic(t[1], t[3], arithmeticOperation.DIV)
-        elif t[2] == '*': t[0] = Arithmetic(t[1], t[3], arithmeticOperation.MULTIPLY)
-        elif t[2] == '^': t[0] = Arithmetic(t[1], t[3], arithmeticOperation.POW)
-        elif t[2] == '%': t[0] = Arithmetic(t[1], t[3], arithmeticOperation.MOD)  
+        if t[2] == '+'  : t[0] = Arithmetic( t[1], t[3], arithmeticOperation.PLUS,linea,columna)
+        elif t[2] == '-': t[0] = Arithmetic(t[1], t[3], arithmeticOperation.MINUS,linea,columna)
+        elif t[2] == '/': t[0] = Arithmetic(t[1], t[3], arithmeticOperation.DIV,linea,columna)
+        elif t[2] == '*': t[0] = Arithmetic(t[1], t[3], arithmeticOperation.MULTIPLY,linea,columna)
+        elif t[2] == '^': t[0] = Arithmetic(t[1], t[3], arithmeticOperation.POW,linea,columna)
+        elif t[2] == '%': t[0] = Arithmetic(t[1], t[3], arithmeticOperation.MOD,linea,columna)  
         elif t[1] == '(': t[0]=t[2]
     elif t[1]=='-':
-        t[0]=Arithmetic(t[2],t[2],arithmeticOperation.UMENOS)      
+        t[0]=Arithmetic(t[2],t[2],arithmeticOperation.UMENOS,linea,columna)      
     elif len(t)==2:        
         t[0]=t[1]
     
@@ -468,22 +468,22 @@ def p_booleano(t):
     ''' booleano    :   VERDADERO
                         | FALSO
     '''
-    t[0]= Primitive(t[1],typeExpression.BOOL)
+    t[0]= Primitive(t[1],typeExpression.BOOL,linea,columna)
 
 def p_valor_entero(t):
     '''valor    : ENTERO
     '''
-    t[0] = Primitive(t[1], typeExpression.INTEGER)
+    t[0] = Primitive(t[1], typeExpression.INTEGER,linea,columna)
 
 def p_valor_decimal(t):
     '''valor    : DECIMAL
     '''
-    t[0] = Primitive(t[1], typeExpression.FLOAT)
+    t[0] = Primitive(t[1], typeExpression.FLOAT,linea,columna)
 
 def p_valor_char(t):
     '''valor    : CHAR
     '''
-    t[0] = Primitive(t[1], typeExpression.CHAR)
+    t[0] = Primitive(t[1], typeExpression.CHAR,linea,columna)
 
 def p_valor_string(t):
     '''valor   :    cadena                   
@@ -498,7 +498,7 @@ def p_valor_nativas(t):
 def p_valor_Id (t):
     '''valor    : ID
     '''
-    t[0]=VariableCall(t[1])
+    t[0]=VariableCall(t[1],linea,columna)
 
 def p_empty(t):
      'empty :'
@@ -534,12 +534,12 @@ def p_casteo(t):
                     | RFLOATC PARIZQ expresionL PARDER
     '''
     if len(t)==7:
-        if t[1]=='parse': t[0]=Cast(t[5],t[3],castOperation.PARSE)
-        elif t[1]=='trunc': t[0]=Cast(t[5],typeExpression.FLOAT,castOperation.TRUNC)
+        if t[1]=='parse': t[0]=Cast(t[5],t[3],castOperation.PARSE,linea,columna)
+        elif t[1]=='trunc': t[0]=Cast(t[5],typeExpression.FLOAT,castOperation.TRUNC,linea,columna)
     elif len(t)==5:
-        if t[1]=='typeof': t[0]=Cast(t[3],typeExpression.OBJETO,castOperation.TYPEOF)
-        elif t[1]=='string': t[0]=Cast(t[3], typeExpression.OBJETO,castOperation.STRING)
-        elif t[1]=='float': t[0]=Cast(t[3],typeExpression.OBJETO,castOperation.FLOAT)
+        if t[1]=='typeof': t[0]=Cast(t[3],typeExpression.OBJETO,castOperation.TYPEOF,linea,columna)
+        elif t[1]=='string': t[0]=Cast(t[3], typeExpression.OBJETO,castOperation.STRING,linea,columna)
+        elif t[1]=='float': t[0]=Cast(t[3],typeExpression.OBJETO,castOperation.FLOAT,linea,columna)
 
 #--------------------------------------------------------------------
 def p_cadena(t):
@@ -549,12 +549,12 @@ def p_cadena(t):
                     | STRING
     '''
     if len(t)==5:
-        if t[1]=='uppercase': t[0]=Concat(t[3],t[3],concatOperation.UPPERCASE)
-        elif t[1]=='lowercase': t[0]=Concat(t[3],t[3],concatOperation.LOWERCASE)
+        if t[1]=='uppercase': t[0]=Concat(t[3],t[3],concatOperation.UPPERCASE,linea,columna)
+        elif t[1]=='lowercase': t[0]=Concat(t[3],t[3],concatOperation.LOWERCASE,linea,columna)
     elif len(t)==7:
-        t[0]= Concat(t[5],t[5],concatOperation.PARSE)#Primitive(t[5],typeExpression.STRING)
+        t[0]= Concat(t[5],t[5],concatOperation.PARSE,linea,columna)#Primitive(t[5],typeExpression.STRING)
     elif len(t)==2: 
-        t[0]=Primitive(t[1],typeExpression.STRING)
+        t[0]=Primitive(t[1],typeExpression.STRING,linea,columna)
 
 def p_error(t):
     print("Error sintáctico en '%s'" % t.value)

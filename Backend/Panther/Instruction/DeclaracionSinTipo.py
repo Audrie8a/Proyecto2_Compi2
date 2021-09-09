@@ -26,7 +26,7 @@ class DeclaracionSinTipo(Instruction):
         if(self.type.value != tempValue.getType().value):
            if self.type.value!=5:
               print("Los tipos no coinciden")
-              environment.saveVariable('None',Primitive(0,typeExpression.INTEGER).execute(environment),typeExpression.INTEGER,False,self.linea, self.columna)
+              environment.saveVariable('None',Primitive(0,typeExpression.INTEGER,self.linea,self.columna).execute(environment),typeExpression.INTEGER,False,self.linea, self.columna)
               return
            else:
               self.type=tempValue.getType()
@@ -34,7 +34,7 @@ class DeclaracionSinTipo(Instruction):
         if self.tipoVariable=='global':
             environment.getGlobal().saveVariableGlobal(self.id,tempValue,self.type,self.isArray,self.linea, self.columna)
         elif self.tipoVariable=='local':
-            environment.saveVariable(self.id,tempValue,self.type,self.isArray,self.linea, self.columna)
+            environment.saveVariableLocal(self.id,tempValue,self.type,self.isArray,self.linea, self.columna)
         else:
             environment.saveVariable(self.id,tempValue,self.type,self.isArray,self.linea, self.columna)
         
