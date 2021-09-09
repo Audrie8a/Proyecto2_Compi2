@@ -1,11 +1,21 @@
-local variable2 = "Hola";
-function Hola()  
-    global variable2 =15;
-    println(variable2+20);
-    println("Dentro de la funcion: ", variable2,"\n");
 
+global x=5;
+while x>0
+    
+    println("Hola: ",x);
+    x=x-1;
+end; 
+
+println("Variable global: ", x);
+
+function Prueba(entrada,salida)
+    println(entrada^salida);
 end;
 
+function Prueba2(entrada,salida)
+    println("Me llamo: ",entrada);
+    println("Mi appelido es: ",salida);
 
-Hola();
-println("Fuera de la funcion: ",variable2,"\n");
+end;
+Prueba("A ver", 4);
+Prueba2("Audrie ", "del Cid");

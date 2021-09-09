@@ -21,6 +21,9 @@ export class AnalisisComponent implements OnInit {
     let respuesta = await this.analisisService.sendEntrada(this.txtEntrada);
     if(respuesta!= null){
       alert("Analizando");
+      const json = JSON.stringify(respuesta)
+      const obj = JSON.parse(json)
+      alert(obj.Respuesta)
     }else{
       alert("Error: No se logró comunicación")
     }

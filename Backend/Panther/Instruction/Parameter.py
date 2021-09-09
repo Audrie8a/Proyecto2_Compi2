@@ -24,7 +24,7 @@ class Parameter(Instruction):
         if(self.type.value != tempValue.getType().value):
             if self.type.value!=5:
                 print("Los tipos no coinciden")
-                environment.saveVariable('None',Primitive(0,typeExpression.INTEGER,self.linea,self.columna).execute(environment),typeExpression.INTEGER,False,self.linea,self.columna)
+                environment.saveParameter('None',Primitive(0,typeExpression.INTEGER,self.linea,self.columna).execute(environment),typeExpression.INTEGER,False,self.linea,self.columna)
                 return
             else:
               self.type=tempValue.getType()

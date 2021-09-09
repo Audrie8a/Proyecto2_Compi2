@@ -14,9 +14,9 @@ def hello_world():
 @app.route('/Entrada', methods=['POST'])
 def Entrada():
     Texto= request.json['Texto']
-    Texto="Respuesta: "+Texto;
+    
     print(Texto)
-    response= jsonify( {"Respuesta": "Respuesta"+Texto})
+    response= jsonify( {"Respuesta": Texto})
     response.headers.add("Access-Control-Allow-Origin", "*")
     return response
 
