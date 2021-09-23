@@ -4,7 +4,7 @@ from Enum.DominantRelatonal import DominantRelational
 from Environment.Environment import Environment
 from Environment.Symbol import Symbol
 from Abstract.Expression import Expression
-
+from Environment.Listas import Listas
 class Relational(Expression):
 
     def __init__(self, leftExp: Expression, rightExp: Expression, operation: relationalOperation,linea, columna):
@@ -25,6 +25,7 @@ class Relational(Expression):
         column= self.columna
         #Obtenemos nuestro dominante
         dominant = DominantRelational[leftValue.getType().value][rightValue.getType().value]
+        Error=""
         
         
         global izq  
@@ -78,7 +79,9 @@ class Relational(Expression):
                         typeExpression.BOOL, "",line,column
                         )   
                 elif(dominant == typeExpression.ERROR):
-                    print("No es posible una expresión relacional de cadenas con otros tipos de datos:  " + str(leftValue.getValue())) + " y " + str(rightValue.getValue())
+                    Error=("No es posible una expresión relacional de cadenas con otros tipos de datos:  " + str(leftValue.getValue())) + " y " + str(rightValue.getValue())
+                    print("\nNo es posible una expresión relacional de cadenas con otros tipos de datos:  " + str(leftValue.getValue())) + " y " + str(rightValue.getValue())
+                    Listas.saveError("No es posible una expresión relacional de cadenas con otros tipos de datos:  " + str(leftValue.getValue())) + " y " + str(rightValue.getValue() ,line,column)
                     return Symbol(
                                 "",
                                 0,
@@ -124,7 +127,9 @@ class Relational(Expression):
                         typeExpression.BOOL, "",line,column
                         )
                 elif(dominant == typeExpression.ERROR):
-                    print("No es posible una expresión relacional de cadenas con otros tipos de datos:  " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    Error=("No es posible una expresión relacional de cadenas con otros tipos de datos:  " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    print("\nNo es posible una expresión relacional de cadenas con otros tipos de datos:  " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    Listas.saveError("No es posible una expresión relacional de cadenas con otros tipos de datos:  " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()) ,line,column)
                     return Symbol(
                                 "",
                                 0,
@@ -171,7 +176,9 @@ class Relational(Expression):
                         typeExpression.BOOL, "",line,column
                         )
                 elif(dominant == typeExpression.ERROR):
-                    print("No es posible una expresión relacional de cadenas con otros tipos de datos:  " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    Error=("No es posible una expresión relacional de cadenas con otros tipos de datos:  " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    print("\nNo es posible una expresión relacional de cadenas con otros tipos de datos:  " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    Listas.saveError("No es posible una expresión relacional de cadenas con otros tipos de datos:  " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()) ,line,column)
                     return Symbol(
                                 "",
                                 0,
@@ -217,7 +224,9 @@ class Relational(Expression):
                         typeExpression.BOOL, "",line,column
                         )
                 elif(dominant == typeExpression.ERROR):
-                    print("No es posible una expresión relacional de cadenas con otros tipos de datos:  " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    Error=("No es posible una expresión relacional de cadenas con otros tipos de datos:  " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    print("\nNo es posible una expresión relacional de cadenas con otros tipos de datos:  " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    Listas.saveError("No es posible una expresión relacional de cadenas con otros tipos de datos:  " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()),line,column)
                     return Symbol(
                                 "",
                                 0,
@@ -456,6 +465,6 @@ class Relational(Expression):
                         typeExpression.BOOL, "",line,column
                         )
         except:
-            print("No se pudo realizar esta expresion Relacional")
-        return Symbol("",False,typeExpression.BOOL, "",line,column)
+            Listas.saveError(Error,line,column)                    
+            return Symbol("",False,typeExpression.BOOL, "",line,column)
                     

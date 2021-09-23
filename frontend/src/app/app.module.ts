@@ -11,6 +11,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DatosComponent } from './Componentes/datos/datos.component';
 import { FormsModule } from '@angular/forms';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { FormsModule } from '@angular/forms';
     MatTabsModule,
 
     BrowserAnimationsModule,
-    FormsModule
+    FormsModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent]

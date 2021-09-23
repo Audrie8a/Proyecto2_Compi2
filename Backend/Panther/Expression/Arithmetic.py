@@ -4,7 +4,7 @@ from Enum.Dominant import Dominant
 from Environment.Environment import Environment
 from Environment.Symbol import Symbol
 from Abstract.Expression import Expression
-
+from Environment.Listas import Listas
 class Arithmetic(Expression):
 
     def __init__(self, leftExp: Expression, rightExp: Expression, operation: arithmeticOperation, linea, columna):
@@ -25,11 +25,14 @@ class Arithmetic(Expression):
         column = self.columna
         #Obtenemos nuestro dominante
         dominant = Dominant[leftValue.getType().value][rightValue.getType().value]
-        
+        Error=""
+
         try:
             if(self.operation == arithmeticOperation.PLUS):
                 if(dominant == typeExpression.STRING):
-                    print("No es posible sumar entre cadenas" + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    Error=("\nNo es posible sumar entre cadenas" + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    print("\nNo es posible sumar entre cadenas" + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    Listas.saveError("No es posible sumar entre cadenas",line,column)
                     return Symbol(
                         "",
                         None,
@@ -48,7 +51,9 @@ class Arithmetic(Expression):
                         typeExpression.FLOAT,"",line,column
                         )
                 else:
-                    print("No es posible sumar " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    Error=("\nNo es posible sumar " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    print("\nNo es posible sumar " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    Listas.saveError("No es posible sumar " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()),line,column)
                     return Symbol(
                                 "",
                                 0,
@@ -69,14 +74,19 @@ class Arithmetic(Expression):
                         typeExpression.FLOAT,"",line,column
                         )
                 elif(dominant == typeExpression.STRING):
-                    print("No es posible restar entre cadenas " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    Error=("\nNo es posible restar entre cadenas " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    print("\nNo es posible restar entre cadenas " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    Listas.saveError("No es posible restar entre cadenas " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()),line,column)
+                    
                     return Symbol(
                         "",
                         None,
                         typeExpression.STRING,"",line,column
                         )
                 else:
-                    print("No es posible restar " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    Error=("\nNo es posible restar " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    print("\nNo es posible restar " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    Listas.saveError("No es posible restar " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()),line,column)
                     return Symbol(
                                 "",
                                 0,
@@ -104,14 +114,19 @@ class Arithmetic(Expression):
                                 typeExpression.STRING,"",line,column
                             )
                     else:                    
+                        Error=("\nNo es posible imprimir " + str(leftValue.getValue()) + " y " + str(rightValue.getValue())+". Se necesita Castear")
                         print("\nNo es posible imprimir " + str(leftValue.getValue()) + " y " + str(rightValue.getValue())+". Se necesita Castear")
+                        Listas.saveError("No es posible imprimir " + str(leftValue.getValue()) + " y " + str(rightValue.getValue())+". Se necesita Castear",line,column)
+                    
                         return Symbol(
                                 "",
                                 None,
                                 typeExpression.STRING,"",line,column
                         )
                 else:
-                    print("No es posible multiplicar " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    Error=("\nNo es posible multiplicar " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    print("\nNo es posible multiplicar " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    Listas.saveError("No es posible multiplicar " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()),line,column)
                     return Symbol(
                                 "",
                                 0,
@@ -138,7 +153,9 @@ class Arithmetic(Expression):
                         typeExpression.STRING,"",line,column
                         )
                 else:
-                    print("No es posible dividir " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    Error=("\nNo es posible dividir " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    print("\nNo es posible dividir " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    Listas.saveError("No es posible dividir " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()),line,column)
                     return Symbol(
                         "",
                         0,
@@ -166,7 +183,9 @@ class Arithmetic(Expression):
                                 typeExpression.STRING,"",line,column
                         )
                     else:
+                        Error=("\nNo es posible elevar " +str( leftValue.getValue()) + " y " +str( rightValue.getValue()))
                         print("\nNo es posible elevar " +str( leftValue.getValue()) + " y " +str( rightValue.getValue()))
+                        Listas.saveError("No es posible elevar " +str( leftValue.getValue()) + " y " +str( rightValue.getValue()),line,column)
                         return Symbol(
                                 "",
                                 None,
@@ -174,7 +193,9 @@ class Arithmetic(Expression):
                         )
                 else:
                     
+                    Error=("\nNo es posible elevar " +str( leftValue.getValue()) + " y " +str( rightValue.getValue()))
                     print("\nNo es posible elevar " +str( leftValue.getValue()) + " y " +str( rightValue.getValue()))
+                    Listas.saveError("No es posible elevar " +str( leftValue.getValue()) + " y " +str( rightValue.getValue()),line,column)
                     return Symbol(
                         "",
                         0,
@@ -195,7 +216,9 @@ class Arithmetic(Expression):
                         typeExpression.FLOAT,"",line,column
                         )            
                 else:
-                    print("No es posible dividir " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    Error=("\nNo es posible dividir " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    print("\nNo es posible dividir " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    Listas.saveError("No es posible dividir " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()),line,column)
                     return Symbol(
                         "",
                         0,
@@ -216,19 +239,23 @@ class Arithmetic(Expression):
                         typeExpression.FLOAT,"",line,column
                         )
                 elif(dominant == typeExpression.STRING):
-                    print("No es posible restar entre cadenas" + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    Error=("\nNo es posible restar entre cadenas" + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    print("\nNo es posible restar entre cadenas" + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    Listas.saveError("No es posible restar entre cadenas" + str(leftValue.getValue()) + " y " + str(rightValue.getValue()),line,column)
                     return Symbol(
                         "",
                         None,
                         typeExpression.STRING,"",line,column
                         )
                 else:
-                    print("No es posible restar " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    Error=("\nNo es posible restar " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    print("\nNo es posible restar " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    Listas.saveError("No es posible restar " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()),line,column)
                     return Symbol(
                         "",
                         0,
                         typeExpression.INTEGER,"",line,column
                         )
-        except:
-            print("\n Error al realizar esta opearacion aritmetica")
-        return Symbol('',0,typeExpression.INTEGER,"",line,column)
+        except:            
+            Listas.saveError(Error,line,column)
+            return Symbol('',0,typeExpression.INTEGER,"",line,column)

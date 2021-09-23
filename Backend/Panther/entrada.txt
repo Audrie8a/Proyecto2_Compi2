@@ -1,21 +1,9 @@
 
-global x=5;
-while x>0
-    
-    println("Hola: ",x);
-    x=x-1;
-end; 
 
-println("Variable global: ", x);
-
-function Prueba(entrada,salida)
-    println(entrada^salida);
+x=15;
+function hola()
+  println("Hola");
+  return x;
 end;
 
-function Prueba2(entrada,salida)
-    println("Me llamo: ",entrada);
-    println("Mi appelido es: ",salida);
-
-end;
-Prueba("A ver", 4);
-Prueba2("Audrie ", "del Cid");
+y=hola();

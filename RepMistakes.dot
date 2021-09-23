@@ -1,0 +1,17 @@
+digraph G {nodo[shape=plaintext label=<<table >
+<tr>
+<td >No</td>
+<td >Descripcion</td>
+<td >Linea</td>
+<td >Columna</td>
+<td >Fecha y Hora</td>
+</tr>
+<tr>
+<td >1</td>
+<td >Los tipos no coinciden</td>
+<td >1</td>
+<td >0</td>
+<td >12/09/2021 15:19:16</td>
+</tr>
+</table>
+>];}

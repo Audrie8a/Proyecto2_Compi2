@@ -4,6 +4,7 @@ from Expression.Primitive import Primitive
 from Environment.Environment import Environment
 from Abstract.Expression import Expression
 from Enum.typeExpression import typeExpression
+from Environment.Listas import Listas
 
 class VariableCall(Expression):
 
@@ -13,9 +14,13 @@ class VariableCall(Expression):
         self.columna=columna
 
     def execute(self, environment: Environment) -> Symbol:
-        retValue = environment.getVariable(self.id,self.linea,self.columna)
+        try:
+            retValue = environment.getVariable(self.id,self.linea,self.columna)
 
-        if(retValue == None):
-            retValue = Primitive(0,typeExpression.INTEGER,self.linea,self.columna).execute(environment)
+            if(retValue == None):
+                retValue = Primitive(0,typeExpression.INTEGER,self.linea,self.columna).execute(environment)
 
-        return retValue
+            return retValue
+        except:
+            print("\nError al llamar variable!")
+            Listas.saveError("Error al llamar variable!",self.linea,self.columna)

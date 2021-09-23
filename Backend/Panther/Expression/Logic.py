@@ -4,6 +4,7 @@ from Enum.Dominant import Dominant
 from Environment.Environment import Environment
 from Environment.Symbol import Symbol
 from Abstract.Expression import Expression
+from Environment.Listas import Listas
 
 class Logic(Expression):
 
@@ -25,6 +26,7 @@ class Logic(Expression):
         column=self.columna
         #Obtenemos nuestro dominante
         dominant = Dominant[leftValue.getType().value][rightValue.getType().value]
+        Error=""
         
         global izq  
         global der
@@ -37,7 +39,9 @@ class Logic(Expression):
         try:
             if(self.operation == logicOperation.AND):
                 if(dominant == typeExpression.ERROR):
-                    print("No es posible operar tipos de datos diferentes a Bool" + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    Error=("No es posible operar tipos de datos diferentes a Bool" + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    print("\nNo es posible operar tipos de datos diferentes a Bool" + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    Listas.saveError("No es posible operar tipos de datos diferentes a Bool" + str(leftValue.getValue()) + " y " + str(rightValue.getValue()),line,column)
                     return Symbol(
                         "",
                         None,
@@ -52,7 +56,9 @@ class Logic(Expression):
             
             elif(self.operation == logicOperation.OR):
                 if(dominant == typeExpression.ERROR):
-                    print("No es posible operar tipos de datos diferentes a Bool" + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    Error=("No es posible operar tipos de datos diferentes a Bool" + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    print("\nNo es posible operar tipos de datos diferentes a Bool" + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    Listas.saveError("No es posible operar tipos de datos diferentes a Bool" + str(leftValue.getValue()) + " y " + str(rightValue.getValue()),line,column)
                     return Symbol(
                         "",
                         None,
@@ -67,7 +73,9 @@ class Logic(Expression):
             
             elif(self.operation == logicOperation.NOT):
                 if(dominant == typeExpression.ERROR):
-                    print("No es posible operar tipos de datos diferentes a Bool" + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                    Error="No es posible operar tipos de datos diferentes a Bool" + str(leftValue.getValue()) + " y " + str(rightValue.getValue()),line,column
+                    print("\nNo es posible operar tipos de datos diferentes a Bool" + str(leftValue.getValue()) + " y " + str(rightValue.getValue()),line,column)
+                    Listas.saveError("No es posible operar tipos de datos diferentes a Bool" + str(leftValue.getValue()) + " y " + str(rightValue.getValue()),line,column)
                     return Symbol(
                         "",
                         None,
@@ -80,5 +88,5 @@ class Logic(Expression):
                         typeExpression.BOOL, "",line,column
                         )    
         except:
-            print("\n Error al obtener resultado expresion Lógica")
-        return Symbol("",False,typeExpression.BOOL, "",line,column ) 
+            Listas.saveError(Error,line,column)
+            return Symbol("",False,typeExpression.BOOL, "",line,column ) 

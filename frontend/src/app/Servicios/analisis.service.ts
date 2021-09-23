@@ -7,7 +7,8 @@ import { HttpClient} from '@angular/common/http'
 export class AnalisisService {
 
   constructor(private httpClient: HttpClient) { }
-  url:string="http://10.154.136.37:8000/"
+  //"https://olc2-audrie8a.herokuapp.com/"   "http://10.154.136.37:8000/"//
+  url:string="https://olc2-audrie8a.herokuapp.com/"
   sendEntrada(Texto: string){
     const ruta= this.url+"Entrada";
     const data = {Texto};    

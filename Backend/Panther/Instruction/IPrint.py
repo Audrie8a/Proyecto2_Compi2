@@ -3,6 +3,7 @@ from Abstract.Instruction import Instruction
 from Environment.Environment import Environment
 from Abstract.Expression import Expression
 from Environment.Symbol import Symbol
+from Environment.Listas import Listas
 
 class IPrint(Instruction):
 
@@ -15,5 +16,7 @@ class IPrint(Instruction):
         try:
             tempExp = self.expression.execute(environment)
             print(tempExp.getValue(), end=" ")
+            Listas.saveSalida(tempExp.getValue(),"print")
         except:
-            print("Error al imprimir",self.linea,self.columna) 
+            print("\nError al imprimir",self.linea,self.columna) 
+            Listas.saveError("Error al imprimir!",self.linea,self.columna)

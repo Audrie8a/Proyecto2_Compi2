@@ -4,7 +4,7 @@ from Enum.Dominant import Dominant
 from Environment.Environment import Environment
 from Environment.Symbol import Symbol
 from Abstract.Expression import Expression
-
+from Environment.Listas import Listas
 class Concat(Expression):
 
     def __init__(self, leftExp: Expression, rightExp: Expression, operation: concatOperation, linea, columna):
@@ -24,7 +24,7 @@ class Concat(Expression):
         line=self.linea
         column= self.columna
         dominant = Dominant[leftValue.getType().value][rightValue.getType().value]
-        
+        Error=""
         try:
             if(self.operation == concatOperation.COMMA):           
                     return Symbol(
@@ -41,7 +41,9 @@ class Concat(Expression):
                             typeExpression.STRING,"",line,column
                         )
                 else:                    
+                    Error=("\nNo es posible imprimir " + str(leftValue.getValue()))
                     print("\nNo es posible imprimir " + str(leftValue.getValue()))
+                    Listas.saveError("No es posible imprimir " + str(leftValue.getValue()),line,column)
                     return Symbol(
                             "",
                             None,
@@ -56,7 +58,9 @@ class Concat(Expression):
                             typeExpression.STRING,"",line,column
                         )
                 else:                    
+                    Error=("\nNo es posible imprimir " + str(leftValue.getValue()))
                     print("\nNo es posible imprimir " + str(leftValue.getValue()))
+                    Listas.saveError("No es posible imprimir " + str(leftValue.getValue()),line,column)
                     return Symbol(
                             "",
                             None,
@@ -71,8 +75,10 @@ class Concat(Expression):
                         )
 
             else:
+                Error=("No es posible imprimir " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
                 print("No es posible imprimir " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()))
+                Listas.saveError("No es posible imprimir " + str(leftValue.getValue()) + " y " + str(rightValue.getValue()),line,column)
                 return Symbol('',None,typeExpression.STRING,"",line,column)
         except:
-            print("\n Error al obtener Cadena")
-        return Symbol('',None,typeExpression.STRING,"",line,column)
+            Listas.saveError(Error,line,column)
+            return Symbol('',None,typeExpression.STRING,"",line,column)

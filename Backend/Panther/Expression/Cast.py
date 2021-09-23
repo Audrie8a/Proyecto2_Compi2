@@ -3,7 +3,7 @@ from Enum.castOperation import castOperation
 from Environment.Environment import Environment
 from Environment.Symbol import Symbol
 from Abstract.Expression import Expression
-
+from Environment.Listas import Listas
 class Cast(Expression):
 
     def __init__(self, leftExp: Expression, type, operation: castOperation,linea, columna):
@@ -19,6 +19,7 @@ class Cast(Expression):
         leftValue = self.leftExp.execute(environment)
         line=self.linea
         column=self.columna
+        Error=""
         
         try:
             if(self.operation == castOperation.PARSE):          
@@ -53,7 +54,9 @@ class Cast(Expression):
                         typeExpression.STRING,"",line,column
                     )
                 else:
-                    print("Error al castear, no se reconoció el tipo de dato!")
+                    Error=("\nError al castear, no se reconoció el tipo de dato!")
+                    print("\nError al castear, no se reconoció el tipo de dato!")
+                    Listas.saveError("Error al castear, no se reconoció el tipo de dato!",line,column)
                     return Symbol(                    
                         "",
                         None,
@@ -91,7 +94,9 @@ class Cast(Expression):
                             typeExpression.STRING,"",line,column
                         )
                 else:                    
+                    Error=("\nNo fue posible ubicar el tipo de dato al que pertenece esta expresion " + str(leftValue.getValue()))
                     print("\nNo fue posible ubicar el tipo de dato al que pertenece esta expresion " + str(leftValue.getValue()))
+                    Listas.saveError("No fue posible ubicar el tipo de dato al que pertenece esta expresion " + str(leftValue.getValue()),line,column)
                     return Symbol(
                             "",
                             None,
@@ -106,7 +111,9 @@ class Cast(Expression):
                             typeExpression.INTEGER,"",line,column
                         )
                 else:                    
+                    Error=("\nNo es posible truncar otros tipos de datos que no sean Float : " + str(leftValue.getValue()))
                     print("\nNo es posible truncar otros tipos de datos que no sean Float : " + str(leftValue.getValue()))
+                    Listas.saveError("No es posible truncar otros tipos de datos que no sean Float : " + str(leftValue.getValue()),line,column)
                     return Symbol(
                             "",
                             None,
@@ -128,6 +135,8 @@ class Cast(Expression):
                             )
                 else:
                     print("\nNo es posible convertir a Float otros tipos de datos que no sean Enteros : " + str(leftValue.getValue()))
+                    Error=("\nNo es posible convertir a Float otros tipos de datos que no sean Enteros : " + str(leftValue.getValue()))
+                    Listas.saveError("No es posible convertir a Float otros tipos de datos que no sean Enteros : " + str(leftValue.getValue()),line,column)
                     return Symbol(
                             "",
                             None,
@@ -135,7 +144,6 @@ class Cast(Expression):
                     )
 
         except:
-            print("\nNo es posible Castear " + str(leftValue.getValue()) )
-
-        return Symbol('',None,typeExpression.STRING,"",line,column)
+            Listas.saveError(Error,line,column)
+            return Symbol('',None,typeExpression.STRING,"",line,column)
                 

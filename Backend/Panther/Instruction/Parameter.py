@@ -4,6 +4,7 @@ from Environment.Environment import Environment
 from Abstract.Expression import Expression
 from Enum.typeExpression import typeExpression
 from Abstract.Instruction import Instruction
+from Environment.Listas import Listas
 
 class Parameter(Instruction):
 
@@ -18,15 +19,22 @@ class Parameter(Instruction):
         self.value = value
 
     def execute(self, environment: Environment):
+
+        try:
+            tempValue = self.value.execute(environment)
+
+            if(self.type.value != tempValue.getType().value):
+                if self.type.value!=5:
+                    print("Los tipos no coinciden")
+                    environment.saveParameter('None',Primitive(0,typeExpression.INTEGER,self.linea,self.columna).execute(environment),typeExpression.INTEGER,False,self.linea,self.columna)
+                    return
+                else:
+                    self.type=tempValue.getType()
+
+            environment.saveVariable(self.id,tempValue,self.type, False,self.linea, self.columna)
+
+        except:
+            print("\nError al procesar parámetros!")
+            Listas.saveError("Error al procesar parámetros!",self.linea,self.columna)
+            
         
-        tempValue = self.value.execute(environment)
-
-        if(self.type.value != tempValue.getType().value):
-            if self.type.value!=5:
-                print("Los tipos no coinciden")
-                environment.saveParameter('None',Primitive(0,typeExpression.INTEGER,self.linea,self.columna).execute(environment),typeExpression.INTEGER,False,self.linea,self.columna)
-                return
-            else:
-              self.type=tempValue.getType()
-
-        environment.saveVariable(self.id,tempValue,self.type, False,self.linea, self.columna)

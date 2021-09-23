@@ -1,1 +1,101 @@
-<p>reportes works!</p>
+<mat-accordion class="example-headers-align">
+    <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Tabla de Errores
+        </mat-panel-title>
+        <mat-panel-description>
+            Todos los errores semánticos encontrados
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <button class="Boton" (click)="cragarTablaErrores()">Generar</button>
+      <button class="Boton" (click)="limpiar(1)">Limpiar</button>
+      <br/>
+        <table id="Tabla">
+          <thead>
+            <tr>
+              <th >No</th>
+              <th >Descripcion</th>
+              <th >Línea</th>
+              <th >Columna</th>
+              <th >Fecha y Hora</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let error of Errores">
+            <tr>
+              <td >{{error[0]}}</td>
+              <td >{{error[1]}}</td>
+              <td >{{error[2]}}</td>
+              <td >{{error[3]}}</td>
+              <td >{{error[4]}}</td>
+            </tr>
+          </tbody>
+          </table>
+      
+      
+      <mat-action-row>
+        <button mat-button color="primary"  class="Boton" (click)="nextStep()">Next</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+    
+    <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          AST
+        </mat-panel-title>
+        <mat-panel-description>
+          Árbol de Análisis sintáctico
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="form-group shadow-textarea">
+        <textarea  class="form-control z-depth-1" id="exampleFormControlTextarea6"  [(ngModel)]="txtSalida"  value="{{txtSalida}}"placeholder="Write something here..."></textarea>
+    </div>
+      
+      <button (click)="cargarAst()" class="Boton">Cargar</button>
+      <button class="Boton" (click)="limpiar(2  )">Limpiar</button>
+      <mat-action-row>
+        <button mat-button class="Boton" (click)="prevStep()">Previous</button>
+        <button mat-button class="Boton" (click)="nextStep()">Next</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+  
+    <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Tabla de Símbolos
+        </mat-panel-title>
+        <mat-panel-description>
+            Todas las variables, funciones y struct reconocidas
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+  
+      <button class="Boton" (click)="cragarTablaSimbolos()">Generar</button>
+      <button class="Boton" (click)="limpiar(3)">Limpiar</button>
+      <table id="Tabla">
+        <thead>
+          <tr>
+            <th >Nombre</th>
+            <th >Tipo</th>
+            <th >Ámbito</th>
+            <th >Fila</th>
+            <th >Columna</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let simb of Simbolos">
+          <tr>
+            <td >{{simb[0]}}</td>
+            <td >{{simb[1]}}</td>
+            <td >{{simb[2]}}</td>
+            <td >{{simb[3]}}</td>
+            <td >{{simb[4]}}</td>
+          </tr>
+        </tbody>
+        </table>
+  
+      <mat-action-row>
+        <button mat-button class="Boton" (click)="prevStep()">Previous</button>
+        <button mat-button class="Boton" (click)="nextStep()">End</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+  
+  </mat-accordion>
