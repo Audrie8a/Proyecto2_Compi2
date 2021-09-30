@@ -1,9 +1,0 @@
-
-
-x=15;
-function hola()
-  println("Hola");
-  return x;
-end;
-
-y=hola();

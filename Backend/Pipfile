@@ -4,8 +4,13 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+flask = "*"
+gunicorn = "*"
+ply = "*"
+flask-cors = "*"
+graphviz = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.9"
+python_version = "3.7"
