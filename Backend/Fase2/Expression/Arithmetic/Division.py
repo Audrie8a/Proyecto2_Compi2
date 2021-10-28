@@ -2,7 +2,7 @@ from Abstract.Expression import Expression
 from Environment.Environment import Environment
 from Environment.Value import Value
 from Enum.typeExpression import typeExpression
-from Impresiones3D.Impresiones import *
+from Impresiones3D.Impresiones import Impresiones
 
 class Division(Expression):
 
@@ -23,7 +23,7 @@ class Division(Expression):
 
         if(leftValue.type == typeExpression.INTEGER):
             if(rightValue.type == typeExpression.INTEGER or rightValue.type == typeExpression.FLOAT):
-                DivisionCero(self,self.generator,newTemp,leftValue.getValue(),rightValue.getValue())                
+                Impresiones.DivisionCero(self,self.generator,newTemp,leftValue.getValue(),rightValue.getValue())                
                 return Value(newTemp,True,rightValue.type)
             else:
                 print("Error en division")
@@ -31,7 +31,7 @@ class Division(Expression):
 
         elif(leftValue.type == typeExpression.FLOAT):
             if(rightValue.type == typeExpression.INTEGER or rightValue.type == typeExpression.FLOAT):
-                self.generator.addExpression(newTemp,leftValue.getValue(),rightValue.getValue(),"/")
+                Impresiones.DivisionCero(self,self.generator,newTemp,leftValue.getValue(),rightValue.getValue()) 
                 return Value(newTemp,True,typeExpression.FLOAT)
             else:
                 print("Error en division")

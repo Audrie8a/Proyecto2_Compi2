@@ -1,3 +1,4 @@
+from Impresiones3D.Impresiones import Impresiones
 class Generator:
 
     def __init__(self) -> None:
@@ -14,6 +15,7 @@ class Generator:
 
     #Obtener el codigo generado
     def getCode(self) -> str:
+        metodoPrint=Impresiones.metodoPrintString(self)
         tempCode: str = 'package main;\n'
         tempCode = tempCode + 'import("fmt");\n'
         tempCode = tempCode + "var P, H float64;\n"
@@ -24,7 +26,10 @@ class Generator:
         if(len(self.tempList) > 0):
             tempCode = tempCode + "var " + self.getUsedTemps() + " float64;\n\n"
 
-        tempCode = tempCode + '\nfunc main(){\n'
+        #Funciones Quemadas
+        tempCode += metodoPrint
+
+        tempCode = tempCode + '\nfunc main(){\n'        
         tempCode = tempCode + "\n".join(self.code)
         tempCode = tempCode + '\n}\n'
         
@@ -64,11 +69,11 @@ class Generator:
 
     #Añade un printf
     def addPrintf(self, typePrint:str, value:str):
-        self.code.append("printf(\"%" + typePrint + "\"," + value + ");")
+        self.code.append("fmt.Printf(\"%" + typePrint + "\"," + value + ");")
 
     #Salto de linea
     def addNewLine(self):
-        self.code.append('printf(\"%c\",10);')
+        self.code.append('fmt.Printf(\"%c\",10);')
 
     #Se mueve hacia la posicion siguiente del heap
     def addNextHeap(self):

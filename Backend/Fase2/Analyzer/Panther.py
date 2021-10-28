@@ -102,6 +102,7 @@ def t_error(t):
 from Instructions.IPrint import IPrint
 from Instructions.IPrintln import IPrintln
 from Expression.Primitive.NumberVal import NumberVal
+from Expression.Primitive.StringVal import StringVal
 from Expression.Arithmetic.Plus import Plus
 from Expression.Arithmetic.Minus import Minus
 from Expression.Arithmetic.Multiply import Multiply
@@ -232,7 +233,7 @@ def p_valor_decimal(t):
 def p_valor_string(t):
     '''valor   :    STRING                   
     '''
-    t[0]= None
+    t[0]= StringVal(typeExpression.STRING,t[1])
 
 def p_valor_Id (t):
     '''valor    : ID

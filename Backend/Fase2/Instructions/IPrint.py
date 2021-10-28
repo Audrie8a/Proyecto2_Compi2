@@ -3,6 +3,7 @@ from Abstract.Instruction import Instruction
 from Environment.Environment import Environment
 from Environment.Value import Value
 from Enum.typeExpression import typeExpression
+from Impresiones3D.Impresiones import Impresiones
 
 class IPrint(Instruction):
 
@@ -17,10 +18,10 @@ class IPrint(Instruction):
         tempValue: Value = self.exp.compile(environment)
 
         if(tempValue.type == typeExpression.INTEGER):
-            self.generator.addPrintf("d","(int)" + str(tempValue.getValue()))
+            self.generator.addPrintf("d","int(" + str(tempValue.getValue())+")")
 
         elif(tempValue.type == typeExpression.FLOAT):
-            self.generator.addPrintf("f","(double)" + str(tempValue.getValue()))
+            self.generator.addPrintf("f", str(tempValue.getValue()))
 
         elif(tempValue.type == typeExpression.BOOL):
             newLabel = self.generator.newLabel()
@@ -32,8 +33,9 @@ class IPrint(Instruction):
             self.generator.addCallFunc("print_false_proc")
 
             self.generator.addLabel(newLabel)
-
+        elif(tempValue.type == typeExpression.STRING):
+            Impresiones.imprimirCadenas(self,tempValue.value)
         else:
             print("Error en print")
 
-        self.generator.addNewLine()
+        
