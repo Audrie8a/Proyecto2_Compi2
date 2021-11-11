@@ -2,7 +2,7 @@ from Abstract.Expression import Expression
 from Environment.Environment import Environment
 from Environment.Value import Value
 from Enum.typeExpression import typeExpression
-
+from Environment.Listas import Listas
 class NumberVal(Expression):
 
     def __init__(self, type: typeExpression, value) -> None:
@@ -16,4 +16,5 @@ class NumberVal(Expression):
             return Value(str(self.value),False,self.type)
 
         print("No se reconoce el tipo")
+        Listas.saveError("No se reconoce el tipo",0,0)
         return Value("0",False,typeExpression.INTEGER)

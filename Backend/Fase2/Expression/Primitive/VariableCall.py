@@ -3,6 +3,7 @@ from Abstract.Expression import Expression
 from Environment.Environment import Environment
 from Environment.Value import Value
 from Enum.typeExpression import typeExpression
+from Environment.Listas import Listas
 
 class VariableCall(Expression):
 

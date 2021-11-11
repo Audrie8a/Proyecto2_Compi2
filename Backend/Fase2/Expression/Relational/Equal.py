@@ -2,6 +2,7 @@ from Abstract.Expression import Expression
 from Environment.Environment import Environment
 from Environment.Value import Value
 from Enum.typeExpression import typeExpression
+from Impresiones3D.Impresiones import Impresiones
 
 class Equal(Expression):
 
@@ -22,17 +23,6 @@ class Equal(Expression):
 
             if(rightValue.type == typeExpression.INTEGER or rightValue.type == typeExpression.FLOAT):
 
-                newValue = Value("",False,typeExpression.BOOL)
-
-                if(self.trueLabel == ""):
-                    self.trueLabel = self.generator.newLabel()
+                newValue=Impresiones.imprimirRelatonals(self.generator,leftValue.getValue(),rightValue.getValue(),"IgualIgual")
+                return Value(newValue,True,typeExpression.BOOL)
                 
-                if(self.falseLabel == ""):
-                    self.falseLabel = self.generator.newLabel()
-
-                self.generator.addIf(leftValue.value, rightValue.value, "==",self.trueLabel)
-                self.generator.addGoto(self.falseLabel)
-
-                newValue.trueLabel = self.trueLabel
-                newValue.falseLabel = self.falseLabel
-                return newValue

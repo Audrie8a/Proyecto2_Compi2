@@ -1,10 +1,10 @@
 from Abstract.Expression import Expression
 from Environment.Environment import Environment
+from Environment.Listas import Listas
 from Environment.Value import Value
 from Enum.typeExpression import typeExpression
-from Environment.Listas import Listas
 
-class StringVal(Expression):
+class BooleanVal(Expression):
 
     def __init__(self, type: typeExpression, value) -> None:
         super().__init__()
@@ -13,7 +13,7 @@ class StringVal(Expression):
 
     def compile(self, environment: Environment) -> Value:
         
-        if(self.type == typeExpression.STRING):
+        if(self.type == typeExpression.BOOL ):
             return Value(str(self.value),False,self.type)
 
         print("No se reconoce el tipo")

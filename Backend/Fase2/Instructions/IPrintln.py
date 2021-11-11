@@ -33,15 +33,7 @@ class IPrintln(Instruction):
             self.generator.addPrintf("f", str(tempValue.getValue()))
 
         elif(tempValue.type == typeExpression.BOOL):
-            newLabel = self.generator.newLabel()
-            self.generator.addLabel(tempValue.trueLabel)
-            self.generator.addCallFunc("print_true_proc")
-            
-            self.generator.addGoto(newLabel)
-            self.generator.addLabel(tempValue.falseLabel)
-            self.generator.addCallFunc("print_false_proc")
-
-            self.generator.addLabel(newLabel)
+            Impresiones.imprimirBooleans(self.generator,tempValue.getValue())
         elif(tempValue.type == typeExpression.STRING):
             aux= len(tempValue.value)-1
             if tempValue.value[aux]=='~':
@@ -73,15 +65,7 @@ class IPrintln(Instruction):
                 compilador.generator.addPrintf("f", str(tempValue.getValue()))
 
             elif(tempValue.type == typeExpression.BOOL):
-                newLabel = compilador.generator.newLabel()
-                compilador.generator.addLabel(tempValue.trueLabel)
-                compilador.generator.addCallFunc("print_true_proc")
-                    
-                compilador.generator.addGoto(newLabel)
-                compilador.generator.addLabel(tempValue.falseLabel)
-                compilador.generator.addCallFunc("print_false_proc")
-
-                compilador.generator.addLabel(newLabel)
+                Impresiones.imprimirBooleans(compilador.generator,tempValue.getValue())
             elif(tempValue.type == typeExpression.STRING):
                 aux= len(tempValue.value)-1
                 if tempValue.value[aux]=='~':

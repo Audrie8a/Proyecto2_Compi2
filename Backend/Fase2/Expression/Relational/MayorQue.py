@@ -4,7 +4,7 @@ from Environment.Value import Value
 from Enum.typeExpression import typeExpression
 from Impresiones3D.Impresiones import Impresiones
 
-class Menor(Expression):
+class MayorQue(Expression):
 
     def __init__(self, left: Expression, right: Expression) -> None:
         super().__init__()
@@ -23,6 +23,6 @@ class Menor(Expression):
 
             if(rightValue.type == typeExpression.INTEGER or rightValue.type == typeExpression.FLOAT):
 
-                newValue=Impresiones.imprimirRelatonals(self.generator,leftValue.getValue(),rightValue.getValue(),"Menor")
+                newValue=Impresiones.imprimirRelatonals(self.generator,leftValue.getValue(),rightValue.getValue(),"MayorQue")
                 return Value(newValue,True,typeExpression.BOOL)
                 

@@ -24,6 +24,14 @@ class Generator:
         metodoPrint=Impresiones.PrintAux
         metodoPowString=Impresiones.PotenciaStrAux
         metodoMod=Impresiones.ModAux
+        metodoMenor=Impresiones.MenorAux
+        metodoMayor=Impresiones.MayorAux
+        metodoMenorQue=Impresiones.MenorQueAux
+        metodoMayorQue=Impresiones.MayorQueAux
+        metodoIgualIgual=Impresiones.IgualIgualAux
+        metodoNoIgual=Impresiones.NoIgualAux
+        metodoPrintBools=Impresiones.printBooleansAux
+
        
         tempCode: str = 'package main;\n'
         tempCode = tempCode + 'import("fmt");\n'
@@ -37,9 +45,16 @@ class Generator:
 
         #Funciones Quemadas
         tempCode += metodoPrint
+        tempCode += metodoPrintBools
         tempCode += metodoPow
         tempCode += metodoPowString
         tempCode += metodoMod
+        tempCode += metodoMenor
+        tempCode += metodoMayor
+        tempCode += metodoMenorQue
+        tempCode += metodoMayorQue
+        tempCode += metodoIgualIgual
+        tempCode += metodoNoIgual
         tempCode = tempCode + '\nfunc main(){\n'        
         tempCode = tempCode + "\n".join(self.code)
         tempCode = tempCode + '\n}\n'
