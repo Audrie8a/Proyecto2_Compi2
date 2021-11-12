@@ -14,6 +14,10 @@ class BooleanVal(Expression):
     def compile(self, environment: Environment) -> Value:
         
         if(self.type == typeExpression.BOOL ):
+            if self.value=="true":
+                self.value=1
+            else:
+                self.value=0
             return Value(str(self.value),False,self.type)
 
         print("No se reconoce el tipo")

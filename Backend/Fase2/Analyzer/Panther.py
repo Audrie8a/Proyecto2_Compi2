@@ -3,14 +3,17 @@ reservadas = {
     'println'   :   'IPRINTLN',
     
 
-    # 'Int64'     :   'RINT',
-    # 'Float64'   :   'RFLOAT',
-    # 'Bool'      :   'RBOOL',
-    # 'Char'      :   'RCHAR',
-    # 'String'    :   'RSTRING'
+     'Int64'     :   'RINT',
+     'Float64'   :   'RFLOAT',
+     'Bool'      :   'RBOOL',
+     'Char'      :   'RCHAR',
+     'String'    :   'RSTRING',
 
     'true'      :   'VERDADERO',
     'false'     :   'FALSO',
+
+    'global'    :   'RGLOBAL',
+    'local'     :   'RLOCAL',
 }
 
 tokens = [
@@ -31,7 +34,9 @@ tokens = [
 
 
     'PTCOMA',
-    'COMA',
+    'COMA',  
+    'FPTS',
+    'IGUAL',
     'ID',
 
     'MAYOR',
@@ -39,7 +44,13 @@ tokens = [
     'MAYORIGUAL',
     'MENORIGUAL',
     'IGUALIGUAL',
-    'NOIGUAL'
+    'NOIGUAL',
+    
+    'NOT',
+    'AND',
+    'OR'
+
+
  ] + list(reservadas.values())
 
 # Tokens
@@ -54,7 +65,8 @@ t_DIVIDIDO  = r'/'
 
 t_PTCOMA    = r';'
 t_COMA      = r','
-
+t_FPTS           = r'::'
+t_IGUAL          = r'='
 
 t_MAYOR     = r'>'
 t_MENOR     = r'<'
@@ -62,6 +74,9 @@ t_MAYORIGUAL     = r'>='
 t_MENORIGUAL     = r'<='
 t_IGUALIGUAL     = r'=='
 t_NOIGUAL        = r'!='
+t_NOT            = r'!'
+t_AND            = r'&&'
+t_OR             = r'\|\|'
 
 
 def t_DECIMAL(t):
@@ -89,7 +104,7 @@ def t_STRING(t):
 
 def t_ID(t):
       r'[a-zA-Z_][a-zA-Z_0-9]*'
-      t.type = reservadas.get(t.value.lower(),'ID')    # Check for reserved words
+      t.type = reservadas.get(t.value,'ID')    # Check for reserved words
       return t
 
 def t_CHAR(t):
@@ -134,6 +149,9 @@ from Expression.Relational.Mayor import Mayor
 from Expression.Relational.MayorQue import MayorQue
 from Expression.Relational.MenorQue import MenorQue
 from Expression.Relational.NoIgual import NoIgual
+from Expression.Logic.AndF import AndF
+from Expression.Logic.OrF import OrF
+from Expression.Logic.NotF import NotF
 from Expression.Primitive.VariableCall import VariableCall
 from Environment.Environment import Environment
 from Enum.typeExpression import typeExpression
@@ -145,12 +163,15 @@ lexer = lex.lex()
 
 # Asociación de operadores y precedencia
 precedence = (
+    ('left','OR'),  
+    ('left','AND'),
     ('left', 'MENOR','MENORIGUAL','MAYOR','MAYORIGUAL'),
     ('left','IGUALIGUAL','NOIGUAL'),
     ('left','MAS','MENOS'),
     ('left','POR','DIVIDIDO'),
     ('left','POW','MOD'),
-    ('right','UMENOS'),
+    ('right','UMENOS'),    
+    ('right','NOT'),
     )
 
 # Definición de la gramática=====================================================
@@ -158,7 +179,7 @@ def p_initial(t):
     '''initial : instructions'''
 
     generator: Generator = Generator()
-    globalEnv = Environment(None)
+    globalEnv = Environment(None,"father")
     for ins in t[1]:
         ins.generator = generator
         ins.compile(globalEnv)
@@ -182,29 +203,63 @@ def p_instructions(t):
 #====================================================
 def p_instruction(t):
     '''instruction     :    impresion PTCOMA
-                            | expresionR
-                            | empty
+                            | asignacion PTCOMA
+                            | expresionL
     '''
     t[0] = t[1]
 
 
-
-
 #====================================================
 
-# def p_Tipo(t):
-#     '''Tipo :   RINT
-#                 | RFLOAT
-#                 | RBOOL
-#                 | RCHAR
-#                 | RSTRING   
-#     '''
+def p_asignacion(t):
+    '''asignacion   :   TipoVarible ID  IGUAL expresionL Final
+                        | TipoVarible ID
+                        | ID IGUAL expresionL Final
+    '''
+    if len(t)==6:
+        if t[5]!=False:
+            t[0]=Declaration(t[1],t[2],t[4],t[5])
+        else:        
+            t[0]=Declaration(t[1],t[2],t[4],typeExpression.OBJETO)
+    elif len(t)==5:
+        if t[4]!=False:
+            t[0]=Declaration("none",t[1],t[3],t[4])
+        else:
+            t[0]=Declaration("none",t[1],t[3],typeExpression.OBJETO)
+
+    elif len(t)==3:
+        t[0]=Declaration(t[1],t[2],"null","null")
+#====================================================
+def p_TipoVarible(t):
+    '''TipoVarible   :  RGLOBAL
+                        | RLOCAL
+    '''
     
-#     if t[1]=='Int64'        : t[0]=typeExpression.INTEGER
-#     elif t[1]=='Float64'    : t[0]=typeExpression.FLOAT
-#     elif t[1]=='Bool'       : t[0]=typeExpression.BOOL
-#     elif t[1]=='Char'       : t[0]=typeExpression.CHAR
-#     elif t[1]=='String'     : t[0]=typeExpression.STRING 
+    t[0]= t[1]
+
+#====================================================
+def p_Final(t):
+    '''Final    :   FPTS Tipo
+                    | empty
+    '''
+    if len(t)==3:
+        t[0]=t[2]
+    else:
+        t[0]=False
+#====================================================
+def p_Tipo(t):
+    '''Tipo :   RINT
+                | RFLOAT
+                | RBOOL
+                | RCHAR
+                | RSTRING   
+    '''
+    
+    if t[1]=='Int64'        : t[0]=typeExpression.INTEGER
+    elif t[1]=='Float64'    : t[0]=typeExpression.FLOAT
+    elif t[1]=='Bool'       : t[0]=typeExpression.BOOL
+    elif t[1]=='Char'       : t[0]=typeExpression.CHAR
+    elif t[1]=='String'     : t[0]=typeExpression.STRING 
     
 
 #====================================================
@@ -219,7 +274,7 @@ def p_impresion(t):
 #====================================================
 def p_val(t):
     ''' val     :   val COMA val   
-                    | expresionR                
+                    | expresionL               
     '''
     
     if(len(t)!=2):
@@ -227,6 +282,26 @@ def p_val(t):
         t[0]=t[1]
     else:
         t[0]=[t[1]]
+
+#====================================================
+def p_expresion_logica(t):
+    '''expresionL : expresionL AND expresionL
+                  | expresionL OR expresionL
+                  | NOT expresionL
+                  | PARIZQ expresionL PARDER
+                  | expresionR
+    '''
+    if len(t)==4:
+        if t[2] == '&&'  : t[0] = AndF(t[1],t[3])
+        elif t[2] == '||': t[0] = OrF(t[1],t[3])
+        elif t[1] == '(': t[0]=t[2]
+    
+    elif len(t)==3:
+         t[0] = NotF(t[2])
+    elif len(t)==2:
+        t[0]=t[1]
+
+
 #====================================================
 def p_expresion_relacional(t):
     '''expresionR : expresionR MAYOR expresionR
@@ -308,7 +383,7 @@ def p_valor_Id (t):
 
 def p_empty(t):
      'empty :'
-     t[0]=False
+     pass
 
 def p_error(t):
     print("Error sintáctico en '%s'" % t.value)

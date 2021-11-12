@@ -43,8 +43,11 @@ class Pow(Expression):
                 return Value("0",False,typeExpression.INTEGER)
         elif(leftValue.type == typeExpression.STRING):
             if(rightValue.type == typeExpression.INTEGER):
-                #       left~right~
+                #       left~right~            
                 cadena= str(leftValue.value)+"~"+str(rightValue.value)+"~"
+                if leftValue.isTemp:
+                    return Value(cadena,True,typeExpression.STRING)
+                
                 return Value(cadena,False,typeExpression.STRING)
             else:
                 print("Error en Pow, no se puede elevar una cadena con un dato tipo float!")

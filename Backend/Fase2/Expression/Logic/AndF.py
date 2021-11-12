@@ -6,7 +6,7 @@ from Impresiones3D.Impresiones import Impresiones
 from Environment.Listas import Listas
 
 
-class Mayor(Expression):
+class AndF(Expression):
 
     def __init__(self, left: Expression, right: Expression) -> None:
         super().__init__()
@@ -21,29 +21,28 @@ class Mayor(Expression):
         leftValue: Value = self.leftExpression.compile(environment)
         rightValue: Value = self.rightExpression.compile(environment)
 
-        if(leftValue.type == typeExpression.INTEGER or leftValue.type == typeExpression.FLOAT):
-
-            if(rightValue.type == typeExpression.INTEGER or rightValue.type == typeExpression.FLOAT):
-
-                newValue=Impresiones.imprimirRelatonals(self.generator,leftValue.getValue(),rightValue.getValue(),"Mayor")
-                return Value(newValue,True,typeExpression.BOOL)
-        elif (leftValue.type==typeExpression.STRING):
-            if(rightValue.type==typeExpression.STRING):
-                newValue=Impresiones.imprimirRelationalsStr(self.generator,leftValue.getValue(),rightValue.getValue(),"MayorStr")
-                return Value(newValue,True,typeExpression.BOOL)
-        elif(leftValue.type == typeExpression.BOOL):
+        if(leftValue.type == typeExpression.BOOL):
 
             if(rightValue.type == typeExpression.BOOL):
                 izq="0"
                 der="0"
-                if leftValue.getValue()=="true":
+                if hasattr(rightValue,"isTemp"):
+                    if rightValue.isTemp:
+                        der=rightValue.getValue()
+                elif hasattr(leftValue,"isTemp"):
+                    if leftValue.isTemp:
+                        izq=leftValue.getValue()
+                    
+
+                if leftValue.getValue()=="true" or leftValue.getValue()=="1":
                     izq="1"
-                if rightValue.getValue()=="true":
+                if rightValue.getValue()=="true" or rightValue.getValue()=="1":
                     der="1"
-                newValue=Impresiones.imprimirRelatonals(self.generator,izq,der,"Mayor")
+
+                newValue=Impresiones.imprimirRelatonals(self.generator,izq,der,"AndF")
                 return Value(newValue,True,typeExpression.BOOL)
         else:
-            print("Error en Mayor")
-            Listas.saveError("Error en Mayor",0,0)
+            print("Error en And")
+            Listas.saveError("Error en And",0,0)
             return Value("0",False,typeExpression.BOOL) 
                 

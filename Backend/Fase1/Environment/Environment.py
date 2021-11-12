@@ -133,6 +133,7 @@ class Environment:
             Listas.saveError("Error al crear Variable " + id,linea,columna)
             return None
 
+    #Self están en father
     def saveVariableGlobal(self, id: str, value, type: typeExpression, isArray: bool, linea, columna):
         try:
             if self.Parameter.get(id)==None:

@@ -3,6 +3,7 @@ from Environment.Environment import Environment
 from Environment.Value import Value
 from Enum.typeExpression import typeExpression
 from Impresiones3D.Impresiones import Impresiones
+from Environment.Listas import Listas
 
 class Menor(Expression):
 
@@ -25,4 +26,22 @@ class Menor(Expression):
 
                 newValue=Impresiones.imprimirRelatonals(self.generator,leftValue.getValue(),rightValue.getValue(),"Menor")
                 return Value(newValue,True,typeExpression.BOOL)
-                
+        elif (leftValue.type==typeExpression.STRING):
+            if(rightValue.type==typeExpression.STRING):
+                newValue=Impresiones.imprimirRelationalsStr(self.generator,leftValue.getValue(),rightValue.getValue(),"MenorStr")
+                return Value(newValue,True,typeExpression.BOOL)
+        elif(leftValue.type == typeExpression.BOOL):
+
+            if(rightValue.type == typeExpression.BOOL):
+                izq="0"
+                der="0"
+                if leftValue.getValue()=="true":
+                    izq="1"
+                if rightValue.getValue()=="true":
+                    der="1"
+                newValue=Impresiones.imprimirRelatonals(self.generator,izq,der,"Menor")
+                return Value(newValue,True,typeExpression.BOOL)
+        else:
+            print("Error en Menor")
+            Listas.saveError("Error en Menor",0,0)
+            return Value("0",False,typeExpression.BOOL)                

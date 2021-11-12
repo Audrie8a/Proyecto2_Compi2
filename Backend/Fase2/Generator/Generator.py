@@ -17,6 +17,8 @@ class Generator:
     def getUsedTemps(self) -> str:
         return ",".join(self.tempList)
     
+    def getUsedId(self) -> str:
+        return ",".join(Listas.idLst)
 
     #Obtener el codigo generado
     def getCode(self) -> str:
@@ -31,18 +33,28 @@ class Generator:
         metodoIgualIgual=Impresiones.IgualIgualAux
         metodoNoIgual=Impresiones.NoIgualAux
         metodoPrintBools=Impresiones.printBooleansAux
+        metodoMenorStr= Impresiones.MenorStrAux
+        metodoMayorStr= Impresiones.MayorStrAux
+        metodoMenorQueStr= Impresiones.MenorQueStrAux
+        metodoMayorQueStr= Impresiones.MayorQueStrAux
+        metodoIgualIgualStr= Impresiones.IgualIgualStrAux
+        metodoNoIgualStr= Impresiones.NoIgualStrAux
+        metodoAndF= Impresiones.AndAux
+        metodoOrF= Impresiones.OrAux
+        metodoNotF= Impresiones.NotAux
 
        
         tempCode: str = 'package main;\n'
         tempCode = tempCode + 'import("fmt");\n'
-        tempCode = tempCode + "var P, H float64;\n"
+        tempCode = tempCode + "\nvar P, H float64;\n"
         tempCode = tempCode + "var stack[78000]float64;\n"
         tempCode = tempCode + "var heap["+str(self.H)+"]float64;\n"
 
 
         if(len(self.tempList) > 0):
-            tempCode = tempCode + "var " + self.getUsedTemps() + " float64;\n\n"
-
+            tempCode = tempCode + "\nvar " + self.getUsedTemps() + " float64;\n"
+        if(len(Listas.idLst)>0):
+            tempCode = tempCode + "var " + self.getUsedId()+ " float64;\n"
         #Funciones Quemadas
         tempCode += metodoPrint
         tempCode += metodoPrintBools
@@ -55,8 +67,19 @@ class Generator:
         tempCode += metodoMayorQue
         tempCode += metodoIgualIgual
         tempCode += metodoNoIgual
+        tempCode += metodoMenorStr
+        tempCode += metodoMayorStr
+        tempCode += metodoMenorQueStr
+        tempCode += metodoMayorQueStr
+        tempCode += metodoIgualIgualStr
+        tempCode += metodoNoIgualStr
+        tempCode += metodoAndF
+        tempCode += metodoOrF
+        tempCode += metodoNotF
+
         tempCode = tempCode + '\nfunc main(){\n'        
-        tempCode = tempCode + "\n".join(self.code)
+        tempCode = tempCode + "\n".join(self.code)        
+        tempCode = tempCode + "\n fmt.Printf(\"%c\",10);"
         tempCode = tempCode + '\n}\n'
         
         return tempCode
@@ -148,3 +171,4 @@ class Generator:
             return Indice
         
         return Indice
+    

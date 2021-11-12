@@ -6,6 +6,7 @@ class Listas:
     lstSalida=[]
     lstSimbolos=[]
     TablaSimbolos=[]
+    idLst=[]
     lstAst=[]
     Errores=False
     Ast=False
@@ -33,26 +34,30 @@ class Listas:
         Listas.TablaSimbolos.append([Nombre,Tipo,Ambito,visibilidad,tama, posicion,rol, Fecha])
         contador=0
         for dato in Listas.lstSimbolos:
-            if dato[0]==Nombre and dato[6]==rol and dato[2]==Ambito:
+            if dato[0]==Nombre and dato[6]==rol and dato[2]==Ambito and dato[3]==visibilidad:
                 Listas.lstSimbolos[contador]=[Nombre,Tipo,Ambito,visibilidad,tama,posicion,rol]  
                 return;          
             contador=contador+1
         Listas.lstSimbolos.append([Nombre,Tipo,Ambito,visibilidad,tama, posicion,rol])
+        Listas.guardarId(Nombre,rol)
+
 
 
     # False: Si existe, True: Si no existe puede crearlo
     @staticmethod
-    def checkExistencia(Nombre, Tipo, Ambito, visibilidad,tama,posicion, rol):
+    def checkExistencia(Nombre, Tipo, Ambito, visibilidad,tama, rol):
         contador=0
         for dato in Listas.lstSimbolos:
             if dato[0]==Nombre and dato[6]!=rol:
-                Listas.saveError("Error, ya se ha declarado otro dato con este id"+Nombre)
+                Listas.saveError("Error, ya se ha declarado otro dato con este id"+Nombre,0,0)
                 print("Error, ya se ha declarado otro dato con este id"+Nombre)
                 return False
             if dato[0]==Nombre and dato[6]==rol:
                 return False
             contador=contador+1
         return True
+
+    
 
     @staticmethod
     def searchTabla(Nombre, Ambito):
@@ -138,3 +143,15 @@ class Listas:
         print("-----------------------------------------------------------------------")
         for var in Listas.lstAst:
             print(var)
+
+    def guardarId(id,rol):
+        condicion=True
+        for ids in Listas.idLst:
+            if ids==id :
+                condicion=False
+            
+        if rol!="variable":
+            condicion=False
+
+        if condicion:
+            Listas.idLst.append(id)

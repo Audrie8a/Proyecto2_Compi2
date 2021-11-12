@@ -16,23 +16,6 @@ class VariableCall(Expression):
         retSym:Symbol = environment.getVariable(self.id)
         newTemp = self.generator.newTemp()
 
-        self.generator.addGetStack(newTemp,str(retSym.position))
-
-        if(retSym.type != typeExpression.BOOL):
-            return Value(newTemp,True,retSym.type)
-        else:
-            val = Value("",False,typeExpression.BOOL)
-
-            if(self.trueLabel == ""):
-                self.trueLabel = self.generator.newLabel()
-                
-            if(self.falseLabel == ""):
-                self.falseLabel = self.generator.newLabel()
-
-            self.generator.addIf(newTemp,"1","==",self.trueLabel)
-            self.generator.addGoto(self.falseLabel)
-
-            val.trueLabel = self.trueLabel
-            val.falseLabel = self.falseLabel
-
-            return val
+        self.generator.addGetStack(newTemp,str(retSym.Position))
+        return Value(newTemp,True,retSym.Tipo)
+        

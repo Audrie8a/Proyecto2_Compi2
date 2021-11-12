@@ -7,7 +7,7 @@ from Environment.Environment import Environment
 class Expression(ABC):
 
     def __init__(self) -> None:
-        super().__init__()
+        #super().__init__()
         self.generator: Generator = None
         self.trueLabel = ""
         self.falseLabel = ""
