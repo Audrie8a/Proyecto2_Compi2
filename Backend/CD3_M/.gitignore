@@ -1,0 +1,9 @@
+**/parser.out
+**/parsetab.py
+
+**/.vscode
+**/__pycache__
+
+entrada.txt
+main.py
+ply
