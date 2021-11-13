@@ -1,4 +1,3 @@
-from typing import List
 from Enum.typeExpression import typeExpression
 from Environment.Symbol import Symbol
 from Environment.Environment import Environment

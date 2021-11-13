@@ -14,6 +14,9 @@ reservadas = {
 
     'global'    :   'RGLOBAL',
     'local'     :   'RLOCAL',
+    'if'        :   'RIF',
+    'elseif'      :   'RELIF',
+    'else'      :   'RELSE',
 }
 
 tokens = [
@@ -204,10 +207,43 @@ def p_instructions(t):
 def p_instruction(t):
     '''instruction     :    impresion PTCOMA
                             | asignacion PTCOMA
+                            | condicion PTCOMA
                             | expresionL
     '''
     t[0] = t[1]
 
+#====================================================
+def p_codndicion(t):
+    ''' condicion   :   RIF expresionL block REND
+                        | RIF expresionL block RELSE block REND
+                        | RIF expresionL block elifList REND
+    '''
+    if len(t)==5:
+        t[0]=t[2]#ifSt(t[2],t[3],None,t.lineno(1),t.lexpos(0))
+    elif len(t)==7:
+        t[0]=t[2]#ifSt(t[2],t[3],t[5],t.lineno(1),t.lexpos(0))
+    elif len(t)==6:
+        t[0]=t[2]#ifSt(t[2],t[3],t[4],t.lineno(1),t.lexpos(0))
+
+#-----------------------------------------------------------------
+def p_elifList(t):
+    ''' elifList    :   RELIF expresionL block
+                        | RELIF expresionL block RELSE block
+                        | RELIF expresionL block elifList
+    '''
+    if len(t)==4:
+        t[0]=t[2]#ifSt(t[2],t[3],None,t.lineno(1),t.lexpos(0))
+    elif len(t)==6:
+        t[0]=t[2]#ifSt(t[2],t[3],t[5],t.lineno(1),t.lexpos(0))
+    elif len(t)==5:
+        t[0]=t[2]#ifSt(t[2],t[3],t[4],t.lineno(1),t.lexpos(0))
+
+
+#------------------------------------------------------------------
+def p_block(t):
+    '''block    : instrucciones
+    '''
+    t[0]=t[1]
 
 #====================================================
 
