@@ -14,37 +14,70 @@ export class AnalisisComponent implements OnInit {
     public _router: Router,
     private renderer: Renderer2,
     private element: ElementRef) { }
-
-  txtEntrada:string ="";
-  lstSalida:any=[] 
-  txtSalida:string="...";   
+    opt=""
+    txtEntrada:string ="";
+    lstSalida:any=[] 
+    txtSalida:string="...";   
 
   ngOnInit(): void {
   }
 
   async Analizar(){
-    let respuesta = await this.analisisService.sendEntrada(this.txtEntrada);
-    if(respuesta!= null){
-      alert("Analizando");
-      const json = JSON.stringify(respuesta);
-      const obj = JSON.parse(json);
-      if(obj.Errores=='True'){
-        alert("Se conetraron errores!");
-      }
-      this.lstSalida=obj.Respuesta;
-      this.txtSalida="";
-      for(let x=0; x< obj.Tamano;x++) {
-        if (this.lstSalida[x][1]==="print"){
-          this.txtSalida+=this.lstSalida[x][0];
-        }else{
-          this.txtSalida+="\n"+this.lstSalida[x][0]
+    if (this.opt=="1"){
+      alert("Compilar");
+      
+      let respuesta = await this.analisisService.sendEntrada(this.txtEntrada);
+      if(respuesta!= null){
+        alert("Analizando");
+        const json = JSON.stringify(respuesta);
+        const obj = JSON.parse(json);
+        if(obj.Errores=='True'){
+          alert("Se conetraron errores!");
         }
+        this.txtSalida=obj.Respuesta;       
+        
+      }else{
+        alert("Error: No se logró comunicación");
       }
-      
-      
+
+
+    }else if (this.opt=="2"){
+      alert("Mirilla");
+      let respuesta = await this.analisisService.sendMirilla(this.txtEntrada);
+      if(respuesta!= null){
+        alert("Analizando");
+        const json = JSON.stringify(respuesta);
+        const obj = JSON.parse(json);
+        if(obj.Errores=='True'){
+          alert("Se conetraron errores!");
+        }
+        this.txtSalida=obj.Respuesta;       
+        
+      }else{
+        alert("Error: No se logró comunicación");
+      }
+    }else if (this.opt=="3"){
+      alert("Bloques")
+      let respuesta = await this.analisisService.sendBloques(this.txtEntrada);
+      if(respuesta!= null){
+        alert("Analizando");
+        const json = JSON.stringify(respuesta);
+        const obj = JSON.parse(json);
+        if(obj.Errores=='True'){
+          alert("Se conetraron errores!");
+        }
+        this.txtSalida=obj.Respuesta;       
+        
+      }else{
+        alert("Error: No se logró comunicación");
+      }
     }else{
-      alert("Error: No se logró comunicación");
+      alert("Por favor elija una opción!");
     }
+
+
+    
+    
     
   }
 

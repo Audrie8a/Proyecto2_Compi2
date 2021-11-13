@@ -14,5 +14,11 @@
 </div>
 </div>
 <div id="Boton" class="col text-center">
+    
+    <select [(ngModel)]="opt" id="country" name="country">
+        <option name="opt" value="1">Compilar</option>
+        <option name="opt" value="2">Mirilla</option>
+        <option name="opt" value="3">Bloque</option>
+    </select>
     <button (click)="Analizar()" >Analizar</button>
 </div>

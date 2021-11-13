@@ -6,10 +6,12 @@ class Listas:
     lstSalida=[]
     lstSimbolos=[]
     TablaSimbolos=[]
+    lstOptimizados=[]
     idLst=[]
     lstAst=[]
     Errores=False
     Ast=False
+    txtSalida=""
 
     #--------Banderas----------------
     cicloWhile=False
@@ -128,11 +130,15 @@ class Listas:
         Listas.lstSimbolos.clear()
         Listas.lstAst.clear()
 
+
     def setErrores(valor):
         Listas.Errores=valor
     
     def getErrores():
         return Listas.Errores
+    
+    def getOptimizado():
+        return Listas.lstOptimizados
 
     def getAst():
         return Listas.lstAst

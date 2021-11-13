@@ -13,6 +13,7 @@ export class ReportesComponent implements OnInit {
   imageErrores?:string;
   Errores:any;
   Simbolos:any;
+  Optimizacion:any;
   AST: any;
   txtSalida:string="";
 
@@ -72,6 +73,20 @@ export class ReportesComponent implements OnInit {
     }
   }
 
+  async cargarTablaOptimizacion(){
+    this.Errores=[]
+    let aux= await this.reporteService.getLstOptimizado();
+    let json=JSON.stringify(aux)
+      let obj= JSON.parse(json) 
+    if(obj.Respuesta!='Error'){
+      
+      this.Optimizacion=obj.Respuesta;
+    }else{
+      alert("No hay reglas de optimización que mostrar!");
+    }
+  }
+
+
   async cragarTablaSimbolos(){
     this.Simbolos=[]
     let aux= await this.reporteService.getLstSimbolos();
@@ -79,25 +94,12 @@ export class ReportesComponent implements OnInit {
       let obj= JSON.parse(json) 
     if(obj.Respuesta!='Error'){
       
-      this.Simbolos=obj.Respuesta.reverse();
+      this.Simbolos=obj.Respuesta;
     }else{
-      alert("No hay errores semánticos que mostrar!");
+      alert("No hay símbolos que mostrar!");
     }
   }
 
-  async cargarAst(){
-    this.AST=[]
-    let aux= await this.reporteService.getAst();
-    let json=JSON.stringify(aux)
-      let obj= JSON.parse(json) 
-    if(obj.Respuesta!='Error'){
-      
-      this.AST=obj.Respuesta;
-      this.d3()
-    }else{
-      alert("Error al generar arbol!");
-    }
-  }
   d3(){
     let aux="";
     this.AST.forEach((element: string) => {
@@ -115,8 +117,7 @@ export class ReportesComponent implements OnInit {
     }else if(opcion==3){
       this.Simbolos=[] 
     }else if(opcion==2){
-      this.AST=[]
-      this.txtSalida="";
+      this.Optimizacion=[]
     }
     
    
