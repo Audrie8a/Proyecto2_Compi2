@@ -1,0 +1,1 @@
+<table class="table table-hover" style="cellpadding="0" cellspacing="0" width="80%""><tr style="font-weight: bold; background: lightblue;"><td>Fila</td><td>Tipo</td><td>Codigo a optimizar</td><td>Codigo optimizado</td><td>Regla No.</td></tr><tr><td>21</td><td>Mirilla</td><td>t4 = h+0;</td><td>t4 = h;</td><td>7</td></tr></table>

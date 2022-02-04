@@ -1,0 +1,13 @@
+digraph G {nodo[shape=plaintext label=<<table >
+<tr>
+<td >No</td>
+<td >Descripcion</td>
+<td >Linea</td>
+<td >Columna</td>
+<td >Fecha y Hora</td>
+</tr>
+<tr>
+<td  colspan="5">No se encontraron Errores semanticos!</td>
+</tr>
+</table>
+>];}

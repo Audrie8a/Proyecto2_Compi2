@@ -1,0 +1,100 @@
+
+.Imagen{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    margin-top: 20px;
+}
+
+.example-headers-align .mat-expansion-panel-header-title,
+.example-headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.example-headers-align .mat-form-field + .mat-form-field {
+  margin-left: 8px;
+}
+.Boton:hover {
+    box-shadow: 0 12px 16px 0 rgba(78, 77, 77, 0.24), 0 17px 50px 0 rgba(87, 86, 86, 0.19);
+}
+
+.Boton {
+    background: rgb(2,8,25);
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    
+  }
+  
+.mat-expansion-panel{
+    background: rgb(5,9,19);
+    background: linear-gradient(333deg, rgba(5,9,19,0.9699230033810399) 0%, rgba(15,7,20,0.9755252442773985) 52%, rgba(36,27,45,1) 89%);    
+}
+
+.mat-expansion-panel-header{
+    background: rgb(2,8,25);
+    background: linear-gradient(333deg, rgba(0, 4, 12, 0.97) 0%, rgba(11, 10, 12, 0.976) 52%, rgba(7, 1, 12, 0.883) 89%);   
+    }
+
+.mat-expansion-panel-header-title{
+    color: rgb(219, 207, 207);
+    font-size: 20px;
+    margin: 4px 2px;
+}
+
+.mat-expansion-panel-header-description{
+    color: rgb(219, 207, 207);
+    font-size: 16px;
+    margin: 4px 2px;
+}
+
+#Tabla {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  align-items: center;
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+#Tabla td, #Tabla th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  color: #ddd;
+}
+
+#Tabla tr:nth-child(even){background-color: #f2f2f2;}
+
+#Tabla tr:hover {background-color: rgb(46, 33, 46);}
+
+#Tabla th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #5e555d;
+  color: rgb(15, 7, 7);
+}
+.shadow-textarea textarea.form-control::placeholder {
+  font-weight: 300;
+}
+.shadow-textarea textarea.form-control {
+  padding-left: 0.8rem;
+  width: 500px;
+  height: 400px;
+  margin: 100px;
+  margin-top: 10px;
+}

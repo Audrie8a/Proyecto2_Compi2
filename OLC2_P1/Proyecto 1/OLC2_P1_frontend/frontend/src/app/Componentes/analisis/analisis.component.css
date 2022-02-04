@@ -1,0 +1,56 @@
+#Panel-Analisis{
+    margin: 50px;
+    margin-bottom: 5px;
+}
+.shadow-textarea textarea.form-control::placeholder {
+    font-weight: 300;
+}
+.shadow-textarea textarea.form-control {
+    padding-left: 0.8rem;
+    width: 500px;
+    height: 400px;
+    margin: 100px;
+    margin-top: 10px;
+}
+
+#lblEntrada{
+    margin-left: 60px;
+    margin-top: 40px;
+    font-size: 30px;
+}
+
+#Boton button{
+    margin:25px;
+    height: 60px;
+    width: 200px;
+    background: rgba(0,0,0,0.6);
+    background: radial-gradient(circle, rgba(152, 58, 99, 0.486) 0%, rgba(29, 57, 91, 0.315) 100%);
+    
+    color:white
+}
+
+#Boton2 button{
+    background: rgba(0,0,0,0.6);
+    background: radial-gradient(circle, rgba(152, 58, 99, 0.486) 0%, rgba(29, 57, 91, 0.315) 100%);
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    color:white
+}
+
+
+
+.Boton2 {
+    background: rgb(2,8,25);
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    
+  }

@@ -1,0 +1,7 @@
+x=12;
+
+function hola(x::Int64)
+    print(x);
+end;
+
+hola(2);

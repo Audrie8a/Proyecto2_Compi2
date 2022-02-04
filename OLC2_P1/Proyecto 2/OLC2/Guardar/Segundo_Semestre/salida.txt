@@ -1,0 +1,2298 @@
+package main
+import ("fmt")
+
+var P, H float64;
+var stack [50000000]float64;
+var heap [50000000]float64;
+var t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10 float64;
+var t11, t12, t13, t14, t15, t16, t17, t18, t19, t20 float64;
+var t21, t22, t23, t24, t25, t26, t27, t28, t29, t30 float64;
+var t31, t32, t33, t34, t35, t36, t37, t38, t39, t40 float64;
+var t41, t42, t43, t44, t45, t46, t47, t48, t49, t50 float64;
+var t51, t52, t53, t54, t55, t56, t57, t58, t59, t60 float64;
+var t61, t62, t63, t64, t65, t66, t67, t68, t69, t70 float64;
+var t71, t72, t73, t74, t75, t76, t77, t78, t79, t80 float64;
+var t81, t82, t83, t84, t85, t86, t87, t88, t89, t90 float64;
+var t91, t92, t93, t94, t95, t96, t97, t98, t99, t100 float64;
+var t101, t102, t103, t104, t105, t106, t107, t108, t109, t110 float64;
+var t111, t112, t113, t114, t115, t116, t117, t118, t119, t120 float64;
+var t121, t122, t123, t124, t125, t126, t127, t128, t129, t130 float64;
+var t131, t132, t133, t134, t135, t136, t137, t138, t139, t140 float64;
+var t141, t142, t143, t144, t145, t146, t147, t148, t149, t150 float64;
+var t151, t152, t153, t154, t155, t156, t157, t158, t159, t160 float64;
+var t161, t162, t163, t164, t165, t166, t167, t168, t169, t170 float64;
+var t171, t172, t173, t174, t175, t176, t177, t178, t179, t180 float64;
+var t181, t182, t183, t184, t185, t186, t187, t188, t189, t190 float64;
+var t191, t192, t193, t194, t195, t196, t197, t198, t199, t200 float64;
+var t201, t202, t203, t204, t205 float64;
+
+// -----------------------------------------------------------
+// FUNCIONES NATIVAS 
+func printStr(){
+	t1 = P + 1; // Puntero del parametro
+	t2 = stack[int(t1)];
+	L1:
+	t3 = heap[int(t2)];
+	if t3 == -1 { goto L0; }
+	fmt.Printf("%c", int(t3));
+	t2 = t2 + 1; //aumentar el contador del heap
+	goto L1;
+	L0:
+	return; 
+}
+	func isEqualsStr(){
+	t130 = P + 1; 
+	t131 = stack[int(t130)];
+	t130 = t130 + 1; 
+	t132 = stack[int(t130)];
+	L28:
+	t133 = heap[int(t131)];
+	t134 = heap[int(t132)];
+	if t133 != t134 { goto L29; }
+	if t133 == - 1 { goto L30; }
+	t131 = t131 + 1; 
+	t132 = t132 + 1; 
+	goto L28;
+	L30:
+	stack[int(P)] = 1;
+	goto L27;
+	L29:
+	stack[int(P)] = 0;
+	L27:
+	return; 
+}
+	func joinStr(){
+	t177 = H; // Puntero, iniciara la nueva cadena
+	t178 = P + 1; //Puntero, para el 1re parametro
+	t180 = stack[int(t178)];
+	t179 = P + 2; //Puntero, para el 2do parametro
+	L46:
+	t181 = heap[int(t180)]; // Valor de la cadena No.1
+	if t181 == -1 { goto L47; }
+	heap[int(H)] = t181;
+	H = H + 1;
+	t180 = t180 + 1; //Aumentar el contador heap
+	goto L46;
+	L47:
+	t180 = stack[int(t179)];
+	L48:
+	t181 = heap[int(t180)]; // Valor de la cadena No.2
+	if t181 == -1 { goto L45; }
+	heap[int(H)] = t181;
+	H = H + 1;
+	t180 = t180 + 1; //Aumentar el contador heap
+	goto L48;
+	L45:
+	heap[int(H)] = -1; // FIN CADENA
+	H = H + 1;
+	stack[int(P)] = t177; // Guardar el inicio de la cadena unida
+	return; 
+}
+
+
+
+// ===========================================================
+// MAIN 
+// ===========================================================
+func main() {
+	 P = 0; // Puntero Stack 
+	 H = 0; //Puntero Heap 
+	// PRIMITIVO: 1
+	// -----------------------------------------------------------
+	// ASIGNACION: X
+	stack[int(0)] = 1;
+	// FIN ASIGNACION DE X
+	// -----------------------------------------------------------
+	
+	// PRIMITIVO: 1
+	// -----------------------------------------------------------
+	// ASIGNACION: Y
+	stack[int(1)] = 1;
+	// FIN ASIGNACION DE Y
+	// -----------------------------------------------------------
+	
+	
+	// -----------------------------------------------------------
+	// INICIO PRINT
+	// PRIMITIVO: ---------------------------------
+	
+	t0 = H;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = -1; // FIN CADENA
+	H = H + 1;
+	
+	// -----------------------------------------------------------
+	// GUARDAR VARIABLE EN STACK
+	t4 = P + 2; 
+	t4 = t4 + 1; 
+	stack[int(t4)] = t0;
+	// -----------------------------------------------------------
+	
+	P = P + 2;
+	printStr();
+	
+	// GUARDAR RETURN DE LA FUNCION
+	t5 = stack[int(P)];
+	// REGRESO DE ENTORNO
+	P = P - 2;
+	
+	fmt.Printf("%c", int(10));
+	// FIN PRINT
+	// -----------------------------------------------------------
+	
+	// -----------------------------------------------------------
+	// INICIO PRINT
+	// PRIMITIVO: TABLAS DE MULTIPLICAR CON WHILE
+	
+	t6 = H;
+	heap[int(H)] = 84; // T
+	H = H + 1;
+	heap[int(H)] = 97; // a
+	H = H + 1;
+	heap[int(H)] = 98; // b
+	H = H + 1;
+	heap[int(H)] = 108; // l
+	H = H + 1;
+	heap[int(H)] = 97; // a
+	H = H + 1;
+	heap[int(H)] = 115; // s
+	H = H + 1;
+	heap[int(H)] = 32; //  
+	H = H + 1;
+	heap[int(H)] = 100; // d
+	H = H + 1;
+	heap[int(H)] = 101; // e
+	H = H + 1;
+	heap[int(H)] = 32; //  
+	H = H + 1;
+	heap[int(H)] = 109; // m
+	H = H + 1;
+	heap[int(H)] = 117; // u
+	H = H + 1;
+	heap[int(H)] = 108; // l
+	H = H + 1;
+	heap[int(H)] = 116; // t
+	H = H + 1;
+	heap[int(H)] = 105; // i
+	H = H + 1;
+	heap[int(H)] = 112; // p
+	H = H + 1;
+	heap[int(H)] = 108; // l
+	H = H + 1;
+	heap[int(H)] = 105; // i
+	H = H + 1;
+	heap[int(H)] = 99; // c
+	H = H + 1;
+	heap[int(H)] = 97; // a
+	H = H + 1;
+	heap[int(H)] = 114; // r
+	H = H + 1;
+	heap[int(H)] = 32; //  
+	H = H + 1;
+	heap[int(H)] = 99; // c
+	H = H + 1;
+	heap[int(H)] = 111; // o
+	H = H + 1;
+	heap[int(H)] = 110; // n
+	H = H + 1;
+	heap[int(H)] = 32; //  
+	H = H + 1;
+	heap[int(H)] = 87; // W
+	H = H + 1;
+	heap[int(H)] = 104; // h
+	H = H + 1;
+	heap[int(H)] = 105; // i
+	H = H + 1;
+	heap[int(H)] = 108; // l
+	H = H + 1;
+	heap[int(H)] = 101; // e
+	H = H + 1;
+	heap[int(H)] = -1; // FIN CADENA
+	H = H + 1;
+	
+	// -----------------------------------------------------------
+	// GUARDAR VARIABLE EN STACK
+	t7 = P + 2; 
+	t7 = t7 + 1; 
+	stack[int(t7)] = t6;
+	// -----------------------------------------------------------
+	
+	P = P + 2;
+	printStr();
+	
+	// GUARDAR RETURN DE LA FUNCION
+	t8 = stack[int(P)];
+	// REGRESO DE ENTORNO
+	P = P - 2;
+	
+	fmt.Printf("%c", int(10));
+	// FIN PRINT
+	// -----------------------------------------------------------
+	
+	// -----------------------------------------------------------
+	// INICIO PRINT
+	// PRIMITIVO: ---------------------------------
+	
+	t9 = H;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = -1; // FIN CADENA
+	H = H + 1;
+	
+	// -----------------------------------------------------------
+	// GUARDAR VARIABLE EN STACK
+	t10 = P + 2; 
+	t10 = t10 + 1; 
+	stack[int(t10)] = t9;
+	// -----------------------------------------------------------
+	
+	P = P + 2;
+	printStr();
+	
+	// GUARDAR RETURN DE LA FUNCION
+	t11 = stack[int(P)];
+	// REGRESO DE ENTORNO
+	P = P - 2;
+	
+	fmt.Printf("%c", int(10));
+	// FIN PRINT
+	// -----------------------------------------------------------
+	// -----------------------------------------------------------
+	// WHILE
+	L2:
+	// -----------------------------------------------------------
+	// ACCESO A VARIABLE: X
+	t12 = stack[int(0)];
+	// FIN ACCESO
+	// -----------------------------------------------------------
+	
+	// PRIMITIVO: 10
+	if t12 <= 10 { goto L3; }
+	goto L4;
+	L3:
+	// -----------------------------------------------------------
+	// WHILE
+	L5:
+	// -----------------------------------------------------------
+	// ACCESO A VARIABLE: Y
+	t13 = stack[int(1)];
+	// FIN ACCESO
+	// -----------------------------------------------------------
+	
+	// PRIMITIVO: 10
+	if t13 <= 10 { goto L6; }
+	goto L7;
+	L6:
+	
+	// -----------------------------------------------------------
+	// INICIO PRINT
+	// -----------------------------------------------------------
+	// ACCESO A VARIABLE: X
+	t14 = stack[int(0)];
+	// FIN ACCESO
+	// -----------------------------------------------------------
+	
+	fmt.Printf("%d", int(t14));
+	// FIN PRINT
+	// -----------------------------------------------------------
+	
+	// -----------------------------------------------------------
+	// INICIO PRINT
+	// PRIMITIVO: X
+	
+	t15 = H;
+	heap[int(H)] = 120; // x
+	H = H + 1;
+	heap[int(H)] = -1; // FIN CADENA
+	H = H + 1;
+	
+	// -----------------------------------------------------------
+	// GUARDAR VARIABLE EN STACK
+	t16 = P + 2; 
+	t16 = t16 + 1; 
+	stack[int(t16)] = t15;
+	// -----------------------------------------------------------
+	
+	P = P + 2;
+	printStr();
+	
+	// GUARDAR RETURN DE LA FUNCION
+	t17 = stack[int(P)];
+	// REGRESO DE ENTORNO
+	P = P - 2;
+	
+	// FIN PRINT
+	// -----------------------------------------------------------
+	
+	// -----------------------------------------------------------
+	// INICIO PRINT
+	// -----------------------------------------------------------
+	// ACCESO A VARIABLE: Y
+	t18 = stack[int(1)];
+	// FIN ACCESO
+	// -----------------------------------------------------------
+	
+	fmt.Printf("%d", int(t18));
+	// FIN PRINT
+	// -----------------------------------------------------------
+	
+	// -----------------------------------------------------------
+	// INICIO PRINT
+	// PRIMITIVO: =
+	
+	t19 = H;
+	heap[int(H)] = 61; // =
+	H = H + 1;
+	heap[int(H)] = -1; // FIN CADENA
+	H = H + 1;
+	
+	// -----------------------------------------------------------
+	// GUARDAR VARIABLE EN STACK
+	t20 = P + 2; 
+	t20 = t20 + 1; 
+	stack[int(t20)] = t19;
+	// -----------------------------------------------------------
+	
+	P = P + 2;
+	printStr();
+	
+	// GUARDAR RETURN DE LA FUNCION
+	t21 = stack[int(P)];
+	// REGRESO DE ENTORNO
+	P = P - 2;
+	
+	// FIN PRINT
+	// -----------------------------------------------------------
+	
+	// -----------------------------------------------------------
+	// INICIO PRINT
+	// -----------------------------------------------------------
+	// ACCESO A VARIABLE: X
+	t22 = stack[int(0)];
+	// FIN ACCESO
+	// -----------------------------------------------------------
+	
+	// -----------------------------------------------------------
+	// ACCESO A VARIABLE: Y
+	t23 = stack[int(1)];
+	// FIN ACCESO
+	// -----------------------------------------------------------
+	
+	t24 = t22 * t23; 
+	
+	fmt.Printf("%d", int(t24));
+	fmt.Printf("%c", int(10));
+	// FIN PRINT
+	// -----------------------------------------------------------
+	// -----------------------------------------------------------
+	// ACCESO A VARIABLE: Y
+	t25 = stack[int(1)];
+	// FIN ACCESO
+	// -----------------------------------------------------------
+	
+	// PRIMITIVO: 1
+	t26 = t25 + 1; 
+	
+	// -----------------------------------------------------------
+	// ASIGNACION: Y
+	stack[int(1)] = t26;
+	// FIN ASIGNACION DE Y
+	// -----------------------------------------------------------
+	
+	goto L5;
+	L7:
+	// FIN WHILE
+	// -----------------------------------------------------------
+	
+	
+	// -----------------------------------------------------------
+	// INICIO PRINT
+	// PRIMITIVO: -----------------------------
+	
+	t27 = H;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = -1; // FIN CADENA
+	H = H + 1;
+	
+	// -----------------------------------------------------------
+	// GUARDAR VARIABLE EN STACK
+	t28 = P + 2; 
+	t28 = t28 + 1; 
+	stack[int(t28)] = t27;
+	// -----------------------------------------------------------
+	
+	P = P + 2;
+	printStr();
+	
+	// GUARDAR RETURN DE LA FUNCION
+	t29 = stack[int(P)];
+	// REGRESO DE ENTORNO
+	P = P - 2;
+	
+	fmt.Printf("%c", int(10));
+	// FIN PRINT
+	// -----------------------------------------------------------
+	// -----------------------------------------------------------
+	// ACCESO A VARIABLE: X
+	t30 = stack[int(0)];
+	// FIN ACCESO
+	// -----------------------------------------------------------
+	
+	// PRIMITIVO: 1
+	t31 = t30 + 1; 
+	
+	// -----------------------------------------------------------
+	// ASIGNACION: X
+	stack[int(0)] = t31;
+	// FIN ASIGNACION DE X
+	// -----------------------------------------------------------
+	
+	// PRIMITIVO: 1
+	// -----------------------------------------------------------
+	// ASIGNACION: Y
+	stack[int(1)] = 1;
+	// FIN ASIGNACION DE Y
+	// -----------------------------------------------------------
+	
+	goto L2;
+	L4:
+	// FIN WHILE
+	// -----------------------------------------------------------
+	
+	
+	// -----------------------------------------------------------
+	// INICIO PRINT
+	// PRIMITIVO: ---------------------------------
+	
+	t32 = H;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = -1; // FIN CADENA
+	H = H + 1;
+	
+	// -----------------------------------------------------------
+	// GUARDAR VARIABLE EN STACK
+	t33 = P + 2; 
+	t33 = t33 + 1; 
+	stack[int(t33)] = t32;
+	// -----------------------------------------------------------
+	
+	P = P + 2;
+	printStr();
+	
+	// GUARDAR RETURN DE LA FUNCION
+	t34 = stack[int(P)];
+	// REGRESO DE ENTORNO
+	P = P - 2;
+	
+	fmt.Printf("%c", int(10));
+	// FIN PRINT
+	// -----------------------------------------------------------
+	
+	// -----------------------------------------------------------
+	// INICIO PRINT
+	// PRIMITIVO:   TABLAS DE MULTIPLICAR CON FOR
+	
+	t35 = H;
+	heap[int(H)] = 32; //  
+	H = H + 1;
+	heap[int(H)] = 32; //  
+	H = H + 1;
+	heap[int(H)] = 84; // T
+	H = H + 1;
+	heap[int(H)] = 97; // a
+	H = H + 1;
+	heap[int(H)] = 98; // b
+	H = H + 1;
+	heap[int(H)] = 108; // l
+	H = H + 1;
+	heap[int(H)] = 97; // a
+	H = H + 1;
+	heap[int(H)] = 115; // s
+	H = H + 1;
+	heap[int(H)] = 32; //  
+	H = H + 1;
+	heap[int(H)] = 100; // d
+	H = H + 1;
+	heap[int(H)] = 101; // e
+	H = H + 1;
+	heap[int(H)] = 32; //  
+	H = H + 1;
+	heap[int(H)] = 109; // m
+	H = H + 1;
+	heap[int(H)] = 117; // u
+	H = H + 1;
+	heap[int(H)] = 108; // l
+	H = H + 1;
+	heap[int(H)] = 116; // t
+	H = H + 1;
+	heap[int(H)] = 105; // i
+	H = H + 1;
+	heap[int(H)] = 112; // p
+	H = H + 1;
+	heap[int(H)] = 108; // l
+	H = H + 1;
+	heap[int(H)] = 105; // i
+	H = H + 1;
+	heap[int(H)] = 99; // c
+	H = H + 1;
+	heap[int(H)] = 97; // a
+	H = H + 1;
+	heap[int(H)] = 114; // r
+	H = H + 1;
+	heap[int(H)] = 32; //  
+	H = H + 1;
+	heap[int(H)] = 99; // c
+	H = H + 1;
+	heap[int(H)] = 111; // o
+	H = H + 1;
+	heap[int(H)] = 110; // n
+	H = H + 1;
+	heap[int(H)] = 32; //  
+	H = H + 1;
+	heap[int(H)] = 70; // F
+	H = H + 1;
+	heap[int(H)] = 111; // o
+	H = H + 1;
+	heap[int(H)] = 114; // r
+	H = H + 1;
+	heap[int(H)] = -1; // FIN CADENA
+	H = H + 1;
+	
+	// -----------------------------------------------------------
+	// GUARDAR VARIABLE EN STACK
+	t36 = P + 2; 
+	t36 = t36 + 1; 
+	stack[int(t36)] = t35;
+	// -----------------------------------------------------------
+	
+	P = P + 2;
+	printStr();
+	
+	// GUARDAR RETURN DE LA FUNCION
+	t37 = stack[int(P)];
+	// REGRESO DE ENTORNO
+	P = P - 2;
+	
+	fmt.Printf("%c", int(10));
+	// FIN PRINT
+	// -----------------------------------------------------------
+	
+	// -----------------------------------------------------------
+	// INICIO PRINT
+	// PRIMITIVO: ---------------------------------
+	
+	t38 = H;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = -1; // FIN CADENA
+	H = H + 1;
+	
+	// -----------------------------------------------------------
+	// GUARDAR VARIABLE EN STACK
+	t39 = P + 2; 
+	t39 = t39 + 1; 
+	stack[int(t39)] = t38;
+	// -----------------------------------------------------------
+	
+	P = P + 2;
+	printStr();
+	
+	// GUARDAR RETURN DE LA FUNCION
+	t40 = stack[int(P)];
+	// REGRESO DE ENTORNO
+	P = P - 2;
+	
+	fmt.Printf("%c", int(10));
+	// FIN PRINT
+	// -----------------------------------------------------------
+	// -----------------------------------------------------------
+	// INICIO FOR
+	// PRIMITIVO: 1
+	// PRIMITIVO: 10
+	t41 = P + 2; 
+	stack[int(t41)] = 1;
+	
+	L8:
+	t43 = P + 2; //Posicionar el puntero
+	t42 = stack[int(t43)];
+	if t42 > 10 { goto L9; }
+	// -----------------------------------------------------------
+	// INICIO FOR
+	// PRIMITIVO: 1
+	// PRIMITIVO: 10
+	t44 = P + 3; 
+	stack[int(t44)] = 1;
+	
+	L11:
+	t46 = P + 3; //Posicionar el puntero
+	t45 = stack[int(t46)];
+	if t45 > 10 { goto L12; }
+	
+	// -----------------------------------------------------------
+	// INICIO PRINT
+	// -----------------------------------------------------------
+	// ACCESO A VARIABLE: I
+	t48 = P + 2; //Posicionar el puntero
+	t47 = stack[int(t48)];
+	// FIN ACCESO
+	// -----------------------------------------------------------
+	
+	fmt.Printf("%d", int(t47));
+	// FIN PRINT
+	// -----------------------------------------------------------
+	
+	// -----------------------------------------------------------
+	// INICIO PRINT
+	// PRIMITIVO: X
+	
+	t49 = H;
+	heap[int(H)] = 120; // x
+	H = H + 1;
+	heap[int(H)] = -1; // FIN CADENA
+	H = H + 1;
+	
+	// -----------------------------------------------------------
+	// GUARDAR VARIABLE EN STACK
+	t50 = P + 4; 
+	t50 = t50 + 1; 
+	stack[int(t50)] = t49;
+	// -----------------------------------------------------------
+	
+	P = P + 4;
+	printStr();
+	
+	// GUARDAR RETURN DE LA FUNCION
+	t51 = stack[int(P)];
+	// REGRESO DE ENTORNO
+	P = P - 4;
+	
+	// FIN PRINT
+	// -----------------------------------------------------------
+	
+	// -----------------------------------------------------------
+	// INICIO PRINT
+	// -----------------------------------------------------------
+	// ACCESO A VARIABLE: J
+	t53 = P + 3; //Posicionar el puntero
+	t52 = stack[int(t53)];
+	// FIN ACCESO
+	// -----------------------------------------------------------
+	
+	fmt.Printf("%d", int(t52));
+	// FIN PRINT
+	// -----------------------------------------------------------
+	
+	// -----------------------------------------------------------
+	// INICIO PRINT
+	// PRIMITIVO: =
+	
+	t54 = H;
+	heap[int(H)] = 61; // =
+	H = H + 1;
+	heap[int(H)] = -1; // FIN CADENA
+	H = H + 1;
+	
+	// -----------------------------------------------------------
+	// GUARDAR VARIABLE EN STACK
+	t55 = P + 4; 
+	t55 = t55 + 1; 
+	stack[int(t55)] = t54;
+	// -----------------------------------------------------------
+	
+	P = P + 4;
+	printStr();
+	
+	// GUARDAR RETURN DE LA FUNCION
+	t56 = stack[int(P)];
+	// REGRESO DE ENTORNO
+	P = P - 4;
+	
+	// FIN PRINT
+	// -----------------------------------------------------------
+	
+	// -----------------------------------------------------------
+	// INICIO PRINT
+	// -----------------------------------------------------------
+	// ACCESO A VARIABLE: I
+	t58 = P + 2; //Posicionar el puntero
+	t57 = stack[int(t58)];
+	// FIN ACCESO
+	// -----------------------------------------------------------
+	
+	// -----------------------------------------------------------
+	// ACCESO A VARIABLE: J
+	t60 = P + 3; //Posicionar el puntero
+	t59 = stack[int(t60)];
+	// FIN ACCESO
+	// -----------------------------------------------------------
+	
+	t61 = t57 * t59; 
+	
+	fmt.Printf("%d", int(t61));
+	fmt.Printf("%c", int(10));
+	// FIN PRINT
+	// -----------------------------------------------------------
+	goto L13;
+	
+	L13:
+	t63 = P + 3; //Posicionar el puntero
+	t62 = stack[int(t63)];
+	t62 = t62 + 1; 
+	stack[int(t63)] = t62;
+	goto L11;
+	L12:
+	// FIN FOR
+	// -----------------------------------------------------------
+	
+	
+	// -----------------------------------------------------------
+	// INICIO PRINT
+	// PRIMITIVO: --------------------------
+	
+	t64 = H;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = 45; // -
+	H = H + 1;
+	heap[int(H)] = -1; // FIN CADENA
+	H = H + 1;
+	
+	// -----------------------------------------------------------
+	// GUARDAR VARIABLE EN STACK
+	t65 = P + 3; 
+	t65 = t65 + 1; 
+	stack[int(t65)] = t64;
+	// -----------------------------------------------------------
+	
+	P = P + 3;
+	printStr();
+	
+	// GUARDAR RETURN DE LA FUNCION
+	t66 = stack[int(P)];
+	// REGRESO DE ENTORNO
+	P = P - 3;
+	
+	fmt.Printf("%c", int(10));
+	// FIN PRINT
+	// -----------------------------------------------------------
+	goto L10;
+	
+	L10:
+	t68 = P + 2; //Posicionar el puntero
+	t67 = stack[int(t68)];
+	t67 = t67 + 1; 
+	stack[int(t68)] = t67;
+	goto L8;
+	L9:
+	// FIN FOR
+	// -----------------------------------------------------------
+	
+	// PRIMITIVO: 10
+	// -----------------------------------------------------------
+	// ASIGNACION: ITERACIONES
+	stack[int(2)] = 10;
+	// FIN ASIGNACION DE ITERACIONES
+	// -----------------------------------------------------------
+	
+	// PRIMITIVO: 0
+	// -----------------------------------------------------------
+	// ASIGNACION: TEMPORAL
+	stack[int(3)] = 0;
+	// FIN ASIGNACION DE TEMPORAL
+	// -----------------------------------------------------------
+	
+	// -----------------------------------------------------------
+	// WHILE
+	L14:
+	// -----------------------------------------------------------
+	// ACCESO A VARIABLE: TEMPORAL
+	t69 = stack[int(3)];
+	// FIN ACCESO
+	// -----------------------------------------------------------
+	
+	// -----------------------------------------------------------
+	// ACCESO A VARIABLE: ITERACIONES
+	t70 = stack[int(2)];
+	// FIN ACCESO
+	// -----------------------------------------------------------
+	
+	if t69 <= t70 { goto L15; }
+	goto L16;
+	L15:
+	// -----------------------------------------------------------
+	// ACCESO A VARIABLE: TEMPORAL
+	t71 = stack[int(3)];
+	// FIN ACCESO
+	// -----------------------------------------------------------
+	
+	// -----------------------------------------------------------
+	// ASIGNACION: NUMERO
+	t72 = P + 4; 
+	stack[int(t72)] = t71;
+	// FIN ASIGNACION DE NUMERO
+	// -----------------------------------------------------------
+	
+	// -----------------------------------------------------------
+	// INICIO IF
+	// -----------------------------------------------------------
+	// ACCESO A VARIABLE: NUMERO
+	t74 = P + 4; //Posicionar el puntero
+	t73 = stack[int(t74)];
+	// FIN ACCESO
+	// -----------------------------------------------------------
+	
+	// PRIMITIVO: 0
+	if t73 <= 0 { goto L17; }
+	goto L18;
+	L17:
+	
+	// -----------------------------------------------------------
+	// INICIO PRINT
+	// PRIMITIVO: FACTORIAL DE 
+	
+	t75 = H;
+	heap[int(H)] = 70; // F
+	H = H + 1;
+	heap[int(H)] = 97; // a
+	H = H + 1;
+	heap[int(H)] = 99; // c
+	H = H + 1;
+	heap[int(H)] = 116; // t
+	H = H + 1;
+	heap[int(H)] = 111; // o
+	H = H + 1;
+	heap[int(H)] = 114; // r
+	H = H + 1;
+	heap[int(H)] = 105; // i
+	H = H + 1;
+	heap[int(H)] = 97; // a
+	H = H + 1;
+	heap[int(H)] = 108; // l
+	H = H + 1;
+	heap[int(H)] = 32; //  
+	H = H + 1;
+	heap[int(H)] = 100; // d
+	H = H + 1;
+	heap[int(H)] = 101; // e
+	H = H + 1;
+	heap[int(H)] = 32; //  
+	H = H + 1;
+	heap[int(H)] = -1; // FIN CADENA
+	H = H + 1;
+	
+	// -----------------------------------------------------------
+	// GUARDAR VARIABLE EN STACK
+	t76 = P + 5; 
+	t76 = t76 + 1; 
+	stack[int(t76)] = t75;
+	// -----------------------------------------------------------
+	
+	P = P + 5;
+	printStr();
+	
+	// GUARDAR RETURN DE LA FUNCION
+	t77 = stack[int(P)];
+	// REGRESO DE ENTORNO
+	P = P - 5;
+	
+	// FIN PRINT
+	// -----------------------------------------------------------
+	
+	// -----------------------------------------------------------
+	// INICIO PRINT
+	// -----------------------------------------------------------
+	// ACCESO A VARIABLE: TEMPORAL
+	t78 = stack[int(3)];
+	// FIN ACCESO
+	// -----------------------------------------------------------
+	
+	fmt.Printf("%d", int(t78));
+	// FIN PRINT
+	// -----------------------------------------------------------
+	
+	// -----------------------------------------------------------
+	// INICIO PRINT
+	// PRIMITIVO:  = 0
+	
+	t79 = H;
+	heap[int(H)] = 32; //  
+	H = H + 1;
+	heap[int(H)] = 61; // =
+	H = H + 1;
+	heap[int(H)] = 32; //  
+	H = H + 1;
+	heap[int(H)] = 48; // 0
+	H = H + 1;
+	heap[int(H)] = -1; // FIN CADENA
+	H = H + 1;
+	
+	// -----------------------------------------------------------
+	// GUARDAR VARIABLE EN STACK
+	t80 = P + 5; 
+	t80 = t80 + 1; 
+	stack[int(t80)] = t79;
+	// -----------------------------------------------------------
+	
+	P = P + 5;
+	printStr();
+	
+	// GUARDAR RETURN DE LA FUNCION
+	t81 = stack[int(P)];
+	// REGRESO DE ENTORNO
+	P = P - 5;
+	
+	fmt.Printf("%c", int(10));
+	// FIN PRINT
+	// -----------------------------------------------------------
+	// -----------------------------------------------------------
+	// ACCESO A VARIABLE: TEMPORAL
+	t82 = stack[int(3)];
+	// FIN ACCESO
+	// -----------------------------------------------------------
+	
+	// PRIMITIVO: 1
+	t83 = t82 + 1; 
+	
+	// -----------------------------------------------------------
+	// ASIGNACION: TEMPORAL
+	stack[int(3)] = t83;
+	// FIN ASIGNACION DE TEMPORAL
+	// -----------------------------------------------------------
+	
+	goto L14;
+	L18:
+	// FIN IF
+	// -----------------------------------------------------------
+	
+	// PRIMITIVO: 1
+	// -----------------------------------------------------------
+	// ASIGNACION: FACTORIAL
+	t84 = P + 5; 
+	stack[int(t84)] = 1;
+	// FIN ASIGNACION DE FACTORIAL
+	// -----------------------------------------------------------
+	
+	// -----------------------------------------------------------
+	// WHILE
+	L19:
+	// -----------------------------------------------------------
+	// ACCESO A VARIABLE: NUMERO
+	t86 = P + 4; //Posicionar el puntero
+	t85 = stack[int(t86)];
+	// FIN ACCESO
+	// -----------------------------------------------------------
+	
+	// PRIMITIVO: 1
+	if t85 > 1 { goto L20; }
+	goto L21;
+	L20:
+	// -----------------------------------------------------------
+	// ACCESO A VARIABLE: FACTORIAL
+	t88 = P + 5; //Posicionar el puntero
+	t87 = stack[int(t88)];
+	// FIN ACCESO
+	// -----------------------------------------------------------
+	
+	// -----------------------------------------------------------
+	// ACCESO A VARIABLE: NUMERO
+	t90 = P + 4; //Posicionar el puntero
+	t89 = stack[int(t90)];
+	// FIN ACCESO
+	// -----------------------------------------------------------
+	
+	t91 = t87 * t89; 
+	
+	// -----------------------------------------------------------
+	// ASIGNACION: FACTORIAL
+	t92 = P + 5; 
+	stack[int(t92)] = t91;
+	// FIN ASIGNACION DE FACTORIAL
+	// -----------------------------------------------------------
+	
+	// -----------------------------------------------------------
+	// ACCESO A VARIABLE: NUMERO
+	t94 = P + 4; //Posicionar el puntero
+	t93 = stack[int(t94)];
+	// FIN ACCESO
+	// -----------------------------------------------------------
+	
+	// PRIMITIVO: 1
+	t95 = t93 - 1; 
+	
+	// -----------------------------------------------------------
+	// ASIGNACION: NUMERO
+	t96 = P + 4; 
+	stack[int(t96)] = t95;
+	// FIN ASIGNACION DE NUMERO
+	// -----------------------------------------------------------
+	
+	goto L19;
+	L21:
+	// FIN WHILE
+	// -----------------------------------------------------------
+	
+	
+	// -----------------------------------------------------------
+	// INICIO PRINT
+	// PRIMITIVO: FACTORIAL DE 
+	
+	t97 = H;
+	heap[int(H)] = 70; // F
+	H = H + 1;
+	heap[int(H)] = 97; // a
+	H = H + 1;
+	heap[int(H)] = 99; // c
+	H = H + 1;
+	heap[int(H)] = 116; // t
+	H = H + 1;
+	heap[int(H)] = 111; // o
+	H = H + 1;
+	heap[int(H)] = 114; // r
+	H = H + 1;
+	heap[int(H)] = 105; // i
+	H = H + 1;
+	heap[int(H)] = 97; // a
+	H = H + 1;
+	heap[int(H)] = 108; // l
+	H = H + 1;
+	heap[int(H)] = 32; //  
+	H = H + 1;
+	heap[int(H)] = 100; // d
+	H = H + 1;
+	heap[int(H)] = 101; // e
+	H = H + 1;
+	heap[int(H)] = 32; //  
+	H = H + 1;
+	heap[int(H)] = -1; // FIN CADENA
+	H = H + 1;
+	
+	// -----------------------------------------------------------
+	// GUARDAR VARIABLE EN STACK
+	t98 = P + 6; 
+	t98 = t98 + 1; 
+	stack[int(t98)] = t97;
+	// -----------------------------------------------------------
+	
+	P = P + 6;
+	printStr();
+	
+	// GUARDAR RETURN DE LA FUNCION
+	t99 = stack[int(P)];
+	// REGRESO DE ENTORNO
+	P = P - 6;
+	
+	// FIN PRINT
+	// -----------------------------------------------------------
+	
+	// -----------------------------------------------------------
+	// INICIO PRINT
+	// -----------------------------------------------------------
+	// ACCESO A VARIABLE: TEMPORAL
+	t100 = stack[int(3)];
+	// FIN ACCESO
+	// -----------------------------------------------------------
+	
+	fmt.Printf("%d", int(t100));
+	// FIN PRINT
+	// -----------------------------------------------------------
+	
+	// -----------------------------------------------------------
+	// INICIO PRINT
+	// PRIMITIVO:  = 
+	
+	t101 = H;
+	heap[int(H)] = 32; //  
+	H = H + 1;
+	heap[int(H)] = 61; // =
+	H = H + 1;
+	heap[int(H)] = 32; //  
+	H = H + 1;
+	heap[int(H)] = -1; // FIN CADENA
+	H = H + 1;
+	
+	// -----------------------------------------------------------
+	// GUARDAR VARIABLE EN STACK
+	t102 = P + 6; 
+	t102 = t102 + 1; 
+	stack[int(t102)] = t101;
+	// -----------------------------------------------------------
+	
+	P = P + 6;
+	printStr();
+	
+	// GUARDAR RETURN DE LA FUNCION
+	t103 = stack[int(P)];
+	// REGRESO DE ENTORNO
+	P = P - 6;
+	
+	// FIN PRINT
+	// -----------------------------------------------------------
+	
+	// -----------------------------------------------------------
+	// INICIO PRINT
+	// -----------------------------------------------------------
+	// ACCESO A VARIABLE: FACTORIAL
+	t105 = P + 5; //Posicionar el puntero
+	t104 = stack[int(t105)];
+	// FIN ACCESO
+	// -----------------------------------------------------------
+	
+	fmt.Printf("%d", int(t104));
+	fmt.Printf("%c", int(10));
+	// FIN PRINT
+	// -----------------------------------------------------------
+	// -----------------------------------------------------------
+	// ACCESO A VARIABLE: TEMPORAL
+	t106 = stack[int(3)];
+	// FIN ACCESO
+	// -----------------------------------------------------------
+	
+	// PRIMITIVO: 1
+	t107 = t106 + 1; 
+	
+	// -----------------------------------------------------------
+	// ASIGNACION: TEMPORAL
+	stack[int(3)] = t107;
+	// FIN ASIGNACION DE TEMPORAL
+	// -----------------------------------------------------------
+	
+	goto L14;
+	L16:
+	// FIN WHILE
+	// -----------------------------------------------------------
+	
+	
+	// -----------------------------------------------------------
+	// ARREGLO
+	t108 = H; // Apuntador donde se guarda el array
+	t109 = H; // Contador del heap
+	H = H + 8; //Almacenar espacio en heap longitud + array
+	heap[int(t109)] = 7; // Guadar longtud arreglo
+	t109 = t109 + 1; 
+	// GUARDAR VALORES
+	// PRIMITIVO: DOMINGO
+	
+	t110 = H;
+	heap[int(H)] = 68; // D
+	H = H + 1;
+	heap[int(H)] = 111; // o
+	H = H + 1;
+	heap[int(H)] = 109; // m
+	H = H + 1;
+	heap[int(H)] = 105; // i
+	H = H + 1;
+	heap[int(H)] = 110; // n
+	H = H + 1;
+	heap[int(H)] = 103; // g
+	H = H + 1;
+	heap[int(H)] = 111; // o
+	H = H + 1;
+	heap[int(H)] = -1; // FIN CADENA
+	H = H + 1;
+	
+	heap[int(t109)] = t110;
+	t109 = t109 + 1; 
+	// PRIMITIVO: LUNES
+	
+	t111 = H;
+	heap[int(H)] = 76; // L
+	H = H + 1;
+	heap[int(H)] = 117; // u
+	H = H + 1;
+	heap[int(H)] = 110; // n
+	H = H + 1;
+	heap[int(H)] = 101; // e
+	H = H + 1;
+	heap[int(H)] = 115; // s
+	H = H + 1;
+	heap[int(H)] = -1; // FIN CADENA
+	H = H + 1;
+	
+	heap[int(t109)] = t111;
+	t109 = t109 + 1; 
+	// PRIMITIVO: MARTES
+	
+	t112 = H;
+	heap[int(H)] = 77; // M
+	H = H + 1;
+	heap[int(H)] = 97; // a
+	H = H + 1;
+	heap[int(H)] = 114; // r
+	H = H + 1;
+	heap[int(H)] = 116; // t
+	H = H + 1;
+	heap[int(H)] = 101; // e
+	H = H + 1;
+	heap[int(H)] = 115; // s
+	H = H + 1;
+	heap[int(H)] = -1; // FIN CADENA
+	H = H + 1;
+	
+	heap[int(t109)] = t112;
+	t109 = t109 + 1; 
+	// PRIMITIVO: MIERCOLES
+	
+	t113 = H;
+	heap[int(H)] = 77; // M
+	H = H + 1;
+	heap[int(H)] = 105; // i
+	H = H + 1;
+	heap[int(H)] = 101; // e
+	H = H + 1;
+	heap[int(H)] = 114; // r
+	H = H + 1;
+	heap[int(H)] = 99; // c
+	H = H + 1;
+	heap[int(H)] = 111; // o
+	H = H + 1;
+	heap[int(H)] = 108; // l
+	H = H + 1;
+	heap[int(H)] = 101; // e
+	H = H + 1;
+	heap[int(H)] = 115; // s
+	H = H + 1;
+	heap[int(H)] = -1; // FIN CADENA
+	H = H + 1;
+	
+	heap[int(t109)] = t113;
+	t109 = t109 + 1; 
+	// PRIMITIVO: JUEVES
+	
+	t114 = H;
+	heap[int(H)] = 74; // J
+	H = H + 1;
+	heap[int(H)] = 117; // u
+	H = H + 1;
+	heap[int(H)] = 101; // e
+	H = H + 1;
+	heap[int(H)] = 118; // v
+	H = H + 1;
+	heap[int(H)] = 101; // e
+	H = H + 1;
+	heap[int(H)] = 115; // s
+	H = H + 1;
+	heap[int(H)] = -1; // FIN CADENA
+	H = H + 1;
+	
+	heap[int(t109)] = t114;
+	t109 = t109 + 1; 
+	// PRIMITIVO: VIERNES
+	
+	t115 = H;
+	heap[int(H)] = 86; // V
+	H = H + 1;
+	heap[int(H)] = 105; // i
+	H = H + 1;
+	heap[int(H)] = 101; // e
+	H = H + 1;
+	heap[int(H)] = 114; // r
+	H = H + 1;
+	heap[int(H)] = 110; // n
+	H = H + 1;
+	heap[int(H)] = 101; // e
+	H = H + 1;
+	heap[int(H)] = 115; // s
+	H = H + 1;
+	heap[int(H)] = -1; // FIN CADENA
+	H = H + 1;
+	
+	heap[int(t109)] = t115;
+	t109 = t109 + 1; 
+	// PRIMITIVO: SABADO
+	
+	t116 = H;
+	heap[int(H)] = 83; // S
+	H = H + 1;
+	heap[int(H)] = 97; // a
+	H = H + 1;
+	heap[int(H)] = 98; // b
+	H = H + 1;
+	heap[int(H)] = 97; // a
+	H = H + 1;
+	heap[int(H)] = 100; // d
+	H = H + 1;
+	heap[int(H)] = 111; // o
+	H = H + 1;
+	heap[int(H)] = -1; // FIN CADENA
+	H = H + 1;
+	
+	heap[int(t109)] = t116;
+	t109 = t109 + 1; 
+	// -----------------------------------------------------------
+	// FIN ARREGLO
+	
+	// -----------------------------------------------------------
+	// ASIGNACION: DIAS
+	stack[int(4)] = t108;
+	// FIN ASIGNACION DE DIAS
+	// -----------------------------------------------------------
+	
+	// -----------------------------------------------------------
+	// INICIO FOR
+	// -----------------------------------------------------------
+	// ACCESO A VARIABLE: DIAS
+	t117 = stack[int(4)];
+	// FIN ACCESO
+	// -----------------------------------------------------------
+	
+	t118 = P + 5; 
+	t119 = t117;
+	stack[int(t118)] = t117;
+	t120 = stack[int(t118)];
+	t121 = heap[int(t120)];
+	t124 = 0;
+	t126 = t119;
+	t126 = t126 + 1; 
+	L22:
+	t123 = P + t118; 
+	t122 = stack[int(t123)];
+	if t124 < t121 { goto L23; }
+	goto L24;
+	L23:
+	t125 = heap[int(t126)];
+	stack[int(5)] = t125;
+	// -----------------------------------------------------------
+	// INICIO IF
+	// -----------------------------------------------------------
+	// ACCESO A VARIABLE: I
+	t128 = P + 5; //Posicionar el puntero
+	t127 = stack[int(t128)];
+	// FIN ACCESO
+	// -----------------------------------------------------------
+	
+	// PRIMITIVO: LUNES
+	
+	t129 = H;
+	heap[int(H)] = 76; // L
+	H = H + 1;
+	heap[int(H)] = 117; // u
+	H = H + 1;
+	heap[int(H)] = 110; // n
+	H = H + 1;
+	heap[int(H)] = 101; // e
+	H = H + 1;
+	heap[int(H)] = 115; // s
+	H = H + 1;
+	heap[int(H)] = -1; // FIN CADENA
+	H = H + 1;
+	
+	
+	// -----------------------------------------------------------
+	t135 = P + 6; 
+	t135 = t135 + 1; 
+	stack[int(t135)] = t127;
+	t135 = t135 + 1; 
+	stack[int(t135)] = t129;
+	P = P + 6;
+	isEqualsStr();
+	t136 = stack[int(P)];
+	P = P - 6;
+	// -----------------------------------------------------------
+	
+	if t136 == 1 { goto L25; }
+	goto L26;
+	L25:
+	
+	// -----------------------------------------------------------
+	// INICIO PRINT
+	// PRIMITIVO: 1
+	fmt.Printf("%d", int(1));
+	fmt.Printf("%c", int(10));
+	// FIN PRINT
+	// -----------------------------------------------------------
+	L26:
+	// FIN IF
+	// -----------------------------------------------------------
+	
+	// -----------------------------------------------------------
+	// INICIO IF
+	// -----------------------------------------------------------
+	// ACCESO A VARIABLE: I
+	t138 = P + 5; //Posicionar el puntero
+	t137 = stack[int(t138)];
+	// FIN ACCESO
+	// -----------------------------------------------------------
+	
+	// PRIMITIVO: MARTES
+	
+	t139 = H;
+	heap[int(H)] = 77; // M
+	H = H + 1;
+	heap[int(H)] = 97; // a
+	H = H + 1;
+	heap[int(H)] = 114; // r
+	H = H + 1;
+	heap[int(H)] = 116; // t
+	H = H + 1;
+	heap[int(H)] = 101; // e
+	H = H + 1;
+	heap[int(H)] = 115; // s
+	H = H + 1;
+	heap[int(H)] = -1; // FIN CADENA
+	H = H + 1;
+	
+	
+	// -----------------------------------------------------------
+	t140 = P + 6; 
+	t140 = t140 + 1; 
+	stack[int(t140)] = t137;
+	t140 = t140 + 1; 
+	stack[int(t140)] = t139;
+	P = P + 6;
+	isEqualsStr();
+	t141 = stack[int(P)];
+	P = P - 6;
+	// -----------------------------------------------------------
+	
+	if t141 == 1 { goto L31; }
+	goto L32;
+	L31:
+	
+	// -----------------------------------------------------------
+	// INICIO PRINT
+	// PRIMITIVO: 2
+	fmt.Printf("%d", int(2));
+	fmt.Printf("%c", int(10));
+	// FIN PRINT
+	// -----------------------------------------------------------
+	L32:
+	// FIN IF
+	// -----------------------------------------------------------
+	
+	// -----------------------------------------------------------
+	// INICIO IF
+	// -----------------------------------------------------------
+	// ACCESO A VARIABLE: I
+	t143 = P + 5; //Posicionar el puntero
+	t142 = stack[int(t143)];
+	// FIN ACCESO
+	// -----------------------------------------------------------
+	
+	// PRIMITIVO: MIERCOLES
+	
+	t144 = H;
+	heap[int(H)] = 77; // M
+	H = H + 1;
+	heap[int(H)] = 105; // i
+	H = H + 1;
+	heap[int(H)] = 101; // e
+	H = H + 1;
+	heap[int(H)] = 114; // r
+	H = H + 1;
+	heap[int(H)] = 99; // c
+	H = H + 1;
+	heap[int(H)] = 111; // o
+	H = H + 1;
+	heap[int(H)] = 108; // l
+	H = H + 1;
+	heap[int(H)] = 101; // e
+	H = H + 1;
+	heap[int(H)] = 115; // s
+	H = H + 1;
+	heap[int(H)] = -1; // FIN CADENA
+	H = H + 1;
+	
+	
+	// -----------------------------------------------------------
+	t145 = P + 6; 
+	t145 = t145 + 1; 
+	stack[int(t145)] = t142;
+	t145 = t145 + 1; 
+	stack[int(t145)] = t144;
+	P = P + 6;
+	isEqualsStr();
+	t146 = stack[int(P)];
+	P = P - 6;
+	// -----------------------------------------------------------
+	
+	if t146 == 1 { goto L33; }
+	goto L34;
+	L33:
+	
+	// -----------------------------------------------------------
+	// INICIO PRINT
+	// PRIMITIVO: 3
+	fmt.Printf("%d", int(3));
+	fmt.Printf("%c", int(10));
+	// FIN PRINT
+	// -----------------------------------------------------------
+	L34:
+	// FIN IF
+	// -----------------------------------------------------------
+	
+	// -----------------------------------------------------------
+	// INICIO IF
+	// -----------------------------------------------------------
+	// ACCESO A VARIABLE: I
+	t148 = P + 5; //Posicionar el puntero
+	t147 = stack[int(t148)];
+	// FIN ACCESO
+	// -----------------------------------------------------------
+	
+	// PRIMITIVO: JUEVES
+	
+	t149 = H;
+	heap[int(H)] = 74; // J
+	H = H + 1;
+	heap[int(H)] = 117; // u
+	H = H + 1;
+	heap[int(H)] = 101; // e
+	H = H + 1;
+	heap[int(H)] = 118; // v
+	H = H + 1;
+	heap[int(H)] = 101; // e
+	H = H + 1;
+	heap[int(H)] = 115; // s
+	H = H + 1;
+	heap[int(H)] = -1; // FIN CADENA
+	H = H + 1;
+	
+	
+	// -----------------------------------------------------------
+	t150 = P + 6; 
+	t150 = t150 + 1; 
+	stack[int(t150)] = t147;
+	t150 = t150 + 1; 
+	stack[int(t150)] = t149;
+	P = P + 6;
+	isEqualsStr();
+	t151 = stack[int(P)];
+	P = P - 6;
+	// -----------------------------------------------------------
+	
+	if t151 == 1 { goto L35; }
+	goto L36;
+	L35:
+	
+	// -----------------------------------------------------------
+	// INICIO PRINT
+	// PRIMITIVO: 4
+	fmt.Printf("%d", int(4));
+	fmt.Printf("%c", int(10));
+	// FIN PRINT
+	// -----------------------------------------------------------
+	L36:
+	// FIN IF
+	// -----------------------------------------------------------
+	
+	// -----------------------------------------------------------
+	// INICIO IF
+	// -----------------------------------------------------------
+	// ACCESO A VARIABLE: I
+	t153 = P + 5; //Posicionar el puntero
+	t152 = stack[int(t153)];
+	// FIN ACCESO
+	// -----------------------------------------------------------
+	
+	// PRIMITIVO: VIERNES
+	
+	t154 = H;
+	heap[int(H)] = 86; // V
+	H = H + 1;
+	heap[int(H)] = 105; // i
+	H = H + 1;
+	heap[int(H)] = 101; // e
+	H = H + 1;
+	heap[int(H)] = 114; // r
+	H = H + 1;
+	heap[int(H)] = 110; // n
+	H = H + 1;
+	heap[int(H)] = 101; // e
+	H = H + 1;
+	heap[int(H)] = 115; // s
+	H = H + 1;
+	heap[int(H)] = -1; // FIN CADENA
+	H = H + 1;
+	
+	
+	// -----------------------------------------------------------
+	t155 = P + 6; 
+	t155 = t155 + 1; 
+	stack[int(t155)] = t152;
+	t155 = t155 + 1; 
+	stack[int(t155)] = t154;
+	P = P + 6;
+	isEqualsStr();
+	t156 = stack[int(P)];
+	P = P - 6;
+	// -----------------------------------------------------------
+	
+	if t156 == 1 { goto L37; }
+	goto L38;
+	L37:
+	
+	// -----------------------------------------------------------
+	// INICIO PRINT
+	// PRIMITIVO: 5
+	fmt.Printf("%d", int(5));
+	fmt.Printf("%c", int(10));
+	// FIN PRINT
+	// -----------------------------------------------------------
+	
+	// -----------------------------------------------------------
+	// INICIO PRINT
+	// PRIMITIVO: WEEKDAY
+	
+	t157 = H;
+	heap[int(H)] = 87; // W
+	H = H + 1;
+	heap[int(H)] = 101; // e
+	H = H + 1;
+	heap[int(H)] = 101; // e
+	H = H + 1;
+	heap[int(H)] = 107; // k
+	H = H + 1;
+	heap[int(H)] = 100; // d
+	H = H + 1;
+	heap[int(H)] = 97; // a
+	H = H + 1;
+	heap[int(H)] = 121; // y
+	H = H + 1;
+	heap[int(H)] = -1; // FIN CADENA
+	H = H + 1;
+	
+	// -----------------------------------------------------------
+	// GUARDAR VARIABLE EN STACK
+	t158 = P + 6; 
+	t158 = t158 + 1; 
+	stack[int(t158)] = t157;
+	// -----------------------------------------------------------
+	
+	P = P + 6;
+	printStr();
+	
+	// GUARDAR RETURN DE LA FUNCION
+	t159 = stack[int(P)];
+	// REGRESO DE ENTORNO
+	P = P - 6;
+	
+	fmt.Printf("%c", int(10));
+	// FIN PRINT
+	// -----------------------------------------------------------
+	goto L24;
+	L38:
+	// FIN IF
+	// -----------------------------------------------------------
+	
+	
+	// -----------------------------------------------------------
+	// INICIO PRINT
+	// PRIMITIVO: WEEKEND
+	
+	t160 = H;
+	heap[int(H)] = 87; // W
+	H = H + 1;
+	heap[int(H)] = 101; // e
+	H = H + 1;
+	heap[int(H)] = 101; // e
+	H = H + 1;
+	heap[int(H)] = 107; // k
+	H = H + 1;
+	heap[int(H)] = 101; // e
+	H = H + 1;
+	heap[int(H)] = 110; // n
+	H = H + 1;
+	heap[int(H)] = 100; // d
+	H = H + 1;
+	heap[int(H)] = -1; // FIN CADENA
+	H = H + 1;
+	
+	// -----------------------------------------------------------
+	// GUARDAR VARIABLE EN STACK
+	t161 = P + 6; 
+	t161 = t161 + 1; 
+	stack[int(t161)] = t160;
+	// -----------------------------------------------------------
+	
+	P = P + 6;
+	printStr();
+	
+	// GUARDAR RETURN DE LA FUNCION
+	t162 = stack[int(P)];
+	// REGRESO DE ENTORNO
+	P = P - 6;
+	
+	fmt.Printf("%c", int(10));
+	// FIN PRINT
+	// -----------------------------------------------------------
+	t124 = t124 + 1; 
+	t126 = t126 + 1; 
+	goto L22;
+	L24:
+	// FIN FOR
+	// -----------------------------------------------------------
+	
+	// -----------------------------------------------------------
+	// INICIO FOR
+	// PRIMITIVO: 0
+	// PRIMITIVO: 9
+	t163 = P + 5; 
+	stack[int(t163)] = 0;
+	
+	L39:
+	t165 = P + 5; //Posicionar el puntero
+	t164 = stack[int(t165)];
+	if t164 > 9 { goto L40; }
+	// PRIMITIVO: 
+	
+	t166 = H;
+	heap[int(H)] = -1; // FIN CADENA
+	H = H + 1;
+	
+	// -----------------------------------------------------------
+	// ASIGNACION: OUTPUT
+	t167 = P + 6; 
+	stack[int(t167)] = t166;
+	// FIN ASIGNACION DE OUTPUT
+	// -----------------------------------------------------------
+	
+	// -----------------------------------------------------------
+	// INICIO FOR
+	// PRIMITIVO: 0
+	// PRIMITIVO: 10
+	// -----------------------------------------------------------
+	// ACCESO A VARIABLE: I
+	t169 = P + 5; //Posicionar el puntero
+	t168 = stack[int(t169)];
+	// FIN ACCESO
+	// -----------------------------------------------------------
+	
+	t170 = 10 - t168; 
+	
+	t171 = P + 7; 
+	stack[int(t171)] = 0;
+	
+	L42:
+	t173 = P + 7; //Posicionar el puntero
+	t172 = stack[int(t173)];
+	if t172 > t170 { goto L43; }
+	// -----------------------------------------------------------
+	// ACCESO A VARIABLE: OUTPUT
+	t175 = P + 6; //Posicionar el puntero
+	t174 = stack[int(t175)];
+	// FIN ACCESO
+	// -----------------------------------------------------------
+	
+	// PRIMITIVO:  
+	
+	t176 = H;
+	heap[int(H)] = 32; //  
+	H = H + 1;
+	heap[int(H)] = -1; // FIN CADENA
+	H = H + 1;
+	
+	// -----------------------------------------------------------
+	// PASO DE PARAMETROS
+	t182 = P + 8; 
+	// 1ER PARAMETRO
+	t182 = t182 + 1; 
+	stack[int(t182)] = t174;
+	// 2DO PARAMETRO
+	t182 = t182 + 1; 
+	stack[int(t182)] = t176;
+	// FIN PASO PARAMETROS
+	// -----------------------------------------------------------
+	// CAMBIO DE ENTORNO
+	P = P + 8;
+	joinStr();
+	// GUARDAR RETURN DE LA FUNCION
+	t183 = stack[int(P)];
+	// REGRESO ENTORNO GLOBAL
+	P = P - 8;
+	
+	// -----------------------------------------------------------
+	// ASIGNACION: OUTPUT
+	t184 = P + 6; 
+	stack[int(t184)] = t183;
+	// FIN ASIGNACION DE OUTPUT
+	// -----------------------------------------------------------
+	
+	goto L44;
+	
+	L44:
+	t186 = P + 7; //Posicionar el puntero
+	t185 = stack[int(t186)];
+	t185 = t185 + 1; 
+	stack[int(t186)] = t185;
+	goto L42;
+	L43:
+	// FIN FOR
+	// -----------------------------------------------------------
+	
+	// -----------------------------------------------------------
+	// INICIO FOR
+	// PRIMITIVO: 0
+	// -----------------------------------------------------------
+	// ACCESO A VARIABLE: I
+	t188 = P + 5; //Posicionar el puntero
+	t187 = stack[int(t188)];
+	// FIN ACCESO
+	// -----------------------------------------------------------
+	
+	t189 = P + 7; 
+	stack[int(t189)] = 0;
+	
+	L49:
+	t191 = P + 7; //Posicionar el puntero
+	t190 = stack[int(t191)];
+	if t190 > t187 { goto L50; }
+	// -----------------------------------------------------------
+	// ACCESO A VARIABLE: OUTPUT
+	t193 = P + 6; //Posicionar el puntero
+	t192 = stack[int(t193)];
+	// FIN ACCESO
+	// -----------------------------------------------------------
+	
+	// PRIMITIVO: * 
+	
+	t194 = H;
+	heap[int(H)] = 42; // *
+	H = H + 1;
+	heap[int(H)] = 32; //  
+	H = H + 1;
+	heap[int(H)] = -1; // FIN CADENA
+	H = H + 1;
+	
+	// -----------------------------------------------------------
+	// PASO DE PARAMETROS
+	t195 = P + 8; 
+	// 1ER PARAMETRO
+	t195 = t195 + 1; 
+	stack[int(t195)] = t192;
+	// 2DO PARAMETRO
+	t195 = t195 + 1; 
+	stack[int(t195)] = t194;
+	// FIN PASO PARAMETROS
+	// -----------------------------------------------------------
+	// CAMBIO DE ENTORNO
+	P = P + 8;
+	joinStr();
+	// GUARDAR RETURN DE LA FUNCION
+	t196 = stack[int(P)];
+	// REGRESO ENTORNO GLOBAL
+	P = P - 8;
+	
+	// -----------------------------------------------------------
+	// ASIGNACION: OUTPUT
+	t197 = P + 6; 
+	stack[int(t197)] = t196;
+	// FIN ASIGNACION DE OUTPUT
+	// -----------------------------------------------------------
+	
+	goto L51;
+	
+	L51:
+	t199 = P + 7; //Posicionar el puntero
+	t198 = stack[int(t199)];
+	t198 = t198 + 1; 
+	stack[int(t199)] = t198;
+	goto L49;
+	L50:
+	// FIN FOR
+	// -----------------------------------------------------------
+	
+	
+	// -----------------------------------------------------------
+	// INICIO PRINT
+	// -----------------------------------------------------------
+	// ACCESO A VARIABLE: OUTPUT
+	t201 = P + 6; //Posicionar el puntero
+	t200 = stack[int(t201)];
+	// FIN ACCESO
+	// -----------------------------------------------------------
+	
+	// -----------------------------------------------------------
+	// GUARDAR VARIABLE EN STACK
+	t202 = P + 7; 
+	t202 = t202 + 1; 
+	stack[int(t202)] = t200;
+	// -----------------------------------------------------------
+	
+	P = P + 7;
+	printStr();
+	
+	// GUARDAR RETURN DE LA FUNCION
+	t203 = stack[int(P)];
+	// REGRESO DE ENTORNO
+	P = P - 7;
+	
+	fmt.Printf("%c", int(10));
+	// FIN PRINT
+	// -----------------------------------------------------------
+	goto L41;
+	
+	L41:
+	t205 = P + 5; //Posicionar el puntero
+	t204 = stack[int(t205)];
+	t204 = t204 + 1; 
+	stack[int(t205)] = t204;
+	goto L39;
+	L40:
+	// FIN FOR
+	// -----------------------------------------------------------
+	
+
+}

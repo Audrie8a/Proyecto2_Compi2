@@ -1,0 +1,84 @@
+package main;
+import("fmt");
+
+var P, H float64;
+var stack[78000]float64;
+var heap[11]float64;
+
+var t0,t1,t2,t3,t4,t5,t6,t7,t8,t9,t10,t11,t12,t13,t14,t15,t16 float64;
+var x,y,entrada float64;
+func printString(){
+ 	t6=P;
+	t7=stack[int(t6)];
+	L2:
+		t8=heap[int(t7)]; 
+		if t8 == -1 {goto L0;}
+		goto L1;
+	L1:
+		fmt.Printf("%c", int(t8));
+ 		t7=t7+1; 
+		goto L2;
+	L0:
+		return;
+}
+func hola(){
+t3 = 2  ;
+stack[int(t3)] = 19;
+x = stack[int(t3)];
+t4 = stack[int(2)];
+fmt.Printf("%d",int(t4));
+t5 = stack[int(1)];
+t9=3;
+
+stack[int(t9)]=t5;
+
+P = P + 3;
+printString();
+
+P = P - 3;
+fmt.Printf("%c",10);
+}
+
+func main(){
+t0 = 0  ;
+stack[int(t0)] = 12;
+x = stack[int(t0)];
+t1=H;
+
+heap[int(H)]=104;
+H = H + 1;
+heap[int(H)]=111;
+H = H + 1;
+heap[int(H)]=108;
+H = H + 1;
+heap[int(H)]=97;
+H = H + 1;
+heap[int(H)]=-1;
+H = H + 1;
+t2 = 1  ;
+stack[int(t2)] = t1;
+y = stack[int(t2)];
+hola();
+t10=H;
+
+heap[int(H)]=97;
+H = H + 1;
+heap[int(H)]=100;
+H = H + 1;
+heap[int(H)]=105;
+H = H + 1;
+heap[int(H)]=111;
+H = H + 1;
+heap[int(H)]=115;
+H = H + 1;
+heap[int(H)]=-1;
+H = H + 1;
+t11 = 1  ;
+stack[int(t11)] = t10;
+y = stack[int(t11)];
+hola();
+t16 = stack[int(0)];
+fmt.Printf("%d",int(t16));
+fmt.Printf("%c",10);
+ fmt.Printf("%c",10);
+}

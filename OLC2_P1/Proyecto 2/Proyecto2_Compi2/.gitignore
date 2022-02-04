@@ -1,0 +1,5 @@
+parser.out
+parsetab.py
+Gramatica/ply/__pycache__/
+Gramatica/__pycache__
+Backend/node_modules

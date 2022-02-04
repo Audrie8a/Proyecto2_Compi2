@@ -1,0 +1,1397 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    Rfloat64
+    Rvar
+    encabezado
+
+Grammar
+
+Rule 0     S' -> S
+Rule 1     S -> LFUNC
+Rule 2     LFUNC -> LFUNC FUNCION
+Rule 3     LFUNC -> FUNCION
+Rule 4     FUNCION -> Rfunc identificador parA parC llaveA CUERPO llaveC
+Rule 5     CUERPO -> LINS
+Rule 6     LINS -> LINS INS
+Rule 7     LINS -> INS
+Rule 8     INS -> ASIGNA
+Rule 9     INS -> ETIQUETA
+Rule 10    INS -> SALTO
+Rule 11    INS -> PRINT
+Rule 12    INS -> IF
+Rule 13    INS -> LLAMADA
+Rule 14    INS -> RETORNO
+Rule 15    ASIGNA -> identificador igual E pyc
+Rule 16    ASIGNA -> identificador igual PRIMITIVO pyc
+Rule 17    ASIGNA -> identificador corA Rint parA PRIMITIVO parC corC igual PRIMITIVO pyc
+Rule 18    ASIGNA -> identificador igual identificador corA Rint parA PRIMITIVO parC corC pyc
+Rule 19    ETIQUETA -> identificador dospuntos
+Rule 20    SALTO -> Rgoto identificador pyc
+Rule 21    PRINT -> Rfmt punto Rprint parA cadena coma PRIMITIVO parC pyc
+Rule 22    PRINT -> Rfmt punto Rprint parA cadena coma Rint parA PRIMITIVO parC parC pyc
+Rule 23    IF -> Rif E llaveA SALTO llaveC
+Rule 24    IF -> Rif parA E parC llaveA SALTO llaveC
+Rule 25    LLAMADA -> identificador parA parC pyc
+Rule 26    RETORNO -> Rreturn pyc
+Rule 27    E -> PRIMITIVO mas PRIMITIVO
+Rule 28    E -> PRIMITIVO menos PRIMITIVO
+Rule 29    E -> PRIMITIVO por PRIMITIVO
+Rule 30    E -> PRIMITIVO div PRIMITIVO
+Rule 31    E -> PRIMITIVO meq PRIMITIVO
+Rule 32    E -> PRIMITIVO mayq PRIMITIVO
+Rule 33    E -> PRIMITIVO meiq PRIMITIVO
+Rule 34    E -> PRIMITIVO mayiq PRIMITIVO
+Rule 35    E -> PRIMITIVO iqiq PRIMITIVO
+Rule 36    E -> PRIMITIVO noiq PRIMITIVO
+Rule 37    PRIMITIVO -> entero
+Rule 38    PRIMITIVO -> decimal
+Rule 39    PRIMITIVO -> identificador
+Rule 40    PRIMITIVO -> menos entero
+Rule 41    PRIMITIVO -> menos decimal
+
+Terminals, with rules where they appear
+
+Rfloat64             : 
+Rfmt                 : 21 22
+Rfunc                : 4
+Rgoto                : 20
+Rif                  : 23 24
+Rint                 : 17 18 22
+Rprint               : 21 22
+Rreturn              : 26
+Rvar                 : 
+cadena               : 21 22
+coma                 : 21 22
+corA                 : 17 18
+corC                 : 17 18
+decimal              : 38 41
+div                  : 30
+dospuntos            : 19
+encabezado           : 
+entero               : 37 40
+error                : 
+identificador        : 4 15 16 17 18 18 19 20 25 39
+igual                : 15 16 17 18
+iqiq                 : 35
+llaveA               : 4 23 24
+llaveC               : 4 23 24
+mas                  : 27
+mayiq                : 34
+mayq                 : 32
+meiq                 : 33
+menos                : 28 40 41
+meq                  : 31
+noiq                 : 36
+parA                 : 4 17 18 21 22 22 24 25
+parC                 : 4 17 18 21 22 22 24 25
+por                  : 29
+punto                : 21 22
+pyc                  : 15 16 17 18 20 21 22 25 26
+
+Nonterminals, with rules where they appear
+
+ASIGNA               : 8
+CUERPO               : 4
+E                    : 15 23 24
+ETIQUETA             : 9
+FUNCION              : 2 3
+IF                   : 12
+INS                  : 6 7
+LFUNC                : 1 2
+LINS                 : 5 6
+LLAMADA              : 13
+PRIMITIVO            : 16 17 17 18 21 22 27 27 28 28 29 29 30 30 31 31 32 32 33 33 34 34 35 35 36 36
+PRINT                : 11
+RETORNO              : 14
+S                    : 0
+SALTO                : 10 23 24
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . S
+    (1) S -> . LFUNC
+    (2) LFUNC -> . LFUNC FUNCION
+    (3) LFUNC -> . FUNCION
+    (4) FUNCION -> . Rfunc identificador parA parC llaveA CUERPO llaveC
+
+    Rfunc           shift and go to state 4
+
+    S                              shift and go to state 1
+    LFUNC                          shift and go to state 2
+    FUNCION                        shift and go to state 3
+
+state 1
+
+    (0) S' -> S .
+
+
+
+state 2
+
+    (1) S -> LFUNC .
+    (2) LFUNC -> LFUNC . FUNCION
+    (4) FUNCION -> . Rfunc identificador parA parC llaveA CUERPO llaveC
+
+    $end            reduce using rule 1 (S -> LFUNC .)
+    Rfunc           shift and go to state 4
+
+    FUNCION                        shift and go to state 5
+
+state 3
+
+    (3) LFUNC -> FUNCION .
+
+    Rfunc           reduce using rule 3 (LFUNC -> FUNCION .)
+    $end            reduce using rule 3 (LFUNC -> FUNCION .)
+
+
+state 4
+
+    (4) FUNCION -> Rfunc . identificador parA parC llaveA CUERPO llaveC
+
+    identificador   shift and go to state 6
+
+
+state 5
+
+    (2) LFUNC -> LFUNC FUNCION .
+
+    Rfunc           reduce using rule 2 (LFUNC -> LFUNC FUNCION .)
+    $end            reduce using rule 2 (LFUNC -> LFUNC FUNCION .)
+
+
+state 6
+
+    (4) FUNCION -> Rfunc identificador . parA parC llaveA CUERPO llaveC
+
+    parA            shift and go to state 7
+
+
+state 7
+
+    (4) FUNCION -> Rfunc identificador parA . parC llaveA CUERPO llaveC
+
+    parC            shift and go to state 8
+
+
+state 8
+
+    (4) FUNCION -> Rfunc identificador parA parC . llaveA CUERPO llaveC
+
+    llaveA          shift and go to state 9
+
+
+state 9
+
+    (4) FUNCION -> Rfunc identificador parA parC llaveA . CUERPO llaveC
+    (5) CUERPO -> . LINS
+    (6) LINS -> . LINS INS
+    (7) LINS -> . INS
+    (8) INS -> . ASIGNA
+    (9) INS -> . ETIQUETA
+    (10) INS -> . SALTO
+    (11) INS -> . PRINT
+    (12) INS -> . IF
+    (13) INS -> . LLAMADA
+    (14) INS -> . RETORNO
+    (15) ASIGNA -> . identificador igual E pyc
+    (16) ASIGNA -> . identificador igual PRIMITIVO pyc
+    (17) ASIGNA -> . identificador corA Rint parA PRIMITIVO parC corC igual PRIMITIVO pyc
+    (18) ASIGNA -> . identificador igual identificador corA Rint parA PRIMITIVO parC corC pyc
+    (19) ETIQUETA -> . identificador dospuntos
+    (20) SALTO -> . Rgoto identificador pyc
+    (21) PRINT -> . Rfmt punto Rprint parA cadena coma PRIMITIVO parC pyc
+    (22) PRINT -> . Rfmt punto Rprint parA cadena coma Rint parA PRIMITIVO parC parC pyc
+    (23) IF -> . Rif E llaveA SALTO llaveC
+    (24) IF -> . Rif parA E parC llaveA SALTO llaveC
+    (25) LLAMADA -> . identificador parA parC pyc
+    (26) RETORNO -> . Rreturn pyc
+
+    identificador   shift and go to state 10
+    Rgoto           shift and go to state 21
+    Rfmt            shift and go to state 22
+    Rif             shift and go to state 23
+    Rreturn         shift and go to state 24
+
+    CUERPO                         shift and go to state 11
+    LINS                           shift and go to state 12
+    INS                            shift and go to state 13
+    ASIGNA                         shift and go to state 14
+    ETIQUETA                       shift and go to state 15
+    SALTO                          shift and go to state 16
+    PRINT                          shift and go to state 17
+    IF                             shift and go to state 18
+    LLAMADA                        shift and go to state 19
+    RETORNO                        shift and go to state 20
+
+state 10
+
+    (15) ASIGNA -> identificador . igual E pyc
+    (16) ASIGNA -> identificador . igual PRIMITIVO pyc
+    (17) ASIGNA -> identificador . corA Rint parA PRIMITIVO parC corC igual PRIMITIVO pyc
+    (18) ASIGNA -> identificador . igual identificador corA Rint parA PRIMITIVO parC corC pyc
+    (19) ETIQUETA -> identificador . dospuntos
+    (25) LLAMADA -> identificador . parA parC pyc
+
+    igual           shift and go to state 25
+    corA            shift and go to state 26
+    dospuntos       shift and go to state 28
+    parA            shift and go to state 27
+
+
+state 11
+
+    (4) FUNCION -> Rfunc identificador parA parC llaveA CUERPO . llaveC
+
+    llaveC          shift and go to state 29
+
+
+state 12
+
+    (5) CUERPO -> LINS .
+    (6) LINS -> LINS . INS
+    (8) INS -> . ASIGNA
+    (9) INS -> . ETIQUETA
+    (10) INS -> . SALTO
+    (11) INS -> . PRINT
+    (12) INS -> . IF
+    (13) INS -> . LLAMADA
+    (14) INS -> . RETORNO
+    (15) ASIGNA -> . identificador igual E pyc
+    (16) ASIGNA -> . identificador igual PRIMITIVO pyc
+    (17) ASIGNA -> . identificador corA Rint parA PRIMITIVO parC corC igual PRIMITIVO pyc
+    (18) ASIGNA -> . identificador igual identificador corA Rint parA PRIMITIVO parC corC pyc
+    (19) ETIQUETA -> . identificador dospuntos
+    (20) SALTO -> . Rgoto identificador pyc
+    (21) PRINT -> . Rfmt punto Rprint parA cadena coma PRIMITIVO parC pyc
+    (22) PRINT -> . Rfmt punto Rprint parA cadena coma Rint parA PRIMITIVO parC parC pyc
+    (23) IF -> . Rif E llaveA SALTO llaveC
+    (24) IF -> . Rif parA E parC llaveA SALTO llaveC
+    (25) LLAMADA -> . identificador parA parC pyc
+    (26) RETORNO -> . Rreturn pyc
+
+    llaveC          reduce using rule 5 (CUERPO -> LINS .)
+    identificador   shift and go to state 10
+    Rgoto           shift and go to state 21
+    Rfmt            shift and go to state 22
+    Rif             shift and go to state 23
+    Rreturn         shift and go to state 24
+
+    INS                            shift and go to state 30
+    ASIGNA                         shift and go to state 14
+    ETIQUETA                       shift and go to state 15
+    SALTO                          shift and go to state 16
+    PRINT                          shift and go to state 17
+    IF                             shift and go to state 18
+    LLAMADA                        shift and go to state 19
+    RETORNO                        shift and go to state 20
+
+state 13
+
+    (7) LINS -> INS .
+
+    identificador   reduce using rule 7 (LINS -> INS .)
+    Rgoto           reduce using rule 7 (LINS -> INS .)
+    Rfmt            reduce using rule 7 (LINS -> INS .)
+    Rif             reduce using rule 7 (LINS -> INS .)
+    Rreturn         reduce using rule 7 (LINS -> INS .)
+    llaveC          reduce using rule 7 (LINS -> INS .)
+
+
+state 14
+
+    (8) INS -> ASIGNA .
+
+    identificador   reduce using rule 8 (INS -> ASIGNA .)
+    Rgoto           reduce using rule 8 (INS -> ASIGNA .)
+    Rfmt            reduce using rule 8 (INS -> ASIGNA .)
+    Rif             reduce using rule 8 (INS -> ASIGNA .)
+    Rreturn         reduce using rule 8 (INS -> ASIGNA .)
+    llaveC          reduce using rule 8 (INS -> ASIGNA .)
+
+
+state 15
+
+    (9) INS -> ETIQUETA .
+
+    identificador   reduce using rule 9 (INS -> ETIQUETA .)
+    Rgoto           reduce using rule 9 (INS -> ETIQUETA .)
+    Rfmt            reduce using rule 9 (INS -> ETIQUETA .)
+    Rif             reduce using rule 9 (INS -> ETIQUETA .)
+    Rreturn         reduce using rule 9 (INS -> ETIQUETA .)
+    llaveC          reduce using rule 9 (INS -> ETIQUETA .)
+
+
+state 16
+
+    (10) INS -> SALTO .
+
+    identificador   reduce using rule 10 (INS -> SALTO .)
+    Rgoto           reduce using rule 10 (INS -> SALTO .)
+    Rfmt            reduce using rule 10 (INS -> SALTO .)
+    Rif             reduce using rule 10 (INS -> SALTO .)
+    Rreturn         reduce using rule 10 (INS -> SALTO .)
+    llaveC          reduce using rule 10 (INS -> SALTO .)
+
+
+state 17
+
+    (11) INS -> PRINT .
+
+    identificador   reduce using rule 11 (INS -> PRINT .)
+    Rgoto           reduce using rule 11 (INS -> PRINT .)
+    Rfmt            reduce using rule 11 (INS -> PRINT .)
+    Rif             reduce using rule 11 (INS -> PRINT .)
+    Rreturn         reduce using rule 11 (INS -> PRINT .)
+    llaveC          reduce using rule 11 (INS -> PRINT .)
+
+
+state 18
+
+    (12) INS -> IF .
+
+    identificador   reduce using rule 12 (INS -> IF .)
+    Rgoto           reduce using rule 12 (INS -> IF .)
+    Rfmt            reduce using rule 12 (INS -> IF .)
+    Rif             reduce using rule 12 (INS -> IF .)
+    Rreturn         reduce using rule 12 (INS -> IF .)
+    llaveC          reduce using rule 12 (INS -> IF .)
+
+
+state 19
+
+    (13) INS -> LLAMADA .
+
+    identificador   reduce using rule 13 (INS -> LLAMADA .)
+    Rgoto           reduce using rule 13 (INS -> LLAMADA .)
+    Rfmt            reduce using rule 13 (INS -> LLAMADA .)
+    Rif             reduce using rule 13 (INS -> LLAMADA .)
+    Rreturn         reduce using rule 13 (INS -> LLAMADA .)
+    llaveC          reduce using rule 13 (INS -> LLAMADA .)
+
+
+state 20
+
+    (14) INS -> RETORNO .
+
+    identificador   reduce using rule 14 (INS -> RETORNO .)
+    Rgoto           reduce using rule 14 (INS -> RETORNO .)
+    Rfmt            reduce using rule 14 (INS -> RETORNO .)
+    Rif             reduce using rule 14 (INS -> RETORNO .)
+    Rreturn         reduce using rule 14 (INS -> RETORNO .)
+    llaveC          reduce using rule 14 (INS -> RETORNO .)
+
+
+state 21
+
+    (20) SALTO -> Rgoto . identificador pyc
+
+    identificador   shift and go to state 31
+
+
+state 22
+
+    (21) PRINT -> Rfmt . punto Rprint parA cadena coma PRIMITIVO parC pyc
+    (22) PRINT -> Rfmt . punto Rprint parA cadena coma Rint parA PRIMITIVO parC parC pyc
+
+    punto           shift and go to state 32
+
+
+state 23
+
+    (23) IF -> Rif . E llaveA SALTO llaveC
+    (24) IF -> Rif . parA E parC llaveA SALTO llaveC
+    (27) E -> . PRIMITIVO mas PRIMITIVO
+    (28) E -> . PRIMITIVO menos PRIMITIVO
+    (29) E -> . PRIMITIVO por PRIMITIVO
+    (30) E -> . PRIMITIVO div PRIMITIVO
+    (31) E -> . PRIMITIVO meq PRIMITIVO
+    (32) E -> . PRIMITIVO mayq PRIMITIVO
+    (33) E -> . PRIMITIVO meiq PRIMITIVO
+    (34) E -> . PRIMITIVO mayiq PRIMITIVO
+    (35) E -> . PRIMITIVO iqiq PRIMITIVO
+    (36) E -> . PRIMITIVO noiq PRIMITIVO
+    (37) PRIMITIVO -> . entero
+    (38) PRIMITIVO -> . decimal
+    (39) PRIMITIVO -> . identificador
+    (40) PRIMITIVO -> . menos entero
+    (41) PRIMITIVO -> . menos decimal
+
+    parA            shift and go to state 34
+    entero          shift and go to state 37
+    decimal         shift and go to state 38
+    identificador   shift and go to state 39
+    menos           shift and go to state 36
+
+    E                              shift and go to state 33
+    PRIMITIVO                      shift and go to state 35
+
+state 24
+
+    (26) RETORNO -> Rreturn . pyc
+
+    pyc             shift and go to state 40
+
+
+state 25
+
+    (15) ASIGNA -> identificador igual . E pyc
+    (16) ASIGNA -> identificador igual . PRIMITIVO pyc
+    (18) ASIGNA -> identificador igual . identificador corA Rint parA PRIMITIVO parC corC pyc
+    (27) E -> . PRIMITIVO mas PRIMITIVO
+    (28) E -> . PRIMITIVO menos PRIMITIVO
+    (29) E -> . PRIMITIVO por PRIMITIVO
+    (30) E -> . PRIMITIVO div PRIMITIVO
+    (31) E -> . PRIMITIVO meq PRIMITIVO
+    (32) E -> . PRIMITIVO mayq PRIMITIVO
+    (33) E -> . PRIMITIVO meiq PRIMITIVO
+    (34) E -> . PRIMITIVO mayiq PRIMITIVO
+    (35) E -> . PRIMITIVO iqiq PRIMITIVO
+    (36) E -> . PRIMITIVO noiq PRIMITIVO
+    (37) PRIMITIVO -> . entero
+    (38) PRIMITIVO -> . decimal
+    (39) PRIMITIVO -> . identificador
+    (40) PRIMITIVO -> . menos entero
+    (41) PRIMITIVO -> . menos decimal
+
+    identificador   shift and go to state 41
+    entero          shift and go to state 37
+    decimal         shift and go to state 38
+    menos           shift and go to state 36
+
+    E                              shift and go to state 42
+    PRIMITIVO                      shift and go to state 43
+
+state 26
+
+    (17) ASIGNA -> identificador corA . Rint parA PRIMITIVO parC corC igual PRIMITIVO pyc
+
+    Rint            shift and go to state 44
+
+
+state 27
+
+    (25) LLAMADA -> identificador parA . parC pyc
+
+    parC            shift and go to state 45
+
+
+state 28
+
+    (19) ETIQUETA -> identificador dospuntos .
+
+    identificador   reduce using rule 19 (ETIQUETA -> identificador dospuntos .)
+    Rgoto           reduce using rule 19 (ETIQUETA -> identificador dospuntos .)
+    Rfmt            reduce using rule 19 (ETIQUETA -> identificador dospuntos .)
+    Rif             reduce using rule 19 (ETIQUETA -> identificador dospuntos .)
+    Rreturn         reduce using rule 19 (ETIQUETA -> identificador dospuntos .)
+    llaveC          reduce using rule 19 (ETIQUETA -> identificador dospuntos .)
+
+
+state 29
+
+    (4) FUNCION -> Rfunc identificador parA parC llaveA CUERPO llaveC .
+
+    Rfunc           reduce using rule 4 (FUNCION -> Rfunc identificador parA parC llaveA CUERPO llaveC .)
+    $end            reduce using rule 4 (FUNCION -> Rfunc identificador parA parC llaveA CUERPO llaveC .)
+
+
+state 30
+
+    (6) LINS -> LINS INS .
+
+    identificador   reduce using rule 6 (LINS -> LINS INS .)
+    Rgoto           reduce using rule 6 (LINS -> LINS INS .)
+    Rfmt            reduce using rule 6 (LINS -> LINS INS .)
+    Rif             reduce using rule 6 (LINS -> LINS INS .)
+    Rreturn         reduce using rule 6 (LINS -> LINS INS .)
+    llaveC          reduce using rule 6 (LINS -> LINS INS .)
+
+
+state 31
+
+    (20) SALTO -> Rgoto identificador . pyc
+
+    pyc             shift and go to state 46
+
+
+state 32
+
+    (21) PRINT -> Rfmt punto . Rprint parA cadena coma PRIMITIVO parC pyc
+    (22) PRINT -> Rfmt punto . Rprint parA cadena coma Rint parA PRIMITIVO parC parC pyc
+
+    Rprint          shift and go to state 47
+
+
+state 33
+
+    (23) IF -> Rif E . llaveA SALTO llaveC
+
+    llaveA          shift and go to state 48
+
+
+state 34
+
+    (24) IF -> Rif parA . E parC llaveA SALTO llaveC
+    (27) E -> . PRIMITIVO mas PRIMITIVO
+    (28) E -> . PRIMITIVO menos PRIMITIVO
+    (29) E -> . PRIMITIVO por PRIMITIVO
+    (30) E -> . PRIMITIVO div PRIMITIVO
+    (31) E -> . PRIMITIVO meq PRIMITIVO
+    (32) E -> . PRIMITIVO mayq PRIMITIVO
+    (33) E -> . PRIMITIVO meiq PRIMITIVO
+    (34) E -> . PRIMITIVO mayiq PRIMITIVO
+    (35) E -> . PRIMITIVO iqiq PRIMITIVO
+    (36) E -> . PRIMITIVO noiq PRIMITIVO
+    (37) PRIMITIVO -> . entero
+    (38) PRIMITIVO -> . decimal
+    (39) PRIMITIVO -> . identificador
+    (40) PRIMITIVO -> . menos entero
+    (41) PRIMITIVO -> . menos decimal
+
+    entero          shift and go to state 37
+    decimal         shift and go to state 38
+    identificador   shift and go to state 39
+    menos           shift and go to state 36
+
+    E                              shift and go to state 49
+    PRIMITIVO                      shift and go to state 35
+
+state 35
+
+    (27) E -> PRIMITIVO . mas PRIMITIVO
+    (28) E -> PRIMITIVO . menos PRIMITIVO
+    (29) E -> PRIMITIVO . por PRIMITIVO
+    (30) E -> PRIMITIVO . div PRIMITIVO
+    (31) E -> PRIMITIVO . meq PRIMITIVO
+    (32) E -> PRIMITIVO . mayq PRIMITIVO
+    (33) E -> PRIMITIVO . meiq PRIMITIVO
+    (34) E -> PRIMITIVO . mayiq PRIMITIVO
+    (35) E -> PRIMITIVO . iqiq PRIMITIVO
+    (36) E -> PRIMITIVO . noiq PRIMITIVO
+
+    mas             shift and go to state 50
+    menos           shift and go to state 51
+    por             shift and go to state 52
+    div             shift and go to state 53
+    meq             shift and go to state 54
+    mayq            shift and go to state 55
+    meiq            shift and go to state 56
+    mayiq           shift and go to state 57
+    iqiq            shift and go to state 58
+    noiq            shift and go to state 59
+
+
+state 36
+
+    (40) PRIMITIVO -> menos . entero
+    (41) PRIMITIVO -> menos . decimal
+
+    entero          shift and go to state 60
+    decimal         shift and go to state 61
+
+
+state 37
+
+    (37) PRIMITIVO -> entero .
+
+    mas             reduce using rule 37 (PRIMITIVO -> entero .)
+    menos           reduce using rule 37 (PRIMITIVO -> entero .)
+    por             reduce using rule 37 (PRIMITIVO -> entero .)
+    div             reduce using rule 37 (PRIMITIVO -> entero .)
+    meq             reduce using rule 37 (PRIMITIVO -> entero .)
+    mayq            reduce using rule 37 (PRIMITIVO -> entero .)
+    meiq            reduce using rule 37 (PRIMITIVO -> entero .)
+    mayiq           reduce using rule 37 (PRIMITIVO -> entero .)
+    iqiq            reduce using rule 37 (PRIMITIVO -> entero .)
+    noiq            reduce using rule 37 (PRIMITIVO -> entero .)
+    pyc             reduce using rule 37 (PRIMITIVO -> entero .)
+    llaveA          reduce using rule 37 (PRIMITIVO -> entero .)
+    parC            reduce using rule 37 (PRIMITIVO -> entero .)
+
+
+state 38
+
+    (38) PRIMITIVO -> decimal .
+
+    mas             reduce using rule 38 (PRIMITIVO -> decimal .)
+    menos           reduce using rule 38 (PRIMITIVO -> decimal .)
+    por             reduce using rule 38 (PRIMITIVO -> decimal .)
+    div             reduce using rule 38 (PRIMITIVO -> decimal .)
+    meq             reduce using rule 38 (PRIMITIVO -> decimal .)
+    mayq            reduce using rule 38 (PRIMITIVO -> decimal .)
+    meiq            reduce using rule 38 (PRIMITIVO -> decimal .)
+    mayiq           reduce using rule 38 (PRIMITIVO -> decimal .)
+    iqiq            reduce using rule 38 (PRIMITIVO -> decimal .)
+    noiq            reduce using rule 38 (PRIMITIVO -> decimal .)
+    pyc             reduce using rule 38 (PRIMITIVO -> decimal .)
+    llaveA          reduce using rule 38 (PRIMITIVO -> decimal .)
+    parC            reduce using rule 38 (PRIMITIVO -> decimal .)
+
+
+state 39
+
+    (39) PRIMITIVO -> identificador .
+
+    mas             reduce using rule 39 (PRIMITIVO -> identificador .)
+    menos           reduce using rule 39 (PRIMITIVO -> identificador .)
+    por             reduce using rule 39 (PRIMITIVO -> identificador .)
+    div             reduce using rule 39 (PRIMITIVO -> identificador .)
+    meq             reduce using rule 39 (PRIMITIVO -> identificador .)
+    mayq            reduce using rule 39 (PRIMITIVO -> identificador .)
+    meiq            reduce using rule 39 (PRIMITIVO -> identificador .)
+    mayiq           reduce using rule 39 (PRIMITIVO -> identificador .)
+    iqiq            reduce using rule 39 (PRIMITIVO -> identificador .)
+    noiq            reduce using rule 39 (PRIMITIVO -> identificador .)
+    llaveA          reduce using rule 39 (PRIMITIVO -> identificador .)
+    pyc             reduce using rule 39 (PRIMITIVO -> identificador .)
+    parC            reduce using rule 39 (PRIMITIVO -> identificador .)
+
+
+state 40
+
+    (26) RETORNO -> Rreturn pyc .
+
+    identificador   reduce using rule 26 (RETORNO -> Rreturn pyc .)
+    Rgoto           reduce using rule 26 (RETORNO -> Rreturn pyc .)
+    Rfmt            reduce using rule 26 (RETORNO -> Rreturn pyc .)
+    Rif             reduce using rule 26 (RETORNO -> Rreturn pyc .)
+    Rreturn         reduce using rule 26 (RETORNO -> Rreturn pyc .)
+    llaveC          reduce using rule 26 (RETORNO -> Rreturn pyc .)
+
+
+state 41
+
+    (18) ASIGNA -> identificador igual identificador . corA Rint parA PRIMITIVO parC corC pyc
+    (39) PRIMITIVO -> identificador .
+
+    corA            shift and go to state 62
+    pyc             reduce using rule 39 (PRIMITIVO -> identificador .)
+    mas             reduce using rule 39 (PRIMITIVO -> identificador .)
+    menos           reduce using rule 39 (PRIMITIVO -> identificador .)
+    por             reduce using rule 39 (PRIMITIVO -> identificador .)
+    div             reduce using rule 39 (PRIMITIVO -> identificador .)
+    meq             reduce using rule 39 (PRIMITIVO -> identificador .)
+    mayq            reduce using rule 39 (PRIMITIVO -> identificador .)
+    meiq            reduce using rule 39 (PRIMITIVO -> identificador .)
+    mayiq           reduce using rule 39 (PRIMITIVO -> identificador .)
+    iqiq            reduce using rule 39 (PRIMITIVO -> identificador .)
+    noiq            reduce using rule 39 (PRIMITIVO -> identificador .)
+
+
+state 42
+
+    (15) ASIGNA -> identificador igual E . pyc
+
+    pyc             shift and go to state 63
+
+
+state 43
+
+    (16) ASIGNA -> identificador igual PRIMITIVO . pyc
+    (27) E -> PRIMITIVO . mas PRIMITIVO
+    (28) E -> PRIMITIVO . menos PRIMITIVO
+    (29) E -> PRIMITIVO . por PRIMITIVO
+    (30) E -> PRIMITIVO . div PRIMITIVO
+    (31) E -> PRIMITIVO . meq PRIMITIVO
+    (32) E -> PRIMITIVO . mayq PRIMITIVO
+    (33) E -> PRIMITIVO . meiq PRIMITIVO
+    (34) E -> PRIMITIVO . mayiq PRIMITIVO
+    (35) E -> PRIMITIVO . iqiq PRIMITIVO
+    (36) E -> PRIMITIVO . noiq PRIMITIVO
+
+    pyc             shift and go to state 64
+    mas             shift and go to state 50
+    menos           shift and go to state 51
+    por             shift and go to state 52
+    div             shift and go to state 53
+    meq             shift and go to state 54
+    mayq            shift and go to state 55
+    meiq            shift and go to state 56
+    mayiq           shift and go to state 57
+    iqiq            shift and go to state 58
+    noiq            shift and go to state 59
+
+
+state 44
+
+    (17) ASIGNA -> identificador corA Rint . parA PRIMITIVO parC corC igual PRIMITIVO pyc
+
+    parA            shift and go to state 65
+
+
+state 45
+
+    (25) LLAMADA -> identificador parA parC . pyc
+
+    pyc             shift and go to state 66
+
+
+state 46
+
+    (20) SALTO -> Rgoto identificador pyc .
+
+    identificador   reduce using rule 20 (SALTO -> Rgoto identificador pyc .)
+    Rgoto           reduce using rule 20 (SALTO -> Rgoto identificador pyc .)
+    Rfmt            reduce using rule 20 (SALTO -> Rgoto identificador pyc .)
+    Rif             reduce using rule 20 (SALTO -> Rgoto identificador pyc .)
+    Rreturn         reduce using rule 20 (SALTO -> Rgoto identificador pyc .)
+    llaveC          reduce using rule 20 (SALTO -> Rgoto identificador pyc .)
+
+
+state 47
+
+    (21) PRINT -> Rfmt punto Rprint . parA cadena coma PRIMITIVO parC pyc
+    (22) PRINT -> Rfmt punto Rprint . parA cadena coma Rint parA PRIMITIVO parC parC pyc
+
+    parA            shift and go to state 67
+
+
+state 48
+
+    (23) IF -> Rif E llaveA . SALTO llaveC
+    (20) SALTO -> . Rgoto identificador pyc
+
+    Rgoto           shift and go to state 21
+
+    SALTO                          shift and go to state 68
+
+state 49
+
+    (24) IF -> Rif parA E . parC llaveA SALTO llaveC
+
+    parC            shift and go to state 69
+
+
+state 50
+
+    (27) E -> PRIMITIVO mas . PRIMITIVO
+    (37) PRIMITIVO -> . entero
+    (38) PRIMITIVO -> . decimal
+    (39) PRIMITIVO -> . identificador
+    (40) PRIMITIVO -> . menos entero
+    (41) PRIMITIVO -> . menos decimal
+
+    entero          shift and go to state 37
+    decimal         shift and go to state 38
+    identificador   shift and go to state 39
+    menos           shift and go to state 36
+
+    PRIMITIVO                      shift and go to state 70
+
+state 51
+
+    (28) E -> PRIMITIVO menos . PRIMITIVO
+    (37) PRIMITIVO -> . entero
+    (38) PRIMITIVO -> . decimal
+    (39) PRIMITIVO -> . identificador
+    (40) PRIMITIVO -> . menos entero
+    (41) PRIMITIVO -> . menos decimal
+
+    entero          shift and go to state 37
+    decimal         shift and go to state 38
+    identificador   shift and go to state 39
+    menos           shift and go to state 36
+
+    PRIMITIVO                      shift and go to state 71
+
+state 52
+
+    (29) E -> PRIMITIVO por . PRIMITIVO
+    (37) PRIMITIVO -> . entero
+    (38) PRIMITIVO -> . decimal
+    (39) PRIMITIVO -> . identificador
+    (40) PRIMITIVO -> . menos entero
+    (41) PRIMITIVO -> . menos decimal
+
+    entero          shift and go to state 37
+    decimal         shift and go to state 38
+    identificador   shift and go to state 39
+    menos           shift and go to state 36
+
+    PRIMITIVO                      shift and go to state 72
+
+state 53
+
+    (30) E -> PRIMITIVO div . PRIMITIVO
+    (37) PRIMITIVO -> . entero
+    (38) PRIMITIVO -> . decimal
+    (39) PRIMITIVO -> . identificador
+    (40) PRIMITIVO -> . menos entero
+    (41) PRIMITIVO -> . menos decimal
+
+    entero          shift and go to state 37
+    decimal         shift and go to state 38
+    identificador   shift and go to state 39
+    menos           shift and go to state 36
+
+    PRIMITIVO                      shift and go to state 73
+
+state 54
+
+    (31) E -> PRIMITIVO meq . PRIMITIVO
+    (37) PRIMITIVO -> . entero
+    (38) PRIMITIVO -> . decimal
+    (39) PRIMITIVO -> . identificador
+    (40) PRIMITIVO -> . menos entero
+    (41) PRIMITIVO -> . menos decimal
+
+    entero          shift and go to state 37
+    decimal         shift and go to state 38
+    identificador   shift and go to state 39
+    menos           shift and go to state 36
+
+    PRIMITIVO                      shift and go to state 74
+
+state 55
+
+    (32) E -> PRIMITIVO mayq . PRIMITIVO
+    (37) PRIMITIVO -> . entero
+    (38) PRIMITIVO -> . decimal
+    (39) PRIMITIVO -> . identificador
+    (40) PRIMITIVO -> . menos entero
+    (41) PRIMITIVO -> . menos decimal
+
+    entero          shift and go to state 37
+    decimal         shift and go to state 38
+    identificador   shift and go to state 39
+    menos           shift and go to state 36
+
+    PRIMITIVO                      shift and go to state 75
+
+state 56
+
+    (33) E -> PRIMITIVO meiq . PRIMITIVO
+    (37) PRIMITIVO -> . entero
+    (38) PRIMITIVO -> . decimal
+    (39) PRIMITIVO -> . identificador
+    (40) PRIMITIVO -> . menos entero
+    (41) PRIMITIVO -> . menos decimal
+
+    entero          shift and go to state 37
+    decimal         shift and go to state 38
+    identificador   shift and go to state 39
+    menos           shift and go to state 36
+
+    PRIMITIVO                      shift and go to state 76
+
+state 57
+
+    (34) E -> PRIMITIVO mayiq . PRIMITIVO
+    (37) PRIMITIVO -> . entero
+    (38) PRIMITIVO -> . decimal
+    (39) PRIMITIVO -> . identificador
+    (40) PRIMITIVO -> . menos entero
+    (41) PRIMITIVO -> . menos decimal
+
+    entero          shift and go to state 37
+    decimal         shift and go to state 38
+    identificador   shift and go to state 39
+    menos           shift and go to state 36
+
+    PRIMITIVO                      shift and go to state 77
+
+state 58
+
+    (35) E -> PRIMITIVO iqiq . PRIMITIVO
+    (37) PRIMITIVO -> . entero
+    (38) PRIMITIVO -> . decimal
+    (39) PRIMITIVO -> . identificador
+    (40) PRIMITIVO -> . menos entero
+    (41) PRIMITIVO -> . menos decimal
+
+    entero          shift and go to state 37
+    decimal         shift and go to state 38
+    identificador   shift and go to state 39
+    menos           shift and go to state 36
+
+    PRIMITIVO                      shift and go to state 78
+
+state 59
+
+    (36) E -> PRIMITIVO noiq . PRIMITIVO
+    (37) PRIMITIVO -> . entero
+    (38) PRIMITIVO -> . decimal
+    (39) PRIMITIVO -> . identificador
+    (40) PRIMITIVO -> . menos entero
+    (41) PRIMITIVO -> . menos decimal
+
+    entero          shift and go to state 37
+    decimal         shift and go to state 38
+    identificador   shift and go to state 39
+    menos           shift and go to state 36
+
+    PRIMITIVO                      shift and go to state 79
+
+state 60
+
+    (40) PRIMITIVO -> menos entero .
+
+    mas             reduce using rule 40 (PRIMITIVO -> menos entero .)
+    menos           reduce using rule 40 (PRIMITIVO -> menos entero .)
+    por             reduce using rule 40 (PRIMITIVO -> menos entero .)
+    div             reduce using rule 40 (PRIMITIVO -> menos entero .)
+    meq             reduce using rule 40 (PRIMITIVO -> menos entero .)
+    mayq            reduce using rule 40 (PRIMITIVO -> menos entero .)
+    meiq            reduce using rule 40 (PRIMITIVO -> menos entero .)
+    mayiq           reduce using rule 40 (PRIMITIVO -> menos entero .)
+    iqiq            reduce using rule 40 (PRIMITIVO -> menos entero .)
+    noiq            reduce using rule 40 (PRIMITIVO -> menos entero .)
+    pyc             reduce using rule 40 (PRIMITIVO -> menos entero .)
+    llaveA          reduce using rule 40 (PRIMITIVO -> menos entero .)
+    parC            reduce using rule 40 (PRIMITIVO -> menos entero .)
+
+
+state 61
+
+    (41) PRIMITIVO -> menos decimal .
+
+    mas             reduce using rule 41 (PRIMITIVO -> menos decimal .)
+    menos           reduce using rule 41 (PRIMITIVO -> menos decimal .)
+    por             reduce using rule 41 (PRIMITIVO -> menos decimal .)
+    div             reduce using rule 41 (PRIMITIVO -> menos decimal .)
+    meq             reduce using rule 41 (PRIMITIVO -> menos decimal .)
+    mayq            reduce using rule 41 (PRIMITIVO -> menos decimal .)
+    meiq            reduce using rule 41 (PRIMITIVO -> menos decimal .)
+    mayiq           reduce using rule 41 (PRIMITIVO -> menos decimal .)
+    iqiq            reduce using rule 41 (PRIMITIVO -> menos decimal .)
+    noiq            reduce using rule 41 (PRIMITIVO -> menos decimal .)
+    pyc             reduce using rule 41 (PRIMITIVO -> menos decimal .)
+    llaveA          reduce using rule 41 (PRIMITIVO -> menos decimal .)
+    parC            reduce using rule 41 (PRIMITIVO -> menos decimal .)
+
+
+state 62
+
+    (18) ASIGNA -> identificador igual identificador corA . Rint parA PRIMITIVO parC corC pyc
+
+    Rint            shift and go to state 80
+
+
+state 63
+
+    (15) ASIGNA -> identificador igual E pyc .
+
+    identificador   reduce using rule 15 (ASIGNA -> identificador igual E pyc .)
+    Rgoto           reduce using rule 15 (ASIGNA -> identificador igual E pyc .)
+    Rfmt            reduce using rule 15 (ASIGNA -> identificador igual E pyc .)
+    Rif             reduce using rule 15 (ASIGNA -> identificador igual E pyc .)
+    Rreturn         reduce using rule 15 (ASIGNA -> identificador igual E pyc .)
+    llaveC          reduce using rule 15 (ASIGNA -> identificador igual E pyc .)
+
+
+state 64
+
+    (16) ASIGNA -> identificador igual PRIMITIVO pyc .
+
+    identificador   reduce using rule 16 (ASIGNA -> identificador igual PRIMITIVO pyc .)
+    Rgoto           reduce using rule 16 (ASIGNA -> identificador igual PRIMITIVO pyc .)
+    Rfmt            reduce using rule 16 (ASIGNA -> identificador igual PRIMITIVO pyc .)
+    Rif             reduce using rule 16 (ASIGNA -> identificador igual PRIMITIVO pyc .)
+    Rreturn         reduce using rule 16 (ASIGNA -> identificador igual PRIMITIVO pyc .)
+    llaveC          reduce using rule 16 (ASIGNA -> identificador igual PRIMITIVO pyc .)
+
+
+state 65
+
+    (17) ASIGNA -> identificador corA Rint parA . PRIMITIVO parC corC igual PRIMITIVO pyc
+    (37) PRIMITIVO -> . entero
+    (38) PRIMITIVO -> . decimal
+    (39) PRIMITIVO -> . identificador
+    (40) PRIMITIVO -> . menos entero
+    (41) PRIMITIVO -> . menos decimal
+
+    entero          shift and go to state 37
+    decimal         shift and go to state 38
+    identificador   shift and go to state 39
+    menos           shift and go to state 36
+
+    PRIMITIVO                      shift and go to state 81
+
+state 66
+
+    (25) LLAMADA -> identificador parA parC pyc .
+
+    identificador   reduce using rule 25 (LLAMADA -> identificador parA parC pyc .)
+    Rgoto           reduce using rule 25 (LLAMADA -> identificador parA parC pyc .)
+    Rfmt            reduce using rule 25 (LLAMADA -> identificador parA parC pyc .)
+    Rif             reduce using rule 25 (LLAMADA -> identificador parA parC pyc .)
+    Rreturn         reduce using rule 25 (LLAMADA -> identificador parA parC pyc .)
+    llaveC          reduce using rule 25 (LLAMADA -> identificador parA parC pyc .)
+
+
+state 67
+
+    (21) PRINT -> Rfmt punto Rprint parA . cadena coma PRIMITIVO parC pyc
+    (22) PRINT -> Rfmt punto Rprint parA . cadena coma Rint parA PRIMITIVO parC parC pyc
+
+    cadena          shift and go to state 82
+
+
+state 68
+
+    (23) IF -> Rif E llaveA SALTO . llaveC
+
+    llaveC          shift and go to state 83
+
+
+state 69
+
+    (24) IF -> Rif parA E parC . llaveA SALTO llaveC
+
+    llaveA          shift and go to state 84
+
+
+state 70
+
+    (27) E -> PRIMITIVO mas PRIMITIVO .
+
+    llaveA          reduce using rule 27 (E -> PRIMITIVO mas PRIMITIVO .)
+    pyc             reduce using rule 27 (E -> PRIMITIVO mas PRIMITIVO .)
+    parC            reduce using rule 27 (E -> PRIMITIVO mas PRIMITIVO .)
+
+
+state 71
+
+    (28) E -> PRIMITIVO menos PRIMITIVO .
+
+    llaveA          reduce using rule 28 (E -> PRIMITIVO menos PRIMITIVO .)
+    pyc             reduce using rule 28 (E -> PRIMITIVO menos PRIMITIVO .)
+    parC            reduce using rule 28 (E -> PRIMITIVO menos PRIMITIVO .)
+
+
+state 72
+
+    (29) E -> PRIMITIVO por PRIMITIVO .
+
+    llaveA          reduce using rule 29 (E -> PRIMITIVO por PRIMITIVO .)
+    pyc             reduce using rule 29 (E -> PRIMITIVO por PRIMITIVO .)
+    parC            reduce using rule 29 (E -> PRIMITIVO por PRIMITIVO .)
+
+
+state 73
+
+    (30) E -> PRIMITIVO div PRIMITIVO .
+
+    llaveA          reduce using rule 30 (E -> PRIMITIVO div PRIMITIVO .)
+    pyc             reduce using rule 30 (E -> PRIMITIVO div PRIMITIVO .)
+    parC            reduce using rule 30 (E -> PRIMITIVO div PRIMITIVO .)
+
+
+state 74
+
+    (31) E -> PRIMITIVO meq PRIMITIVO .
+
+    llaveA          reduce using rule 31 (E -> PRIMITIVO meq PRIMITIVO .)
+    pyc             reduce using rule 31 (E -> PRIMITIVO meq PRIMITIVO .)
+    parC            reduce using rule 31 (E -> PRIMITIVO meq PRIMITIVO .)
+
+
+state 75
+
+    (32) E -> PRIMITIVO mayq PRIMITIVO .
+
+    llaveA          reduce using rule 32 (E -> PRIMITIVO mayq PRIMITIVO .)
+    pyc             reduce using rule 32 (E -> PRIMITIVO mayq PRIMITIVO .)
+    parC            reduce using rule 32 (E -> PRIMITIVO mayq PRIMITIVO .)
+
+
+state 76
+
+    (33) E -> PRIMITIVO meiq PRIMITIVO .
+
+    llaveA          reduce using rule 33 (E -> PRIMITIVO meiq PRIMITIVO .)
+    pyc             reduce using rule 33 (E -> PRIMITIVO meiq PRIMITIVO .)
+    parC            reduce using rule 33 (E -> PRIMITIVO meiq PRIMITIVO .)
+
+
+state 77
+
+    (34) E -> PRIMITIVO mayiq PRIMITIVO .
+
+    llaveA          reduce using rule 34 (E -> PRIMITIVO mayiq PRIMITIVO .)
+    pyc             reduce using rule 34 (E -> PRIMITIVO mayiq PRIMITIVO .)
+    parC            reduce using rule 34 (E -> PRIMITIVO mayiq PRIMITIVO .)
+
+
+state 78
+
+    (35) E -> PRIMITIVO iqiq PRIMITIVO .
+
+    llaveA          reduce using rule 35 (E -> PRIMITIVO iqiq PRIMITIVO .)
+    pyc             reduce using rule 35 (E -> PRIMITIVO iqiq PRIMITIVO .)
+    parC            reduce using rule 35 (E -> PRIMITIVO iqiq PRIMITIVO .)
+
+
+state 79
+
+    (36) E -> PRIMITIVO noiq PRIMITIVO .
+
+    llaveA          reduce using rule 36 (E -> PRIMITIVO noiq PRIMITIVO .)
+    pyc             reduce using rule 36 (E -> PRIMITIVO noiq PRIMITIVO .)
+    parC            reduce using rule 36 (E -> PRIMITIVO noiq PRIMITIVO .)
+
+
+state 80
+
+    (18) ASIGNA -> identificador igual identificador corA Rint . parA PRIMITIVO parC corC pyc
+
+    parA            shift and go to state 85
+
+
+state 81
+
+    (17) ASIGNA -> identificador corA Rint parA PRIMITIVO . parC corC igual PRIMITIVO pyc
+
+    parC            shift and go to state 86
+
+
+state 82
+
+    (21) PRINT -> Rfmt punto Rprint parA cadena . coma PRIMITIVO parC pyc
+    (22) PRINT -> Rfmt punto Rprint parA cadena . coma Rint parA PRIMITIVO parC parC pyc
+
+    coma            shift and go to state 87
+
+
+state 83
+
+    (23) IF -> Rif E llaveA SALTO llaveC .
+
+    identificador   reduce using rule 23 (IF -> Rif E llaveA SALTO llaveC .)
+    Rgoto           reduce using rule 23 (IF -> Rif E llaveA SALTO llaveC .)
+    Rfmt            reduce using rule 23 (IF -> Rif E llaveA SALTO llaveC .)
+    Rif             reduce using rule 23 (IF -> Rif E llaveA SALTO llaveC .)
+    Rreturn         reduce using rule 23 (IF -> Rif E llaveA SALTO llaveC .)
+    llaveC          reduce using rule 23 (IF -> Rif E llaveA SALTO llaveC .)
+
+
+state 84
+
+    (24) IF -> Rif parA E parC llaveA . SALTO llaveC
+    (20) SALTO -> . Rgoto identificador pyc
+
+    Rgoto           shift and go to state 21
+
+    SALTO                          shift and go to state 88
+
+state 85
+
+    (18) ASIGNA -> identificador igual identificador corA Rint parA . PRIMITIVO parC corC pyc
+    (37) PRIMITIVO -> . entero
+    (38) PRIMITIVO -> . decimal
+    (39) PRIMITIVO -> . identificador
+    (40) PRIMITIVO -> . menos entero
+    (41) PRIMITIVO -> . menos decimal
+
+    entero          shift and go to state 37
+    decimal         shift and go to state 38
+    identificador   shift and go to state 39
+    menos           shift and go to state 36
+
+    PRIMITIVO                      shift and go to state 89
+
+state 86
+
+    (17) ASIGNA -> identificador corA Rint parA PRIMITIVO parC . corC igual PRIMITIVO pyc
+
+    corC            shift and go to state 90
+
+
+state 87
+
+    (21) PRINT -> Rfmt punto Rprint parA cadena coma . PRIMITIVO parC pyc
+    (22) PRINT -> Rfmt punto Rprint parA cadena coma . Rint parA PRIMITIVO parC parC pyc
+    (37) PRIMITIVO -> . entero
+    (38) PRIMITIVO -> . decimal
+    (39) PRIMITIVO -> . identificador
+    (40) PRIMITIVO -> . menos entero
+    (41) PRIMITIVO -> . menos decimal
+
+    Rint            shift and go to state 92
+    entero          shift and go to state 37
+    decimal         shift and go to state 38
+    identificador   shift and go to state 39
+    menos           shift and go to state 36
+
+    PRIMITIVO                      shift and go to state 91
+
+state 88
+
+    (24) IF -> Rif parA E parC llaveA SALTO . llaveC
+
+    llaveC          shift and go to state 93
+
+
+state 89
+
+    (18) ASIGNA -> identificador igual identificador corA Rint parA PRIMITIVO . parC corC pyc
+
+    parC            shift and go to state 94
+
+
+state 90
+
+    (17) ASIGNA -> identificador corA Rint parA PRIMITIVO parC corC . igual PRIMITIVO pyc
+
+    igual           shift and go to state 95
+
+
+state 91
+
+    (21) PRINT -> Rfmt punto Rprint parA cadena coma PRIMITIVO . parC pyc
+
+    parC            shift and go to state 96
+
+
+state 92
+
+    (22) PRINT -> Rfmt punto Rprint parA cadena coma Rint . parA PRIMITIVO parC parC pyc
+
+    parA            shift and go to state 97
+
+
+state 93
+
+    (24) IF -> Rif parA E parC llaveA SALTO llaveC .
+
+    identificador   reduce using rule 24 (IF -> Rif parA E parC llaveA SALTO llaveC .)
+    Rgoto           reduce using rule 24 (IF -> Rif parA E parC llaveA SALTO llaveC .)
+    Rfmt            reduce using rule 24 (IF -> Rif parA E parC llaveA SALTO llaveC .)
+    Rif             reduce using rule 24 (IF -> Rif parA E parC llaveA SALTO llaveC .)
+    Rreturn         reduce using rule 24 (IF -> Rif parA E parC llaveA SALTO llaveC .)
+    llaveC          reduce using rule 24 (IF -> Rif parA E parC llaveA SALTO llaveC .)
+
+
+state 94
+
+    (18) ASIGNA -> identificador igual identificador corA Rint parA PRIMITIVO parC . corC pyc
+
+    corC            shift and go to state 98
+
+
+state 95
+
+    (17) ASIGNA -> identificador corA Rint parA PRIMITIVO parC corC igual . PRIMITIVO pyc
+    (37) PRIMITIVO -> . entero
+    (38) PRIMITIVO -> . decimal
+    (39) PRIMITIVO -> . identificador
+    (40) PRIMITIVO -> . menos entero
+    (41) PRIMITIVO -> . menos decimal
+
+    entero          shift and go to state 37
+    decimal         shift and go to state 38
+    identificador   shift and go to state 39
+    menos           shift and go to state 36
+
+    PRIMITIVO                      shift and go to state 99
+
+state 96
+
+    (21) PRINT -> Rfmt punto Rprint parA cadena coma PRIMITIVO parC . pyc
+
+    pyc             shift and go to state 100
+
+
+state 97
+
+    (22) PRINT -> Rfmt punto Rprint parA cadena coma Rint parA . PRIMITIVO parC parC pyc
+    (37) PRIMITIVO -> . entero
+    (38) PRIMITIVO -> . decimal
+    (39) PRIMITIVO -> . identificador
+    (40) PRIMITIVO -> . menos entero
+    (41) PRIMITIVO -> . menos decimal
+
+    entero          shift and go to state 37
+    decimal         shift and go to state 38
+    identificador   shift and go to state 39
+    menos           shift and go to state 36
+
+    PRIMITIVO                      shift and go to state 101
+
+state 98
+
+    (18) ASIGNA -> identificador igual identificador corA Rint parA PRIMITIVO parC corC . pyc
+
+    pyc             shift and go to state 102
+
+
+state 99
+
+    (17) ASIGNA -> identificador corA Rint parA PRIMITIVO parC corC igual PRIMITIVO . pyc
+
+    pyc             shift and go to state 103
+
+
+state 100
+
+    (21) PRINT -> Rfmt punto Rprint parA cadena coma PRIMITIVO parC pyc .
+
+    identificador   reduce using rule 21 (PRINT -> Rfmt punto Rprint parA cadena coma PRIMITIVO parC pyc .)
+    Rgoto           reduce using rule 21 (PRINT -> Rfmt punto Rprint parA cadena coma PRIMITIVO parC pyc .)
+    Rfmt            reduce using rule 21 (PRINT -> Rfmt punto Rprint parA cadena coma PRIMITIVO parC pyc .)
+    Rif             reduce using rule 21 (PRINT -> Rfmt punto Rprint parA cadena coma PRIMITIVO parC pyc .)
+    Rreturn         reduce using rule 21 (PRINT -> Rfmt punto Rprint parA cadena coma PRIMITIVO parC pyc .)
+    llaveC          reduce using rule 21 (PRINT -> Rfmt punto Rprint parA cadena coma PRIMITIVO parC pyc .)
+
+
+state 101
+
+    (22) PRINT -> Rfmt punto Rprint parA cadena coma Rint parA PRIMITIVO . parC parC pyc
+
+    parC            shift and go to state 104
+
+
+state 102
+
+    (18) ASIGNA -> identificador igual identificador corA Rint parA PRIMITIVO parC corC pyc .
+
+    identificador   reduce using rule 18 (ASIGNA -> identificador igual identificador corA Rint parA PRIMITIVO parC corC pyc .)
+    Rgoto           reduce using rule 18 (ASIGNA -> identificador igual identificador corA Rint parA PRIMITIVO parC corC pyc .)
+    Rfmt            reduce using rule 18 (ASIGNA -> identificador igual identificador corA Rint parA PRIMITIVO parC corC pyc .)
+    Rif             reduce using rule 18 (ASIGNA -> identificador igual identificador corA Rint parA PRIMITIVO parC corC pyc .)
+    Rreturn         reduce using rule 18 (ASIGNA -> identificador igual identificador corA Rint parA PRIMITIVO parC corC pyc .)
+    llaveC          reduce using rule 18 (ASIGNA -> identificador igual identificador corA Rint parA PRIMITIVO parC corC pyc .)
+
+
+state 103
+
+    (17) ASIGNA -> identificador corA Rint parA PRIMITIVO parC corC igual PRIMITIVO pyc .
+
+    identificador   reduce using rule 17 (ASIGNA -> identificador corA Rint parA PRIMITIVO parC corC igual PRIMITIVO pyc .)
+    Rgoto           reduce using rule 17 (ASIGNA -> identificador corA Rint parA PRIMITIVO parC corC igual PRIMITIVO pyc .)
+    Rfmt            reduce using rule 17 (ASIGNA -> identificador corA Rint parA PRIMITIVO parC corC igual PRIMITIVO pyc .)
+    Rif             reduce using rule 17 (ASIGNA -> identificador corA Rint parA PRIMITIVO parC corC igual PRIMITIVO pyc .)
+    Rreturn         reduce using rule 17 (ASIGNA -> identificador corA Rint parA PRIMITIVO parC corC igual PRIMITIVO pyc .)
+    llaveC          reduce using rule 17 (ASIGNA -> identificador corA Rint parA PRIMITIVO parC corC igual PRIMITIVO pyc .)
+
+
+state 104
+
+    (22) PRINT -> Rfmt punto Rprint parA cadena coma Rint parA PRIMITIVO parC . parC pyc
+
+    parC            shift and go to state 105
+
+
+state 105
+
+    (22) PRINT -> Rfmt punto Rprint parA cadena coma Rint parA PRIMITIVO parC parC . pyc
+
+    pyc             shift and go to state 106
+
+
+state 106
+
+    (22) PRINT -> Rfmt punto Rprint parA cadena coma Rint parA PRIMITIVO parC parC pyc .
+
+    identificador   reduce using rule 22 (PRINT -> Rfmt punto Rprint parA cadena coma Rint parA PRIMITIVO parC parC pyc .)
+    Rgoto           reduce using rule 22 (PRINT -> Rfmt punto Rprint parA cadena coma Rint parA PRIMITIVO parC parC pyc .)
+    Rfmt            reduce using rule 22 (PRINT -> Rfmt punto Rprint parA cadena coma Rint parA PRIMITIVO parC parC pyc .)
+    Rif             reduce using rule 22 (PRINT -> Rfmt punto Rprint parA cadena coma Rint parA PRIMITIVO parC parC pyc .)
+    Rreturn         reduce using rule 22 (PRINT -> Rfmt punto Rprint parA cadena coma Rint parA PRIMITIVO parC parC pyc .)
+    llaveC          reduce using rule 22 (PRINT -> Rfmt punto Rprint parA cadena coma Rint parA PRIMITIVO parC parC pyc .)
+

@@ -1,0 +1,30 @@
+func printString(){
+t1 = p + 1;
+t2 = stack[int(t1)];
+L1:
+t3 = heap[int(t2)];
+if t3 == -234 {goto L2;}
+fmt.Printf("%c",int(t3));
+t2 = t2 + 1;
+goto L1;
+L2:
+return;
+}
+func main(){
+t4 = h + 0;
+heap[int(h)] = 104;
+h = h + 1;
+heap[int(h)] = 111;
+h = h + 1;
+heap[int(h)] = 108;
+h = h + 1;
+heap[int(h)] = 97;
+h = h + 1;
+heap[int(h)] = -234;
+h = h + 1;
+t5 = p + 1;
+t6 = stack[int(t5)];
+stack[int(t5)] = t4;
+printString();
+stack[int(t5)] = t6;
+}

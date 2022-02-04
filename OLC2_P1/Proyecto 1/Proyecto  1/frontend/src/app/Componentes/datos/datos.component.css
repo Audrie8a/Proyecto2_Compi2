@@ -1,0 +1,26 @@
+.tuclase {
+    text-align: left; 
+    font-family: Arial Black; 
+    font-weight: bold; 
+    font-size: 20px; 
+    color: rgba(255, 255, 255, 0); 
+    text-shadow: 0 0 2px #8E59A9; 
+    text-transform: uppercase;
+    margin-top: 10px;
+    }
+
+
+.tuclase2 {
+text-align: left; 
+font-family: Arial Black; 
+font-weight: bold; 
+font-size: 30px; 
+color: #fff; 
+text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+}
+
+.Contenido{
+    text-align: center;
+    margin: 20px;
+    
+}

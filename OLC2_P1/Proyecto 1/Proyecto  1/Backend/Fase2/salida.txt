@@ -1,0 +1,108 @@
+package main;
+import("fmt");
+
+var P, H float64;
+var stack[78000]float64;
+var heap[20]float64;
+
+var t0,t1,t2,t3,t4,t5,t6,t7,t8,t9,t10,t11,t12,t13,t14,t15,t16 float64;
+var x float64;
+func printString(){
+ 	t4=P;
+	t5=stack[int(t4)];
+	L2:
+		t6=heap[int(t5)]; 
+		if t6 == -1 {goto L0;}
+		goto L1;
+	L1:
+		fmt.Printf("%c", int(t6));
+ 		t5=t5+1; 
+		goto L2;
+	L0:
+		return;
+}
+func potenciaString(){
+	t8=0;
+	t7=P;
+	t9=stack[int(t7)];
+	L3:
+		stack[int(1)]=t9;
+		P =1;
+		printString();
+		t10=stack[int(3)];
+		P =2;
+		t8 = t8 + 1;
+		if t8 < t10 {goto L3;}
+		 goto L4;
+	L4:
+		return;
+}
+
+func main(){
+t0=H;
+
+heap[int(H)]=104;
+H = H + 1;
+heap[int(H)]=111;
+H = H + 1;
+heap[int(H)]=108;
+H = H + 1;
+heap[int(H)]=97;
+H = H + 1;
+heap[int(H)]=-1;
+H = H + 1;
+t1 = 0  ;
+stack[int(t1)] = t0;
+x = stack[int(t1)];
+t2 = stack[int(0)];
+t11=H;
+
+heap[int(H)]=104;
+H = H + 1;
+heap[int(H)]=111;
+H = H + 1;
+heap[int(H)]=108;
+H = H + 1;
+heap[int(H)]=97;
+H = H + 1;
+heap[int(H)]=116;
+H = H + 1;
+heap[int(H)]=50;
+H = H + 1;
+heap[int(H)]=-1;
+H = H + 1;
+t12 = 2  ;
+stack[int(t12)] = t11;
+t12 = 3  ;
+stack[int(t12)] = 2;
+P = P + 2;
+potenciaString();
+P = P - 2;
+t13 = stack[int(0)];
+t15=H;
+
+heap[int(H)]=104;
+H = H + 1;
+heap[int(H)]=111;
+H = H + 1;
+heap[int(H)]=108;
+H = H + 1;
+heap[int(H)]=97;
+H = H + 1;
+heap[int(H)]=116;
+H = H + 1;
+heap[int(H)]=49;
+H = H + 1;
+heap[int(H)]=51;
+H = H + 1;
+heap[int(H)]=-1;
+H = H + 1;
+t16 = 2  ;
+stack[int(t16)] = t15;
+t16 = 3  ;
+stack[int(t16)] = 2;
+P = P + 2;
+potenciaString();
+P = P - 2;
+ fmt.Printf("%c",10);
+}
